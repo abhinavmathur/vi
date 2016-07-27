@@ -22,3 +22,7 @@
 nav {
     font-family: 'Baloo Thambi', cursive;
 }
+
+.message {
+    color: red;
+}

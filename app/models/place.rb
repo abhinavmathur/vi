@@ -21,8 +21,7 @@ class Place < ActiveRecord::Base
   friendly_id :name, use: :slugged
   CATEGORIES = 7
 
-  validates :name, :address, :category_number, presence: true
-  validates :name, :address, uniqueness: true
+  validates :name, :address, presence: true, uniqueness: true
 
 
   def self.categories
