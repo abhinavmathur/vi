@@ -17,6 +17,7 @@
 //= require_tree .
 
 $(document).ready(function() {
+    $('select').material_select();
     toastr.options = {
         "closeButton": false,
         "debug": false,

@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="col s12 m6 l6 offset-m3 offset-l3">
+    <%= form_for @place, :validate => true do |f| %>
+
+        <p class="center flow-text">Name of the place</p>
+        <%= f.text_field :name, placeholder: 'Title' %>
+
+        <br>
+
+        <p class="center flow-text">Address</p>
+        <%= f.text_field :address %>
+
+        <br>
+
+        <p class="center flow-text">Type</p>
+        <div class="input-field col s12">
+          <%= f.select :category_number, Place.categories %>
+        </div>
+        <br>
+        <%= f.button :submit %>
+    <% end %>
+  </div>
+</div>

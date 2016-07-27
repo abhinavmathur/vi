@@ -3,6 +3,7 @@ class CreatePlaces < ActiveRecord::Migration
     create_table :places do |t|
       t.string :name, default: "", null: false
       t.string :address, default: ""
+      t.string :city, default: ""
       t.float :lat
       t.float :lon
       t.string :full_address, default: ""
