@@ -19,7 +19,10 @@
 class Place < ActiveRecord::Base
   extend FriendlyId
   friendly_id :name, use: :slugged
-  CATEGORIES = 7
+  NUMBER_OF_CATEGORIES = 7
+
+  geocoded_by :address, latitude: :lat, longitude: :lon
+  after_validation :geocode, if: ->(obj){ obj.address.present? and obj.address_changed? }
 
   validates :name, :address, presence: true, uniqueness: true
 
@@ -35,11 +38,11 @@ class Place < ActiveRecord::Base
     ]
   end
 
-  def self.get_category_from_number(number)
-    if number > CATEGORIES
+  def self.get_category_from_number(category_number)
+    if category_number > NUMBER_OF_CATEGORIES
       return
     end
-    self.categories.select { |category, num| num == number}.first[0].to_s
+    self.categories.select { |category, num| num == category_number}.first[0].to_s
   end
 
 end

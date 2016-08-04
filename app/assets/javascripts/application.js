@@ -14,6 +14,8 @@
 //= require jquery_ujs
 //= require toastr
 //= require rails.validations
+//= require underscore
+//= require gmaps/google
 //= require turbolinks
 //= require_tree .
 

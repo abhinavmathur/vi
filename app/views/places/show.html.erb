@@ -1,1 +1,28 @@
 <%= @place.name %>
+
+<% location_info = request.location %><%= request.remote_ip %>
+
+<%= Place.near([location_info.latitude, location_info.longitude], 50).size %>
+
+<div style='width: 800px;'>
+  <div id="geolocation" style='width: 800px; height: 400px;'></div>
+</div>
+
+
+
+<script type="text/javascript" charset="utf-8">
+  var handler = Gmaps.build('Google');
+  handler.buildMap({ internal: {id: 'geolocation'} }, function(){
+    if(navigator.geolocation)
+      navigator.geolocation.getCurrentPosition(displayOnMap);
+  });
+
+  function displayOnMap(position){
+    var marker = handler.addMarker({
+      lat: position.coords.latitude,
+      lng: position.coords.longitude
+    });
+    handler.map.centerOn(marker);
+  };
+
+</script>
