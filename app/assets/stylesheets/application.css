@@ -24,5 +24,7 @@ nav {
 }
 
 .message {
-    color: red;
+    padding-top: 35px;
+    color: red !important;
 }
+

@@ -1,7 +1,11 @@
 class Admin::CategoriesController < Admin::DashboardController
 
-  before_action :set_category, except: [:new, :create]
+  before_action :set_category, except: [:index, :new, :create]
 
+
+  def index
+    @categories = Category.order('name DESC')
+  end
 
   def new
     @category = Category.new

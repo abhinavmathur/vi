@@ -1,0 +1,7 @@
+<%= link_to 'Create a Category', new_admin_category_path %>
+
+<% unless Category.count <= 0 %>
+    <%= @categories.each do |category| %>
+        <%= link_to category.name, admin_category_path(category) %>
+    <% end %>
+<% end %>
