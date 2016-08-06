@@ -1,5 +1,34 @@
 <h1>Admin Dashboard</h1>
 
+
+
+<%= res = Amazon::Ecs.item_lookup('B0117RFX38', {response_group: 'Medium', IncludeReviewsSummary: true}) %>
+
+
+<br>
+<br>
+<%= res.get_element('ASIN') %>
+<%  item_attributes = res.get_element('ItemAttributes') %>
+<%= item_attributes.get('Feature') %>
+<%= item_attributes.get('Label') %>
+<%= item_attributes.get('Content') %>
+<%= item_attributes.get('ProductGroup') %>
+<br>
+<br>
+<%= raw res.get_element('Content') %>
+
+<% eee =  res.get_elements('LargeImage/URL')%>
+<% eee.each do |image| %>
+    <%= raw image %>
+<% end %>
+
+
+
+
+
+
+
+
 <ul class="collection">
   <li><%= link_to 'Manage Categories', admin_categories_path %></li>
   <li class="collection-item">Alvin</li>
