@@ -31,7 +31,6 @@ class Product < ActiveRecord::Base
         [:name, :id],
     ]
   end
-end
 
   def self.from_amazon(asin)
     result = Amazon::Ecs.item_lookup(asin, {response_group: 'Medium, BrowseNodes'})
