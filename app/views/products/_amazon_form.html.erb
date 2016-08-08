@@ -1,0 +1,10 @@
+<%= form_for Product.new, validate: true do |f| %>
+    <div class="row" id="amazon_form">
+      <div class="input-field col s12">
+        <%= f.label :asin, 'ASIN code from Amazon' %>
+        <%= f.text_field :asin, required: true %>
+      </div>
+    </div>
+
+    <%= f.submit 'Submit Amazon ASIN' %>
+<% end %>

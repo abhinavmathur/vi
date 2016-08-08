@@ -61,6 +61,12 @@ GEM
     archive-zip (0.7.0)
       io-like (~> 0.3.0)
     arel (6.0.3)
+    asin (2.0.2)
+      confiture (>= 0.1)
+      crack (>= 0.3)
+      hashie (>= 1.1)
+      httpi (>= 0.9)
+      snake_case_hash (>= 1.0.2)
     bcrypt (3.1.11)
     better_errors (2.1.1)
       coderay (>= 1.0.0)
@@ -107,7 +113,10 @@ GEM
       execjs
     coffee-script-source (1.10.0)
     concurrent-ruby (1.0.2)
+    confiture (0.1.4)
     connection_pool (2.2.0)
+    crack (0.4.3)
+      safe_yaml (~> 1.0.0)
     database_cleaner (1.5.3)
     debug_inspector (0.0.2)
     devise (4.2.0)
@@ -269,6 +278,9 @@ GEM
     gmaps4rails (2.1.2)
     gravatarify (3.0.0)
     hashie (3.4.4)
+    httpi (2.4.2)
+      rack
+      socksify
     i18n (0.7.0)
     inflecto (0.0.2)
     io-like (0.3.0)
@@ -296,6 +308,7 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
+    method_source (0.8.2)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
@@ -329,6 +342,13 @@ GEM
     orm_adapter (0.5.0)
     pg (0.18.4)
     pkg-config (1.1.7)
+    pry (0.10.4)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
+    pry-byebug (3.4.0)
+      byebug (~> 9.0)
+      pry (~> 0.10)
     puma (3.6.0)
     pundit (1.1.0)
       activesupport (>= 3.0.0)
@@ -408,6 +428,7 @@ GEM
     ruby-hmac (0.4.0)
     ruby-progressbar (1.8.1)
     rubyzip (1.2.0)
+    safe_yaml (1.0.4)
     sass (3.4.22)
     sass-rails (5.0.6)
       railties (>= 4.0.0, < 6)
@@ -437,6 +458,10 @@ GEM
       rack (~> 1.5)
       rack-protection (~> 1.4)
       tilt (>= 1.3, < 3)
+    slop (3.6.0)
+    snake_case_hash (1.0.4)
+      hashie (~> 3.0)
+    socksify (1.7.0)
     spring (1.7.2)
     sprockets (3.7.0)
       concurrent-ruby (~> 1.0)
@@ -480,6 +505,7 @@ PLATFORMS
 DEPENDENCIES
   amazon-ecs
   annotate
+  asin
   better_errors
   brakeman
   bullet
@@ -510,6 +536,7 @@ DEPENDENCIES
   omniauth
   omniauth-google-oauth2
   pg
+  pry-byebug
   puma
   pundit
   quiet_assets

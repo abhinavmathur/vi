@@ -20,6 +20,8 @@
 #  last_sign_in_ip        :inet
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  admin                  :boolean          default(FALSE)
+#  manager                :boolean          default(FALSE)
 #
 
 class User < ActiveRecord::Base
