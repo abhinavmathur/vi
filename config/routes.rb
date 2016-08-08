@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
-  resources :products, except: [:index, :destroy]
+  resources :reviews
+  resources :products, except: [:index, :destroy] do
+    member do
+      get '/new_review' => 'products#new_review'
+      post '/create_review' => 'products#create_review'
+    end
+
+  end
   devise_for :users
   root 'app#index'
 

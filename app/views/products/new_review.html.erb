@@ -1,0 +1,13 @@
+<div class="container">
+  <% form_for Review.new, url: { action: 'create_review'}, method: :post, validate: true do |f| %>
+      <div class="input-field col s12">
+        <%= f.text_field :title %>
+        <%= f.label :title %>
+      </div>
+
+      <div class="input-field col s12">
+        <%= f.submit %>
+      </div>
+  <% end %>
+</div>
+

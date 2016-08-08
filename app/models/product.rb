@@ -9,21 +9,22 @@
 #  company     :string
 #  tags        :string
 #  asin        :string
+#  slug        :string
 #  adult       :boolean          default(FALSE)
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #
+
 class Product < ActiveRecord::Base
   belongs_to :category
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged
 
+  has_many :reviews, as: :reviewfiable
+
   validates :title, :description, :company, :tags, presence: true
   validates :title, :description, uniqueness: true
 
-  def amazon_product?
-    asin.present?
-  end
 
   def slug_candidates
     [
@@ -66,21 +67,6 @@ class Product < ActiveRecord::Base
     cat
   end
 
-  def self.amazon_category_array(res)
-    nodes = res.get_elements('BrowseNode')
-    unless nodes.nil?
-      arr=[]
-      nodes.each do |node|
-        unless prohibited_category_names.include?(node)
-          arr.push(node.get('Name'))
-        end
-      end
-      return arr.uniq.join(', ')
-    end
-    ['1', 'Not Defined'].join(', ')
-  end
-
-
 
   private
 
@@ -96,6 +82,21 @@ class Product < ActiveRecord::Base
   def prohibited_category_names
     ['Products','Categories','Electronics Features','Featured Categories']
   end
+
+  def amazon_category_array(res)
+    nodes = res.get_elements('BrowseNode')
+    unless nodes.nil?
+      arr=[]
+      nodes.each do |node|
+        unless prohibited_category_names.include?(node)
+          arr.push(node.get('Name'))
+        end
+      end
+      return arr.uniq.join(', ')
+    end
+    ['1', 'Not Defined'].join(', ')
+  end
+
 
 
 

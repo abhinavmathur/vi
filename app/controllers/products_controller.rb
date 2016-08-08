@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
 
   before_action :authenticate_user!, except: :show
-  before_action :set_product, only: [:show, :edit, :update]
+  before_action :set_product, except: [:new, :create]
 
   def new
     @product = Product.new
@@ -27,8 +27,6 @@ class ProductsController < ApplicationController
         render :new
       end
     end
-
-
   end
 
   def edit
@@ -47,6 +45,14 @@ class ProductsController < ApplicationController
       flash[:error] = 'Something went wrong. Please check the form'
       render :edit
     end
+  end
+
+  def new_review
+
+  end
+
+  def create_review
+
   end
 
   def amazon_new

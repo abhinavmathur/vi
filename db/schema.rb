@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160808033204) do
+ActiveRecord::Schema.define(version: 20160808063718) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,27 @@ ActiveRecord::Schema.define(version: 20160808033204) do
   add_index "products", ["category_id"], name: "index_products_on_category_id", using: :btree
   add_index "products", ["title"], name: "index_products_on_title", using: :btree
 
+  create_table "reviews", force: :cascade do |t|
+    t.string   "title"
+    t.text     "description"
+    t.string   "tags"
+    t.string   "youtube_url"
+    t.string   "other_video_url"
+    t.string   "affiliate_tag"
+    t.string   "affiliate_link"
+    t.boolean  "has_youtube_link",  default: false
+    t.integer  "reviewfiable_id"
+    t.string   "reviewfiable_type"
+    t.boolean  "publish"
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.integer  "reviewer_id"
+  end
+
+  add_index "reviews", ["reviewer_id"], name: "index_reviews_on_reviewer_id", using: :btree
+  add_index "reviews", ["reviewfiable_id", "reviewfiable_type"], name: "index_reviews_on_reviewfiable_id_and_reviewfiable_type", using: :btree
+  add_index "reviews", ["title"], name: "index_reviews_on_title", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "name",                   default: ""
     t.string   "address",                default: ""
@@ -94,4 +115,5 @@ ActiveRecord::Schema.define(version: 20160808033204) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "reviews", "users", column: "reviewer_id"
 end

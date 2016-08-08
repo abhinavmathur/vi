@@ -9,6 +9,7 @@
 #  company     :string
 #  tags        :string
 #  asin        :string
+#  slug        :string
 #  adult       :boolean          default(FALSE)
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
