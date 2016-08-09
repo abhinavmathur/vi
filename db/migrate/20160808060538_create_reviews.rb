@@ -12,6 +12,7 @@ class CreateReviews < ActiveRecord::Migration
       t.integer :reviewfiable_id
       t.string :reviewfiable_type
       t.boolean :publish
+      t.string :slug
 
 
       t.timestamps null: false

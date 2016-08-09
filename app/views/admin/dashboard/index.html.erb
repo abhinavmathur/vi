@@ -1,78 +1,10 @@
 <h1>Admin Dashboard</h1>
+<% products = Product.order('created_at DESC') %>
 
-
-<% res = Amazon::Ecs.item_lookup('0804139296', {response_group: 'Medium, BrowseNodes'}) %>
-
-
-
-
-<br>
-<br>
-
-<% varr = res.get_elements('Feature') %>
-<% unless varr.nil? %>
-    <% p varr.each do |qqqqqq| %>
-        <%= p qqqqqq.inspect %>
-    <% end %>
-<% end %>
-
-<% #res.get_elements('Feature').marshal_dump %>
-<%# Amazon::Ecs.browse_node_lookup("34").marshal_dump %>
-<% qqq = res.get_elements('BrowseNode') %>
-<% arr = [] %>
-<% qqq.each do |node| %>
-    <%= node.get('Name') %>
-    <%= node.get('IsCategoryRoot') %>
-    <% arr.push(node.get('Name')) %>
-    <% arr.push(node.get('IsCategoryRoot')) unless node.get('IsCategoryRoot').blank? %>
+<% products.each do |product| %>
+    <%= link_to truncate(product.title, length: 20), product_path(product) %>
+    <br>
+    <%= link_to 'Create a Review', new_review_path(product_id: product.id) %>
     <br>
 <% end %>
-====
-<%= arr[arr.index('1') + 1].to_s %>
-=====
-<% nodes =  res.get_element('BrowseNodes')%>
 
-<%= nodes.get_element('BrowseNodeId') %>
-<%= res.get_element('IsEligibleForPrime') %>
-----
-<br>
-<br>
-<%= res.get_element('ASIN').to_s.html_safe %>
-<br>
-<%  item_attributes = res.get_element('ItemAttributes') %>
-<br>
-<p>List price</p>
-<%= item_attributes.get('ListPrice') %>
-<br>
-<p>label</p>
-<%= item_attributes.get('Label') %>
-<br>
-<p>product group</p>
-<%= item_attributes.get('ProductGroup') %>
-................
-<br>
-<p>subcategory</p>
-<%= item_attributes.get('ProductTypeSubcategory') %>
-<br>
-<br>
-<%= res.get_element('Content').to_s.html_safe %>
-
-<% eee =  res.get_elements('LargeImage/URL')%>
-<% eee.each do |image| %>
-    <%= raw image %>
-<% end %>
-
-
-
-
-
-
-
-
-<ul class="collection">
-  <li><%= link_to 'Manage Categories', admin_categories_path %></li>
-  <li class="collection-item">Alvin</li>
-  <li class="collection-item">Alvin</li>
-  <li class="collection-item">Alvin</li>
-  <li class="collection-item">Alvin</li>
-</ul>

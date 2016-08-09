@@ -23,7 +23,7 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
-gem 'asin'
+gem 'html5_validators'
 
 
 group :development, :test do
@@ -35,7 +35,6 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'byebug'
   gem 'factory_girl_rails'
-  gem 'pry-byebug'
 end
 
 group :development do

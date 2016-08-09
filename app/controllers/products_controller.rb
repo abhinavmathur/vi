@@ -47,22 +47,16 @@ class ProductsController < ApplicationController
     end
   end
 
-  def new_review
-
-  end
-
-  def create_review
-
-  end
-
-  def amazon_new
-@product = Product.new
-  end
 
 
   private
   def product_params
     params.require(:product).permit(:title, :description, :category, :company, :tags)
+  end
+
+  def review_params
+    params.require(:review).permit(:title, :description, :youtube_url, :other_video_url, :affiliate_tag,
+                                   :affiliate_link, :has_youtube_link, :publish)
   end
 
 

@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="input-field col s12">
+    <select name="choose-form" required>
+      <option value="" disabled selected>Choose your option</option>
+        <option value="1">Review with YouTube video</option>
+        <option value="2">Review with other platform video</option>
+    </select>
+    <label>Choose the type of review</label>
+  </div>
+</div>
+
+<div class="container" id="review-form-container">
+
+</div>
+
+<script type="text/javascript" charset="utf-8">
+  $('select[name=choose-form]').change(function(e)
+  {
+    if($('select[name=choose-form]').val() == '1')
+    {
+      $('#review-form-container').html("<%= j render partial: 'reviews/youtube_form' %>");
+    }
+    if($('select[name=choose-form]').val() == '2')
+    {
+      $('#review-form-container').html("<%= j render partial: 'reviews/normal_form' %>");
+    }
+  })
+
+</script>
+
+<script type="text/javascript" charset="utf-8">
+  $('select').material_select();
+  if(/[?&]product_id=/.test(location.search))
+  {}
+    else
+  {
+    window.location.href = '/products/new';
+    toastr.warning('You need to search for a product first to make a review');
+  }
+</script>

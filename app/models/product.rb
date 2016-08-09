@@ -18,7 +18,7 @@
 class Product < ActiveRecord::Base
   belongs_to :category
   extend FriendlyId
-  friendly_id :slug_candidates, use: :slugged
+  friendly_id :slug_candidates, use: [:slugged, :finders]
 
   has_many :reviews, as: :reviewfiable
 
@@ -28,8 +28,8 @@ class Product < ActiveRecord::Base
 
   def slug_candidates
     [
-        :name,
-        [:name, :id],
+        :title,
+        [:title, :id],
     ]
   end
 

@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(version: 20160808063718) do
     t.integer  "reviewfiable_id"
     t.string   "reviewfiable_type"
     t.boolean  "publish"
+    t.string   "slug"
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
     t.integer  "reviewer_id"
