@@ -16,6 +16,20 @@ class ReviewsController < ApplicationController
       flash[:error] = 'Wrong product ID supplied'
       redirect_to root_path and return
     end
+    if Review.youtube_video_belongs_to_user?(current_user, params[:youtube_url]) && params[:youtube_url].present?
+      @review = @product.reviews.create(review_params)
+      @review.reviewer_id = current_user.id
+      if @review.save
+        flash[:notice] = 'Review was created successfully'
+        redirect_to review_path(@review)
+      else
+        flash[:error] = @review.errors.full_messages.to_sentence
+        redirect_to new_review_path(product_id: product_id)
+      end
+    else
+      flash[:danger] = 'The YouTube video ID supplied does not belong to your YouTube account'
+      redirect_to new_review_path(product_id: product_id) and return
+    end
     @review = @product.reviews.create(review_params)
     @review.reviewer_id = current_user.id
     if @review.save

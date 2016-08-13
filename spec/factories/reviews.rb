@@ -14,6 +14,7 @@
 #  reviewfiable_id   :integer
 #  reviewfiable_type :string
 #  publish           :boolean
+#  slug              :string
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  reviewer_id       :integer

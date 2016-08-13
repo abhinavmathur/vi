@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160808063718) do
+ActiveRecord::Schema.define(version: 20160813003704) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,13 +92,17 @@ ActiveRecord::Schema.define(version: 20160808063718) do
   add_index "reviews", ["title"], name: "index_reviews_on_title", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "name",                   default: ""
-    t.string   "address",                default: ""
-    t.string   "phone_number",           default: ""
-    t.string   "lat",                    default: ""
-    t.string   "lng",                    default: ""
+    t.string   "username",               default: ""
     t.string   "email",                  default: "",    null: false
     t.string   "encrypted_password",     default: "",    null: false
+    t.string   "token"
+    t.string   "refresh_token"
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "slug"
+    t.string   "avatar"
+    t.text     "description"
+    t.boolean  "has_youtube_account",    default: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -109,8 +113,7 @@ ActiveRecord::Schema.define(version: 20160808063718) do
     t.inet     "last_sign_in_ip"
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
-    t.boolean  "admin",                  default: false
-    t.boolean  "manager",                default: false
+    t.string   "stripe_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

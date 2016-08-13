@@ -2,13 +2,17 @@ class DeviseCreateUsers < ActiveRecord::Migration
   def change
     create_table :users do |t|
       ## Database authenticatable
-      t.string :name, default: ""
-      t.string :address, default: ""
-      t.string :phone_number, default: ""
-      t.string :lat, default: ""
-      t.string :lng, default: ""
+      t.string :username, default: ""
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
+      t.string :token
+      t.string :refresh_token
+      t.string :provider
+      t.string :uid
+      t.string :slug
+      t.string :avatar
+      t.text :description
+      t.boolean :has_youtube_account, default: false
 
       ## Recoverable
       t.string   :reset_password_token

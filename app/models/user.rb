@@ -3,13 +3,17 @@
 # Table name: users
 #
 #  id                     :integer          not null, primary key
-#  name                   :string           default("")
-#  address                :string           default("")
-#  phone_number           :string           default("")
-#  lat                    :string           default("")
-#  lng                    :string           default("")
+#  username               :string           default("")
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
+#  token                  :string
+#  refresh_token          :string
+#  provider               :string
+#  uid                    :string
+#  slug                   :string
+#  avatar                 :string
+#  description            :text
+#  has_youtube_account    :boolean          default(FALSE)
 #  reset_password_token   :string
 #  reset_password_sent_at :datetime
 #  remember_created_at    :datetime
@@ -20,13 +24,31 @@
 #  last_sign_in_ip        :inet
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
-#  admin                  :boolean          default(FALSE)
-#  manager                :boolean          default(FALSE)
+#  stripe_id              :string
 #
 
 class User < ActiveRecord::Base
+
+  extend FriendlyId
+  friendly_id :uid, use: [:slugged, :finders]
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable, :omniauthable,
+  :omniauth_providers => [:google_oauth2]
+
+
+
+  def self.from_omniauth(auth)
+    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+      user.username = auth.info.email.to_s.split('@')[0].to_s
+      user.email = auth.info.email
+      user.provider = auth.provider
+      user.uid = auth.uid
+      user.token = auth.credentials.token
+      user.refresh_token = auth.credentials.refresh_token
+      user.password = Devise.friendly_token.first(12)
+      user.save!
+    end
+  end
 end

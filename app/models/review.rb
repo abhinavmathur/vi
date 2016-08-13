@@ -14,6 +14,7 @@
 #  reviewfiable_id   :integer
 #  reviewfiable_type :string
 #  publish           :boolean
+#  slug              :string
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  reviewer_id       :integer
@@ -33,6 +34,14 @@ class Review < ActiveRecord::Base
     ]
   end
 
-
-
+  def self.youtube_video_belongs_to_user?(user, video_id)
+    begin
+      owner = Yt::ContentOwner.new refresh_token: user.refresh_token, token: user.token
+      video = Yt::Video.new id: video_id, auth: owner
+      video.file_size
+      return true
+    rescue
+      return false
+    end
+  end
 end

@@ -3,13 +3,17 @@
 # Table name: users
 #
 #  id                     :integer          not null, primary key
-#  name                   :string           default("")
-#  address                :string           default("")
-#  phone_number           :string           default("")
-#  lat                    :string           default("")
-#  lng                    :string           default("")
+#  username               :string           default("")
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
+#  token                  :string
+#  refresh_token          :string
+#  provider               :string
+#  uid                    :string
+#  slug                   :string
+#  avatar                 :string
+#  description            :text
+#  has_youtube_account    :boolean          default(FALSE)
 #  reset_password_token   :string
 #  reset_password_sent_at :datetime
 #  remember_created_at    :datetime
@@ -20,8 +24,7 @@
 #  last_sign_in_ip        :inet
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
-#  admin                  :boolean          default(FALSE)
-#  manager                :boolean          default(FALSE)
+#  stripe_id              :string
 #
 
 FactoryGirl.define do
