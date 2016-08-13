@@ -79,3 +79,4 @@ gem 'amazon-ecs'
 gem 'fog'
 gem 'sidekiq'
 gem 'sinatra', :require => nil
+gem 'acts-as-taggable-on', '~> 4.0'

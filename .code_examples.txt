@@ -90,3 +90,40 @@
 <% end %>
 
 <%= render "devise/shared/links" %>
+
+
+-----------------review create----------------------
+def create
+    @product
+    product_id = params[:product_id].to_i
+
+    if Product.exists?(id: product_id)
+      @product = Product.find_by(id: product_id)
+    else
+      flash[:error] = 'Wrong product ID supplied'
+      redirect_to root_path
+    end
+    if Review.youtube_video_belongs_to_user?(current_user, params[:review][:youtube_url]) && params[:review][:youtube_url].present?
+      @review = @product.reviews.create(review_params)
+      @review.reviewer_id = current_user.id
+      if @review.save
+        flash[:notice] = 'Review was created successfully'
+        redirect_to review_path(@review) and return
+      else
+        flash[:error] = @review.errors.full_messages.to_sentence
+        redirect_to new_review_path(product_id: product_id)
+      end
+    else
+      flash[:danger] = 'The YouTube video ID supplied does not belong to your YouTube account'
+      redirect_to new_review_path(product_id: product_id)
+    end
+    @review = @product.reviews.create(review_params)
+    @review.reviewer_id = current_user.id
+    if @review.save
+      flash[:notice] = 'Review was created successfully'
+      redirect_to review_path(@review) and return
+    else
+      flash[:error] = @review.errors.full_messages.to_sentence
+      redirect_to new_review_path(product_id: product_id)
+    end
+  end

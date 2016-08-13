@@ -1,1 +1,3 @@
 <%= @review.title %>
+
+<%= link_to User.find(@review.reviewer_id).username, '#' %>

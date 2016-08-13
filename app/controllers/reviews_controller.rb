@@ -10,33 +10,19 @@ class ReviewsController < ApplicationController
   def create
     @product
     product_id = params[:product_id].to_i
+
     if Product.exists?(id: product_id)
       @product = Product.find_by(id: product_id)
     else
       flash[:error] = 'Wrong product ID supplied'
-      redirect_to root_path and return
+      redirect_to root_path
     end
-    if Review.youtube_video_belongs_to_user?(current_user, params[:youtube_url]) && params[:youtube_url].present?
-      @review = @product.reviews.create(review_params)
-      @review.reviewer_id = current_user.id
-      if @review.save
-        flash[:notice] = 'Review was created successfully'
-        redirect_to review_path(@review)
-      else
-        flash[:error] = @review.errors.full_messages.to_sentence
-        redirect_to new_review_path(product_id: product_id)
-      end
+    error_symbol, message, obj = ReviewCreationService.new(params, current_user, @product).create_review!
+    if error_symbol == 'S'
+      flash[:notice] = message.to_s
+      redirect_to review_path(obj) and return
     else
-      flash[:danger] = 'The YouTube video ID supplied does not belong to your YouTube account'
-      redirect_to new_review_path(product_id: product_id) and return
-    end
-    @review = @product.reviews.create(review_params)
-    @review.reviewer_id = current_user.id
-    if @review.save
-      flash[:notice] = 'Review was created successfully'
-      redirect_to review_path(@review)
-    else
-      flash[:error] = @review.errors.full_messages.to_sentence
+      flash[:error] = message.to_s
       redirect_to new_review_path(product_id: product_id)
     end
   end
@@ -60,7 +46,7 @@ class ReviewsController < ApplicationController
   private
   def review_params
     params.require(:review).permit(:title, :description, :youtube_url, :other_video_url, :affiliate_tag,
-                                   :affiliate_link, :has_youtube_link, :publish)
+                                   :affiliate_link, :has_youtube_link, :publish, :tags)
   end
 
   def set_review

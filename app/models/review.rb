@@ -25,7 +25,7 @@ class Review < ActiveRecord::Base
   friendly_id :slug_candidates, use: [:slugged, :finders]
   belongs_to :reviewfiable, polymorphic: true
 
-  validates_presence_of :title, :description
+  validates_presence_of :title, :description, :tags
 
   def slug_candidates
     [
