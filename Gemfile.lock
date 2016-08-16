@@ -108,6 +108,9 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.10.0)
+    commontator (4.11.1)
+      jquery-rails
+      rails (>= 3.1)
     concurrent-ruby (1.0.2)
     connection_pool (2.2.0)
     database_cleaner (1.5.3)
@@ -493,6 +496,7 @@ DEPENDENCIES
   chromedriver-helper
   client_side_validations
   coffee-rails (~> 4.1.0)
+  commontator (~> 4.11.1)
   database_cleaner
   devise
   factory_girl_rails

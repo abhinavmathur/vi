@@ -31,6 +31,7 @@ class User < ActiveRecord::Base
 
   extend FriendlyId
   friendly_id :uid, use: [:slugged, :finders]
+  acts_as_commontato
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,

@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
-  resources :reviews, except: :index
-  resources :products, except: [:index, :destroy] do
-    collection do
-      get 'new_review' => 'products#new_review'
-      post '/create_review' => 'products#create_review'
+  mount Commontator::Engine => '/commontator'
+  resources :reviews, except: :index do
+    member do
+      post '/redirect_to_website' => 'reviews#redirect_to_website'
     end
   end
+  resources :products, except: [:index, :destroy]
   devise_for :users, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
   root 'app#index'
 
@@ -13,6 +13,10 @@ Rails.application.routes.draw do
   resources :categories, only: :index
 
   authenticate :user, lambda { |u| u.admin? } do
+    require 'sidekiq/web'
+    Sidekiq::Web.set :session_secret, Rails.application.secrets[:secret_token]
+    Sidekiq::Web.set :sessions, Rails.application.config.session_options
+    mount Sidekiq::Web => '/sidekiq'
     namespace :admin do
       root 'dashboard#index'
       resources :categories

@@ -43,6 +43,16 @@ class ReviewsController < ApplicationController
 
   end
 
+  def redirect_to_website
+    unless params[:affiliate_website].present?
+      flash[:error] = 'Affiliate website link not found'
+      redirect_to review_path(@review)
+    end
+    website = params[:affiliate_website]
+    Click.find_or_create_by(review_id: @review.id, user_id: current_user.id)
+    redirect_to 'http://www.amazon.ca'
+  end
+
   private
   def review_params
     params.require(:review).permit(:title, :description, :youtube_url, :other_video_url, :affiliate_tag,

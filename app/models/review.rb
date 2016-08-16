@@ -24,6 +24,7 @@ class Review < ActiveRecord::Base
   extend FriendlyId
   friendly_id :slug_candidates, use: [:slugged, :finders]
   belongs_to :reviewfiable, polymorphic: true
+  acts_as_commontable
 
   validates_presence_of :title, :description, :tags
 
