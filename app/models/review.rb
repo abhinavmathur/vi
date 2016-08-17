@@ -25,6 +25,11 @@ class Review < ActiveRecord::Base
   friendly_id :slug_candidates, use: [:slugged, :finders]
   belongs_to :reviewfiable, polymorphic: true
   acts_as_commontable
+  searchkick
+
+  after_create :build_affiliate_link, if: self.has_youtube_link?
+
+  has_many :clicks
 
   validates_presence_of :title, :description, :tags
 
@@ -44,5 +49,9 @@ class Review < ActiveRecord::Base
     rescue
       return false
     end
+  end
+
+  def build_affiliate_link
+    link = "http://www.amazon.com/dp/#{}{/?tag=your_Associates_ID"
   end
 end

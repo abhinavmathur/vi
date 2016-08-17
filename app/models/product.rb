@@ -38,11 +38,11 @@ class Product < ActiveRecord::Base
     unless result.has_error?
       item_attributes = result.get_element('ItemAttributes')
       title = item_attributes.get('Title')
-      description = sanitize(result.get_element('Content').to_s)
+      description = CGI.unescapeHTML((result.get_element('Content').to_s))
       company = item_attributes.get('Label')
       tags =  item_attributes.get('ProductGroup')
       category = Product.get_category(result)
-      asin = result.get_element('ASIN').to_s.html_safe
+      asin = ActionController::Base.helpers.strip_tags(result.get_element('ASIN').to_s)
       unless Product.exists?(asin: asin)
         product = Product.create(title: title, description: description,
                                  company: company, tags: tags, asin: asin, category_id: category.id)

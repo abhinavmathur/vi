@@ -49,7 +49,10 @@ class ReviewsController < ApplicationController
       redirect_to review_path(@review)
     end
     website = params[:affiliate_website]
-    Click.find_or_create_by(review_id: @review.id, user_id: current_user.id)
+    unless Click.exists?(review_id: @review.id, user_id: current_user.id)
+      ClickPointWorker.perform_async(@review.id, current_user.id)
+      DeleteClicksWorker.perform_at(24.hours.from_now, @review.id, current_user.id)
+    end
     redirect_to 'http://www.amazon.ca'
   end
 

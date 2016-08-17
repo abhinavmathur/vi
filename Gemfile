@@ -78,6 +78,7 @@ gem 'carrierwave'
 gem 'amazon-ecs'
 gem 'fog'
 gem 'sidekiq'
+gem 'searchkick'
 gem 'sinatra', :require => false
 gem 'acts-as-taggable-on', '~> 4.0'
 gem 'commontator', '~> 4.11.1'

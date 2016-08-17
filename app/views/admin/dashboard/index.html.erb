@@ -8,3 +8,9 @@
     <br>
 <% end %>
 
+
+--------------
+<% Review.all.each do |review| %>
+    <%= link_to review.title, review_url(review) %>
+<% end %>
+
