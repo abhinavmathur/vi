@@ -30,16 +30,17 @@
     <div class="row" id="normal_form">
       <div class="input-field col s12">
         <%= f.label :tags %>
-        <%= f.text_field :tags, required: true %>
+        <%= f.text_field :tags, required: true, data: { role: 'materialtags'}%>
       </div>
     </div>
-
 
 
     <%= f.submit 'Submit Product Description' %>
 <% end %>
 
 <script type="text/javascript" charset="utf-8">
-$('#product_category_id').material_select();
+  $('#product_category_id').material_select();
+  $('#product_tags').materialtags();
+
 </script>
 

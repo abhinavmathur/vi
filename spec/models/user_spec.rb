@@ -25,6 +25,8 @@
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  stripe_id              :string
+#  admin                  :boolean          default(FALSE)
+#  manager                :boolean          default(FALSE)
 #
 
 require 'rails_helper'

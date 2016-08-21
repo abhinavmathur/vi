@@ -13,6 +13,8 @@
  *= require_tree .
  *= require_self
  *= require toastr
+ *= require slick-theme
+ *= require materialize-tags.min
  *= require commontator/application
  */
 

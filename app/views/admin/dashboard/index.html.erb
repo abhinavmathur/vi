@@ -14,3 +14,38 @@
     <%= link_to review.title, review_url(review) %>
 <% end %>
 
+<% res = Amazon::Ecs.item_lookup('1408845644', {response_group: 'Medium, BrowseNodes'}) %>
+
+
+
+
+<br>
+<br>
+
+<% varr = res.get_elements('Feature') %>
+<% unless varr.nil? %>
+    <% p varr.each do |qqqqqq| %>
+        <%= p qqqqqq.inspect %>
+    <% end %>
+<% end %>
+
+<% #res.get_elements('Feature').marshal_dump %>
+<%# Amazon::Ecs.browse_node_lookup("34").marshal_dump %>
+<% qqq = res.get_elements('BrowseNode') %>
+<% arr = [] %>
+<% qqq.each do |node| %>
+    <%= node.get('Name').to_s %>
+    <%= node.get('IsCategoryRoot') %>
+    <% arr.push(node.get('Name').to_s.gsub('&amp;', 'and')) %>
+    <% arr.push(node.get('IsCategoryRoot')) unless node.get('IsCategoryRoot').blank? %>
+    <br>
+<% end %>
+====
+
+<br>
+<br>
+<%= arr[arr.index('1') + 1].to_s %>
+
+
+
+

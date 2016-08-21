@@ -16,6 +16,7 @@
 //= require rails.validations
 //= require commontator/application
 //= require underscore
+//= require materialize-tags.min
 //= require gmaps/google
 //= require turbolinks
 //= require_tree .

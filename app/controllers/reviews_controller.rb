@@ -1,7 +1,7 @@
 class ReviewsController < ApplicationController
 
   before_action :authenticate_user!, except: :show
-  before_action :set_review, except: [:new, :create]
+  before_action :set_review, except: [:new, :create, :search]
 
   def new
     @review = Review.new
@@ -41,6 +41,10 @@ class ReviewsController < ApplicationController
 
   def destroy
 
+  end
+
+  def search
+    @reviews = Review.search(params[:q].present? ? params[:q] : 'all')
   end
 
   def redirect_to_website

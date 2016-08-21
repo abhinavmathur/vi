@@ -1,12 +1,13 @@
 Rails.application.routes.draw do
   mount Commontator::Engine => '/commontator'
   resources :reviews, except: :index do
+    get '/search', to: 'reviews#search', as: :search, on: :collection
     member do
       post '/redirect_to_website' => 'reviews#redirect_to_website'
     end
   end
   resources :products, except: [:index, :destroy]
-  devise_for :users, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
+  devise_for :users, :controllers => { :omniauth_callbacks => 'omniauth_callbacks' }
   root 'app#index'
 
   resources :places, except: :index
