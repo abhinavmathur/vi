@@ -50,10 +50,5 @@ class Review < ActiveRecord::Base
     end
   end
 
-  def affiliate_link_build
-    if self.has_youtube_link?
-      link = "http://www.amazon.com/dp/#{self.product.asin}/?tag=#{self.affiliate_tag}"
-      self.update(affiliate_link: link)
-    end
-  end
+
 end
