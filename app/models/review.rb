@@ -27,7 +27,7 @@ class Review < ActiveRecord::Base
   acts_as_commontable
   searchkick
 
-  after_create :build_affiliate_link
+  before_save :build_affiliate_link
 
   has_many :clicks
 
