@@ -1,4 +1,9 @@
 <h1>Admin Dashboard</h1>
+<div id="HUtcKiQrYOkT">
+  Our hardworking reviewers need ads displayed on their review page to continue make more reviews<br>
+  We have made sure that the ads are not intrusive or annoying in any way. <br>
+  Please consider supporting us by disabling your ad blocker.
+</div>
 <% products = Product.order('created_at DESC') %>
 
 <% products.each do |product| %>
@@ -14,37 +19,44 @@
     <%= link_to review.title, review_url(review) %>
 <% end %>
 
-<% res = Amazon::Ecs.item_lookup('1408845644', {response_group: 'Medium, BrowseNodes'}) %>
+<% #res = Amazon::Ecs.item_lookup('1408845644', {response_group: 'Medium, BrowseNodes'}) %>
+
+<style>
+  #HUtcKiQrYOkT {
+    display: none;
+    margin-bottom: 30px;
+    padding: 20px 10px;
+    background: #D30000;
+    text-align: center;
+    font-weight: bold;
+    color: #fff;
+    border-radius: 5px;
+  }
+</style>
 
 
 
+<script src="/ads.js" type="text/javascript"></script>
+<script type="text/javascript">
 
-<br>
-<br>
+  if(!document.getElementById('tPqXhkRoUHbN')){
+    document.getElementById('HUtcKiQrYOkT').style.display='block';
+  }
 
-<% varr = res.get_elements('Feature') %>
-<% unless varr.nil? %>
-    <% p varr.each do |qqqqqq| %>
-        <%= p qqqqqq.inspect %>
-    <% end %>
-<% end %>
+</script>
 
-<% #res.get_elements('Feature').marshal_dump %>
-<%# Amazon::Ecs.browse_node_lookup("34").marshal_dump %>
-<% qqq = res.get_elements('BrowseNode') %>
-<% arr = [] %>
-<% qqq.each do |node| %>
-    <%= node.get('Name').to_s %>
-    <%= node.get('IsCategoryRoot') %>
-    <% arr.push(node.get('Name').to_s.gsub('&amp;', 'and')) %>
-    <% arr.push(node.get('IsCategoryRoot')) unless node.get('IsCategoryRoot').blank? %>
-    <br>
-<% end %>
-====
-
-<br>
-<br>
-<%= arr[arr.index('1') + 1].to_s %>
+<script type="text/javascript">
+  amzn_assoc_placement = "adunit0";
+  amzn_assoc_tracking_id = "raaaaj5000-20";
+  amzn_assoc_ad_mode = "manual";
+  amzn_assoc_ad_type = "smart";
+  amzn_assoc_marketplace = "amazon";
+  amzn_assoc_region = "US";
+  amzn_assoc_title = "My Amazon Picks";
+  amzn_assoc_linkid = "86b164ce94b0977a4be1dc4748d2d352";
+  amzn_assoc_asins = "1338099132,B00AP06III,059035342X,0545162076";
+</script>
+<script src="//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US"></script>
 
 
 

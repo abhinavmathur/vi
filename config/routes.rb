@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   mount Commontator::Engine => '/commontator'
   resources :reviews, except: :index do
     get '/search', to: 'reviews#search', as: :search, on: :collection
+    resources :amazon_ads, except: [:index, :show]
     member do
       post '/redirect_to_website' => 'reviews#redirect_to_website'
     end
