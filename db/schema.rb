@@ -11,10 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160821033232) do
+ActiveRecord::Schema.define(version: 20160821203217) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "amazon_ads", force: :cascade do |t|
+    t.integer  "review_id"
+    t.string   "title"
+    t.string   "link_id"
+    t.string   "asins"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "categories", force: :cascade do |t|
     t.string   "name",                     null: false

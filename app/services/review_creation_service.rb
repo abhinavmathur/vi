@@ -17,6 +17,7 @@ class ReviewCreationService
 
     review = product.reviews.create(review_params)
     review.reviewer_id = user.id
+    review.affiliate_link =  "http://www.amazon.com/dp/#{review.reviewfiable.asin}/?tag=#{review.affiliate_tag}"
     if review.save
       return ['S', 'Your review was saved successfully', review]
     else

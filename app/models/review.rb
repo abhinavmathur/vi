@@ -27,9 +27,8 @@ class Review < ActiveRecord::Base
   acts_as_commontable
   searchkick
 
-  before_save :build_affiliate_link
-
   has_many :clicks
+  has_one :amazon_ad
 
   validates_presence_of :title, :description, :tags
 
@@ -51,9 +50,9 @@ class Review < ActiveRecord::Base
     end
   end
 
-  def build_affiliate_link
+  def affiliate_link_build
     if self.has_youtube_link?
-      link = "http://www.amazon.com/dp/#{self.asin}/?tag=#{self.affiliate_tag}"
+      link = "http://www.amazon.com/dp/#{self.product.asin}/?tag=#{self.affiliate_tag}"
       self.update(affiliate_link: link)
     end
   end
