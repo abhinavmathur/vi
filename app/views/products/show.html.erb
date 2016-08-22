@@ -1,19 +1,61 @@
-<%= @product.title %>
-<br>
-
-<%= @product.asin %>
-
 <div class="row">
-  <div class="col s12 m5 offset-m3 ">
+  <div class="col s12 m6 l6">
+    <h2 class="flow-text title-imp">Product Information</h2>
+    <p>Title: <%= @product.title %></p>
+    <p><i class="material-icons">work</i><%= @product.company.titleize %></p>
+    <% unless @product.user_id.nil? %>
+        <p>Added by: <%= link_to User.find(@product.user_id).username, '#' %></p>
+    <% else %>
+        <p>Added from Amazon</p>
+        <p>ASIN: <%= @product.asin %></p>
+    <% end %>
+    <p>Tags</p>
+    <br>
+    <% @product.tags.split(',').each_with_index do |tag, index| %>
+        <% if index > 5 %>
+            <% break %>
+        <% end %>
+        <div class="chip">
+          <%= tag.to_s %>
+        </div>
+    <% end %>
+  </div>
+  <div class="col s12 m5 l5">
     <div class="image-box">
-      <% unless @product.product_images.nil? %>
-          <% @product.product_images.split(',').each do |image| %>
-              <div class="valign-wrapper">
-                <img src="<%= image.to_s %>" alt="amazon_image" class="responsive-img">
-              </div>
+      <% if @product.asin.present? %>
+          <% if @product.product_images.nil? %>
+              <img src="http://images.amazon.com/images/P/<%= @product.asin %>.01.LZZZZZZZ.jpg" alt="Amazon Image" />
+          <% else %>
+              <% @product.product_images.split(',').each do |image|%>
+                  <img src="<%= image.to_s %>" alt="Amazon Image">i
+              <% end %>
           <% end %>
+      <% else %>
+          <%= image_tag 'no.png' %>
       <% end %>
     </div>
+  </div>
+</div>
+<br>
+
+<div class="row">
+  <h2 class="flow-text">Description</h2>
+  <div class="col showmore">
+    <%= @product.description.html_safe %>
+  </div>
+</div>
+
+<div class="row">
+  <h2 class="flow-text">Related Video Reviews</h2>
+  <div class="row">
+    <% if @product.reviews.count == 0 %>
+        <p class="flow-text center">No reviews of this product yet</p>
+    <% else %>
+        <% @product.reviews.each do |review| %>
+            <%= link_to review.title, review_path(review) %>
+        <% end %>
+    <% end %>
+
   </div>
 </div>
 
