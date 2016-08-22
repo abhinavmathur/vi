@@ -15,12 +15,18 @@
 //= require toastr
 //= require rails.validations
 //= require commontator/application
-//= require underscore
 //= require materialize-tags.min
-//= require gmaps/google
+//= require show_more.min
 //= require turbolinks
 //= require_tree .
 
 $(document).ready(function() {
     $('select').material_select();
+    $('.showmore').showMore({
+        speedDown: 300,
+        speedUp: 300,
+        height: '350px',
+        showText: 'Show more',
+        hideText: 'Show less'
+    });
 });

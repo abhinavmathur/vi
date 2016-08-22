@@ -1,3 +1,5 @@
+<p>For help related to this form, see the box below</p>
+<br>
 <%= form_for Product.new, validate: true do |f| %>
     <div class="row" id="normal_form">
       <div class="input-field col s12">
@@ -9,38 +11,89 @@
     <div class="row" id="normal_form">
       <div class="input-field col s12">
         <%= f.label :title %>
-        <%= f.text_field :title, required: true %>
+        <%= f.text_field :title, data: { validation: 'required'} %>
       </div>
     </div>
 
     <div class="row" id="normal_form">
       <div class="input-field col s12">
         <%= f.label :description %>
-        <%= f.text_area :description, class: 'materialize-textarea', required: true %>
+        <%= f.text_area :description, class: 'materialize-textarea', data: { validation: 'required'} %>
       </div>
     </div>
 
     <div class="row" id="normal_form">
       <div class="input-field col s12">
         <%= f.label :company %>
-        <%= f.text_field :company, required: true %>
+        <%= f.text_field :company, data: { validation: 'required'} %>
+      </div>
+    </div>
+
+    <div class="row" id="normal_form">
+
+      <div class="input-field col s12">
+        <%= f.label :tags %>
+        <%= f.text_field :tags, data: { role: 'materialtags'}, data: { validation: 'required'}%>
       </div>
     </div>
 
     <div class="row" id="normal_form">
       <div class="input-field col s12">
-        <%= f.label :tags %>
-        <%= f.text_field :tags, required: true, data: { role: 'materialtags'}%>
+        <%= f.label :product_images %>
+        <%= f.text_area :product_images, class: 'materialize-textarea'%>
       </div>
     </div>
 
 
-    <%= f.submit 'Submit Product Description' %>
+    <button class="btn waves-effect waves-light" type="submit" name="action">Submit Product Description
+      <i class="material-icons right">send</i>
+    </button>
 <% end %>
+<br>
+<h2 class="flow-text title-imp center">Form Help</h2>
+
+<div class="row">
+  <ul class="collapsible" data-collapsible="accordion">
+    <li>
+      <div class="collapsible-header">Title</div>
+      <div class="collapsible-body"><p>Make sure the title correctly describes the name of the product.
+      Title is used by search engine to find your product</p></div>
+    </li>
+    <li>
+      <div class="collapsible-header">Description</div>
+      <div class="collapsible-body"><p>Description should be succinct and clearly describe the product.
+      There is no length restriction but you should make sure to divide the description in paragraphs</p></div>
+    </li>
+    <li>
+      <div class="collapsible-header">Company</div>
+      <div class="collapsible-body"><p>Make sure the company is relevant and it appears on google search</p></div>
+    </li>
+
+    <li>
+      <div class="collapsible-header">Tags</div>
+      <div class="collapsible-body"><p>Tags are words which describe the product. Put atleast one tag which describes your product. Maximum tags for
+      a product is 6. The rest will be ignored by search engine so make sure they are close to the product description</p></div>
+    </li>
+
+    <li>
+      <div class="collapsible-header">Product Images</div>
+      <div class="collapsible-body"><p>Put atleast 4 product images for your product. If left blank, images won't
+      be shown. Each image should be a link and should either end with .jpg or.png and separated with a comma Eg:- <br>
+        http://www.example.com/example1.jpg, http://www.example.com/example2.jpg, http://www.example.com/example1.jpg</p></div>
+    </li>
+  </ul>
+
+</div>
 
 <script type="text/javascript" charset="utf-8">
   $('#product_category_id').material_select();
   $('#product_tags').materialtags();
+  $('.collapsible').collapsible({
+    accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+  });
+  $.validate({
+    form : "#<%= action_name.to_s %>_<%= controller_name.singularize.to_s %>"
+  });
 
 </script>
 

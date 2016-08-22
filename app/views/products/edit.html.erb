@@ -1,42 +1,61 @@
-<h2 class="center flow-text">Edit form</h2>
+<h2 class="center flow-text title-imp">Edit Product Form</h2>
 <br>
-<%= form_for @product, validate: true do |f| %>
-    <div class="row" id="normal_form">
-      <div class="input-field col s12">
-        <%= f.select(:category_id, Category.select)%>
-        <%= f.label :category %>
+<div class="container">
+  <%= form_for @product, validate: true do |f| %>
+      <div class="row" id="normal_form">
+        <div class="input-field col s12">
+          <%= f.select(:category_id, Category.select) %>
+          <%= f.label :category %>
+        </div>
       </div>
-    </div>
 
-    <div class="row" id="normal_form">
-      <div class="input-field col s12">
-        <%= f.label :title %>
-        <%= f.text_field :title, required: true %>
+      <div class="row" id="normal_form">
+        <div class="input-field col s12">
+          <%= f.label :title %>
+          <%= f.text_field :title, data: { validation: 'required'} %>
+        </div>
       </div>
-    </div>
 
-    <div class="row" id="normal_form">
-      <div class="input-field col s12">
-        <%= f.label :description %>
-        <%= f.text_area :description, class: 'materialize-textarea', required: true %>
+      <div class="row" id="normal_form">
+        <div class="input-field col s12">
+          <%= f.label :description %>
+          <%= f.text_area :description, class: 'materialize-textarea', data: { validation: 'required'} %>
+        </div>
       </div>
-    </div>
 
-    <div class="row" id="normal_form">
-      <div class="input-field col s12">
-        <%= f.label :company %>
-        <%= f.text_field :company, required: true %>
+      <div class="row" id="normal_form">
+        <div class="input-field col s12">
+          <%= f.label :company %>
+          <%= f.text_field :company, data: { validation: 'required'} %>
+        </div>
       </div>
-    </div>
 
-    <div class="row" id="normal_form">
-      <div class="input-field col s12">
-        <%= f.label :tags %>
-        <%= f.text_field :tags, required: true %>
+      <div class="row" id="normal_form">
+        <div class="input-field col s12">
+          <%= f.label :tags %>
+          <%= f.text_field :tags,data: { role: 'materialtags'}, data: { validation: 'required'} %>
+        </div>
       </div>
-    </div>
+
+      <div class="row" id="normal_form">
+        <div class="input-field col s12">
+          <%= f.label :product_images %>
+          <%= f.text_field :product_images %>
+        </div>
+      </div>
 
 
+      <button class="btn waves-effect waves-light" type="submit" name="action">Submit Product Description
+        <i class="material-icons right">send</i>
+      </button>
+  <% end %>
+</div>
 
-    <%= f.submit 'Submit Product Description' %>
-<% end %>
+
+<script type="text/javascript" charset="utf-8">
+  $('#product_category_id').material_select();
+  $('#product_tags').materialtags();
+  $.validate({
+    form : "#<%= action_name.to_s %>_<%= controller_name.singularize.to_s %>"
+  });
+</script>

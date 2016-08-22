@@ -2,9 +2,17 @@
     <div class="row" id="amazon_form">
       <div class="input-field col s12">
         <%= f.label :asin, 'ASIN code from Amazon' %>
-        <%= f.text_field :asin, required: true %>
+        <%= f.text_field :asin, data: {validation: 'alphanumeric length', validation_length: 'max10'} %>
       </div>
     </div>
 
-    <%= f.submit 'Submit Amazon ASIN' %>
+    <button class="btn waves-effect waves-light" type="submit" name="action">Submit Amazon ASIN
+      <i class="material-icons right">send</i>
+    </button>
 <% end %>
+
+<script type="text/javascript" charset="utf-8">
+  $.validate({
+    form : "#<%= action_name.to_s %>_<%= controller_name.singularize.to_s %>"
+  });
+</script>
