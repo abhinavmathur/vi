@@ -7,3 +7,43 @@
 .showmore_content { position:relative; overflow:hidden; }
 .showmore_trigger { width:100%; height:45px; line-height:45px; cursor:pointer; }
 .showmore_trigger span { display:block; }
+
+.main-font {
+  font-family: 'Baloo Thambi', cursive;
+  color: #0091ea;
+  letter-spacing: 1.2px;
+  font-size: 170% !important;
+}
+.brand-logo {
+  margin-left: 10px !important;
+  margin-top: 1px;
+}
+.trending-products {
+  width: 80%;
+}
+.trending-reviews {
+  width: 90%;
+}
+.trending-product-cards {
+  margin-right: 1% !important;
+}
+
+.single-item{
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.featured-card-text {
+  max-height: 200px !important;
+  overflow-y: auto;
+}
+
+.featured-cards {
+  width: 90% !important;
+  margin-left: 3% !important;
+
+}
+
+.featured-reviews {
+  width: 95%
+}

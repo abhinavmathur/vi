@@ -44,7 +44,7 @@ class ReviewsController < ApplicationController
   end
 
   def search
-    @reviews = Review.search(params[:q].present? ? params[:q] : 'all')
+    @reviews = Review.search(params[:q].present? ? params[:q] : '*')
   end
 
   def redirect_to_website
@@ -57,7 +57,7 @@ class ReviewsController < ApplicationController
       ClickPointWorker.perform_async(@review.id, current_user.id)
       DeleteClicksWorker.perform_at(24.hours.from_now, @review.id, current_user.id)
     end
-    redirect_to 'http://www.amazon.ca'
+    redirect_to website
   end
 
   private

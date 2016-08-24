@@ -1,9 +1,100 @@
-<%= @review.title %>
+<div class="row">
+  <div class="col s12 m8 l8 review-title">
+    <h1 class="flow-text center"><%= @review.title %></h1>
 
-<%= link_to User.find(@review.reviewer_id).username, '#' %>
-<%= link_to 'Visit product website', redirect_to_website_review_path(affiliate_website: 'https://www.google.com'), method: :post, target: '_blank'%>
+    <div class="video">
+      <iframe width="854" height="480"
+              src="https://www.youtube.com/embed/<%= @review.youtube_url %>">
+      </iframe>
 
+    </div>
+    <div class="chip">
+      <%= link_to User.find(@review.reviewer_id).username, '#' %>
+    </div>
+    <%= link_to 'Visit product website', redirect_to_website_review_path(affiliate_website: @review.affiliate_link), method: :post, target: '_blank'%>
+
+    <p class="description flow-text">
+      <%= @review.description %>
+    </p>
+    <div class="related-reviews">
+      <% related_reviews =  Review.where(reviewer_id: @review.reviewer_id).where('id != ?', @review.id).all %>
+      <% if related_reviews.size == 0 %>
+          <p class="center flow-text">No other reviews by this user</p>
+      <% else  %>
+
+          <% related_reviews.take(4).each do |review| %>
+              <div class="card col s12 m6 l3" style="min-height: 270px !important">
+                <div class="card-image waves-effect waves-block waves-light">
+                  <img src="http://i3.ytimg.com/vi/<%= @review.youtube_url %>/hqdefault.jpg">
+                </div>
+                <div class="card-content">
+                  <h6><%= truncate(@review.title, length: 50) { link_to 'show more', review_path(@review)} %></h6>
+                </div>
+              </div>
+          <% end %>
+      <% end %>
+
+
+
+
+    </div>
+
+
+
+
+    <script type="text/javascript">
+      amzn_assoc_placement = "adunit0";
+      amzn_assoc_tracking_id = "raaaaj5000-20";
+      amzn_assoc_ad_mode = "manual";
+      amzn_assoc_ad_type = "smart";
+      amzn_assoc_marketplace = "amazon";
+      amzn_assoc_region = "US";
+      amzn_assoc_title = "My Amazon Picks";
+      amzn_assoc_linkid = "86b164ce94b0977a4be1dc4748d2d352";
+      amzn_assoc_asins = "1338099132,B00AP06III,059035342X,0545162076";
+    </script>
+    <script src="//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US"></script>
+
+
+
+
+
+
+
+  </div>
+
+
+  <div class="col s12 m4 l4">
+    <h1 class="flow-text center">Product Overview</h1>
+  </div>
+  <div class="product-name">
+    <h2 class="flow-text title-imp"><%= @review.reviewfiable.title %></h2>
+  </div>
+
+  <a class="modal-trigger waves-effect waves-light btn" href="#modal1">View Description</a>
+
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h4 class="title-imp"><%= @review.reviewfiable.title %></h4>
+      <p><%= @review.reviewfiable.description.html_safe %></p>
+    </div>
+    <div class="modal-footer">
+      <small>Click outside of the box to close</small>
+      <%= link_to 'View More', product_path(@review.reviewfiable), class: 'modal-action modal-close waves-effect light-blue btn-flat' %>
+    </div>
+  </div>
+
+
+
+
+
+
+</div>
 
 <div class="container">
   <%= commontator_thread(@review) %>
 </div>
+<script type="text/javascript" charset="utf-8">
+  $('.modal-trigger').leanModal();
+</script>
