@@ -31,6 +31,7 @@
 
 class User < ActiveRecord::Base
 
+  recommends :reviews, :products
   extend FriendlyId
   friendly_id :uid, use: [:slugged, :finders]
   acts_as_commontator

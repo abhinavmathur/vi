@@ -28,7 +28,11 @@ class ReviewsController < ApplicationController
   end
 
   def show
-
+    if current_user
+      unless current_user.dislikes?(@review)
+        current_user.like(@review)
+      end
+    end
   end
 
   def edit

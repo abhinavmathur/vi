@@ -9,7 +9,7 @@
 
     </div>
     <div class="chip">
-      <%= link_to User.find(@review.reviewer_id).username, '#' %>
+      <%= link_to User.find(@review.reviewer_id).username, '#' %><!--Todo 'Implement User'> -->
     </div>
     <%= link_to 'Visit product website', redirect_to_website_review_path(affiliate_website: @review.affiliate_link), method: :post, target: '_blank'%>
 
@@ -19,7 +19,7 @@
     <div class="related-reviews">
       <% related_reviews =  Review.where(reviewer_id: @review.reviewer_id).where('id != ?', @review.id).all %>
       <% if related_reviews.size == 0 %>
-          <p class="center flow-text">No other reviews by this user</p>
+          <p class="center flow-text">No other reviews by this reviewer</p>
       <% else  %>
 
           <% related_reviews.take(4).each do |review| %>
@@ -33,10 +33,6 @@
               </div>
           <% end %>
       <% end %>
-
-
-
-
     </div>
 
 
@@ -54,13 +50,6 @@
       amzn_assoc_asins = "1338099132,B00AP06III,059035342X,0545162076";
     </script>
     <script src="//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US"></script>
-
-
-
-
-
-
-
   </div>
 
 
@@ -84,9 +73,47 @@
       <%= link_to 'View More', product_path(@review.reviewfiable), class: 'modal-action modal-close waves-effect light-blue btn-flat' %>
     </div>
   </div>
+  <% product = Product.joins(:reviews).where(reviews: { id: @review.id}).first %>
 
+  <div class="center col s12 m4 l4">
+    <div class="carousel">
+      <% product.product_images.split(',').each do |image| %>
+          <img class="carousel-item" src="<%= image %>">
+      <% end %>
+    </div>
+  </div>
 
+  <% unless product.reviews.count < 1 %>
+      <div class="similar-reviews">
+        <% product.reviews.where.not(id: @review.id).each do |review| %>
+            <p><%= link_to review.title, review_path(review) %></p>
+        <% end %>
+      </div>
 
+  <% end %>
+
+  <hr>
+  <div class="row recommended-reviews">
+    <h2 class="flow-text">Recommended Reviews</h2>
+    <% if current_user %>
+        <% if current_user.recommended_reviews.count < 10 %>
+            <% reviews = Review.all.take(8) %>
+            <% reviews.each do |review| %>
+                <% link_to review.title, review_path(review) %>
+            <% end %>
+        <% else %>
+            <% reviews = current_user.recommended_reviews %>
+            <% reviews.each do |review| %>
+                <% link_to review.title, review_path(review) %>
+            <% end %>
+        <% end %>
+    <% else %>
+        <% reviews = Review.order("RANDOM()").limit(10) %>
+        <% reviews.each do |review| %>
+            <% link_to review.title,review_path(review) %>
+        <% end %>
+    <% end %>
+  </div>
 
 
 
@@ -97,4 +124,13 @@
 </div>
 <script type="text/javascript" charset="utf-8">
   $('.modal-trigger').leanModal();
+  $('.carousel').carousel();
+  $('.image-box').slick({
+    infinite: true,
+    lazyLoad: 'ondemand',
+    speed: 500,
+    arrows: true,
+    fade: true,
+    cssEase: 'linear'
+  });
 </script>
