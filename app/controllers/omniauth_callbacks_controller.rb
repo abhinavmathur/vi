@@ -10,7 +10,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @user = User.from_omniauth(auth)
     if @user.persisted?
       flash[:success] = 'You were successfully authenticated through Google'
-      @user.update_attributes(token: auth.credentials.token, refresh_token: auth.credentials.refresh_token)
+      @user.update_attributes(token: auth.credentials.token, avatar: auth.info.image, refresh_token: auth.credentials.refresh_token)
       sign_in_and_redirect @user, :event => :authentication
     else
       session["devise.google_data"] = request.env["omniauth.auth"]

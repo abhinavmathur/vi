@@ -49,6 +49,7 @@ class User < ActiveRecord::Base
       user.email = auth.info.email
       user.provider = auth.provider
       user.uid = auth.uid
+      user.avatar = auth.info.image
       user.token = auth.credentials.token
       user.refresh_token = auth.credentials.refresh_token
       user.password = Devise.friendly_token.first(12)
