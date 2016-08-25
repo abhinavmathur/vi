@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col s12 m8 l8 review-title">
+  <div class="col s12 m8 l8 review-panel">
     <h1 class="flow-text center"><%= @review.title %></h1>
 
     <div class="video">
@@ -25,10 +25,10 @@
           <% related_reviews.take(4).each do |review| %>
               <div class="card col s12 m6 l3" style="min-height: 270px !important">
                 <div class="card-image waves-effect waves-block waves-light">
-                  <img src="http://i3.ytimg.com/vi/<%= @review.youtube_url %>/hqdefault.jpg">
+                  <img src="http://i3.ytimg.com/vi/<%= review.youtube_url %>/hqdefault.jpg">
                 </div>
                 <div class="card-content">
-                  <h6><%= truncate(@review.title, length: 50) { link_to 'show more', review_path(@review)} %></h6>
+                  <h6><%= link_to truncate(review.title, length: 50), review_path(review) %></h6>
                 </div>
               </div>
           <% end %>
@@ -55,68 +55,95 @@
 
   <div class="col s12 m4 l4">
     <h1 class="flow-text center">Product Overview</h1>
-  </div>
-  <div class="product-name">
-    <h2 class="flow-text title-imp"><%= @review.reviewfiable.title %></h2>
-  </div>
 
-  <a class="modal-trigger waves-effect waves-light btn" href="#modal1">View Description</a>
-
-  <!-- Modal Structure -->
-  <div id="modal1" class="modal modal-fixed-footer">
-    <div class="modal-content">
-      <h4 class="title-imp"><%= @review.reviewfiable.title %></h4>
-      <p><%= @review.reviewfiable.description.html_safe %></p>
-    </div>
-    <div class="modal-footer">
-      <small>Click outside of the box to close</small>
-      <%= link_to 'View More', product_path(@review.reviewfiable), class: 'modal-action modal-close waves-effect light-blue btn-flat' %>
-    </div>
-  </div>
-  <% product = Product.joins(:reviews).where(reviews: { id: @review.id}).first %>
-
-  <div class="center col s12 m4 l4">
-    <div class="carousel">
-      <% product.product_images.split(',').each do |image| %>
-          <img class="carousel-item" src="<%= image %>">
-      <% end %>
-    </div>
-  </div>
-
-  <% unless product.reviews.count < 1 %>
-      <div class="similar-reviews">
-        <% product.reviews.where.not(id: @review.id).each do |review| %>
-            <p><%= link_to review.title, review_path(review) %></p>
-        <% end %>
+    <div class="row">
+      <div class="product-name col s12">
+        <h2 class="flow-text title-imp center"><%= @review.reviewfiable.title %></h2>
       </div>
+    </div>
 
-  <% end %>
+    <div class="row">
+      <div class="col s12 center">
+        <a class="modal-trigger waves-effect waves-light btn" href="#modal1">View Full Description</a>
+      </div>
+    </div>
 
-  <hr>
-  <div class="row recommended-reviews">
-    <h2 class="flow-text">Recommended Reviews</h2>
-    <% if current_user %>
-        <% if current_user.recommended_reviews.count < 10 %>
-            <% reviews = Review.all.take(8) %>
-            <% reviews.each do |review| %>
-                <% link_to review.title, review_path(review) %>
+    <% product = Product.joins(:reviews).where(reviews: { id: @review.id}).first %>
+    <% unless product.product_images.nil? %>
+        <div class="row">
+          <div class="center col s12">
+            <div class="carousel">
+
+              <% product.product_images.split(',').each do |image| %>
+                  <img class="carousel-item" src="<%= image %>">
+              <% end %>
+
+            </div>
+          </div>
+        </div>
+    <% end %>
+
+    <% if product.reviews.count > 1 %>
+        <div class="row">
+          <div class="col s12">
+            <h2 class="flow-text teal-text center">Similar Reviews</h2>
+            <ul class="collection">
+              <% product.reviews.where.not(id: @review.id).take(4).each do |review| %>
+                  <li class="collection-item avatar">
+                    <%= link_to review.title do %>
+                        <i class="material-icons circle light-blue">play_arrow</i>
+
+                    <% end %>
+                    <span class="title truncate"><%= link_to review.title, review_path(review) %></span>
+                    <div class="chip">
+                      <%= link_to User.find(review.reviewer_id).username, '#' %><!--Todo 'Implement User'> -->
+                    </div>
+                  </li>
+              <% end %>
+            </ul>
+            <% if product.reviews.count > 4 %>
+                <%= link_to 'View all reviews for this product', product_path(product) %>
+            <% end %>
+          </div>
+        </div>
+    <% end %>
+
+    <div class="row">
+      <div class="col s12 recommended-reviews">
+        <h2 class="flow-text center">Recommended Reviews</h2>
+        <% unless current_user %>
+            <% Review.all.take(10).each do |review| %>
+                <%= link_to review.title, review_path(review) %>
             <% end %>
         <% else %>
-            <% reviews = current_user.recommended_reviews %>
-            <% reviews.each do |review| %>
-                <% link_to review.title, review_path(review) %>
+            <% if current_user.recommended_reviews.count < 10 %>
+                <% Review.all.take(10).each do |review| %>
+                    <%= link_to review.title, review_path(review) %>
+                <% end %>
+            <% else %>
+                <%  current_user.recommended_reviews.each do |review| %>
+                    <%= link_to review.title, review_path(review) %>
+                <% end %>
             <% end %>
         <% end %>
-    <% else %>
-        <% reviews = Review.order("RANDOM()").limit(10) %>
-        <% reviews.each do |review| %>
-            <% link_to review.title,review_path(review) %>
-        <% end %>
-    <% end %>
+      </div>
+    </div>
+
+
+
   </div>
+</div>
 
-
-
+<!-- Modal Structure -->
+<div id="modal1" class="modal modal-fixed-footer">
+  <div class="modal-content">
+    <h4 class="title-imp"><%= @review.reviewfiable.title %></h4>
+    <p><%= @review.reviewfiable.description.html_safe %></p>
+  </div>
+  <div class="modal-footer">
+    <small>Click outside of the box to close</small>
+    <%= link_to 'View More', product_path(@review.reviewfiable), class: 'modal-action modal-close waves-effect light-blue btn-flat' %>
+  </div>
 </div>
 
 <div class="container">
@@ -125,12 +152,4 @@
 <script type="text/javascript" charset="utf-8">
   $('.modal-trigger').leanModal();
   $('.carousel').carousel();
-  $('.image-box').slick({
-    infinite: true,
-    lazyLoad: 'ondemand',
-    speed: 500,
-    arrows: true,
-    fade: true,
-    cssEase: 'linear'
-  });
 </script>
