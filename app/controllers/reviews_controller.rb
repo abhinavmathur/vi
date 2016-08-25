@@ -56,18 +56,18 @@ class ReviewsController < ApplicationController
       flash[:error] = 'Affiliate website link not found'
       redirect_to review_path(@review)
     end
-    website = params[:affiliate_website]
+
     unless Click.exists?(review_id: @review.id, user_id: current_user.id)
       ClickPointWorker.perform_async(@review.id, current_user.id)
-      DeleteClicksWorker.perform_at(24.hours.from_now, @review.id, current_user.id)
+      DeleteClicksWorker.perform_at(12.hours.from_now, @review.id, current_user.id)
     end
-    redirect_to website
+    redirect_to params[:affiliate_website]
   end
 
   private
   def review_params
-    params.require(:review).permit(:title, :description, :youtube_url, :other_video_url, :affiliate_tag,
-                                   :affiliate_link, :has_youtube_link, :publish, :tags)
+    params.require(:review).permit(:title, :description, :youtube_url, :affiliate_tag,
+                                   :affiliate_link,  :publish, :tags)
   end
 
   def set_review

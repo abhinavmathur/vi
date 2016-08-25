@@ -15,6 +15,7 @@
 #  updated_at     :datetime         not null
 #  product_images :text
 #  sub_category   :string
+#  user_id        :integer
 #
 
 class Product < ActiveRecord::Base

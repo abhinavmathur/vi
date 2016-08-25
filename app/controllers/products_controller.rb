@@ -56,8 +56,8 @@ class ProductsController < ApplicationController
   end
 
   def review_params
-    params.require(:review).permit(:title, :description, :youtube_url, :other_video_url, :affiliate_tag,
-                                   :affiliate_link, :has_youtube_link, :publish)
+    params.require(:review).permit(:title, :description, :youtube_url, :affiliate_tag,
+                                   :affiliate_link, :publish)
   end
 
 

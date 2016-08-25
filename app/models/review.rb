@@ -7,10 +7,8 @@
 #  description       :text
 #  tags              :string
 #  youtube_url       :string
-#  other_video_url   :string
 #  affiliate_tag     :string
 #  affiliate_link    :string
-#  has_youtube_link  :boolean          default(FALSE)
 #  reviewfiable_id   :integer
 #  reviewfiable_type :string
 #  publish           :boolean
@@ -44,6 +42,9 @@ class Review < ActiveRecord::Base
       owner = Yt::ContentOwner.new refresh_token: user.refresh_token, token: user.token
       video = Yt::Video.new id: video_id, auth: owner
       video.file_size
+      unless video.public? || video.embeddable?
+        return false
+      end
       return true
     rescue
       return false

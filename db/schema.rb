@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160821234643) do
+ActiveRecord::Schema.define(version: 20160825024217) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -147,16 +147,14 @@ ActiveRecord::Schema.define(version: 20160821234643) do
     t.text     "description"
     t.string   "tags"
     t.string   "youtube_url"
-    t.string   "other_video_url"
     t.string   "affiliate_tag"
     t.string   "affiliate_link"
-    t.boolean  "has_youtube_link",  default: false
     t.integer  "reviewfiable_id"
     t.string   "reviewfiable_type"
     t.boolean  "publish"
     t.string   "slug"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
     t.integer  "reviewer_id"
   end
 

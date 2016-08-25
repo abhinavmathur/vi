@@ -33,15 +33,18 @@
 
     <div class="row">
       <div class="input-field col s12">
-        <%= f.text_field :other_video_url, placeholder: 'http://',data: { validation: 'url', validation_error_msg: 'Must be a valid video link', suggestion: 'Should start with http or https'} %>
-        <%= f.label :other_video_url, 'Video Link' %>
+        <%= f.text_field :youtube_url, placeholder: 'http://',
+                         data: { validation: 'length',
+                                 validation_length: '11-11',
+                                 :validation_error_msg => 'Must be a 11 character YouTube ID'} %>
+        <%= f.label :youtube_url, 'YouTube Video ID' %>
       </div>
     </div>
 
     <div class="row">
       <div class="input-field col s12">
         <%= f.text_field :affiliate_link %>
-        <%= f.label :affiliate_link, 'Your affiliate link goes here',placeholder: 'http://', data: { validation: 'url', error: 'Must be a valid link', suggestion: 'Should start with http or https'} %>
+        <%= f.label :affiliate_link, 'Your affiliate link goes here', placeholder: 'http://', data: { validation: 'url', error: 'Must be a valid link', suggestion: 'Should start with http or https'} %>
       </div>
     </div>
 
@@ -56,6 +59,7 @@
   $.validate({
     form : "#<%= action_name.to_s %>_<%= controller_name.singularize.to_s %>"
   });
+  $('#review_tags').materialtags();
   function getURLParameter(name) {
     return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
   }

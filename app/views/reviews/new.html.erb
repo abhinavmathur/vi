@@ -2,8 +2,8 @@
   <div class="input-field col s12">
     <select name="choose-form" required>
       <option value="" disabled selected>Choose your option</option>
-        <option value="1">Review with YouTube video</option>
-        <option value="2">Review with other platform video</option>
+      <option value="1">Review with Amazon Affiliates Program</option>
+      <option value="2">Review with a website link</option>
     </select>
     <label>Choose the type of review</label>
   </div>
@@ -32,7 +32,7 @@
   $('select').material_select();
   if(/[?&]product_id=/.test(location.search))
   {}
-    else
+  else
   {
     window.location.href = '/products/new';
     toastr.warning('You need to search for a product first to make a review');
