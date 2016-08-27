@@ -1,7 +1,4 @@
-<%= form_for [@review, @amazon_ad] do |f| %>
-    <%= f.text_field :title, placeholder: 'Title' %>
-    <br>
-    <%= f.text_field :asins, placeholder: 'ASINS' %>
-    <%= f.text_field :link_id, placeholder: 'Link ID' %>
-    <%= f.submit %>
-<% end %>
+<div class="container">
+  <h2 class="flow-text title-imp">Edit Amazon Ad form</h2>
+  <%= render 'amazon_ads/form' %>
+</div>

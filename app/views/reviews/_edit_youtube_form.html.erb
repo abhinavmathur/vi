@@ -1,0 +1,58 @@
+<%= form_for @review do |f| %>
+    <div class="row">
+      <div class="input-field col s12">
+        <%= f.text_field :title, data: { validation: 'required'}  %>
+        <%= f.label :title %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <%= f.text_area :description, class: 'materialize-textarea', data: { validation: 'required'} %>
+        <%= f.label :description %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <%= f.text_field :tags, data: { validation: 'required'} %>
+        <%= f.label :tags %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <%= f.text_field :youtube_url, data: { validation: 'length', validation_length: '11-11',
+                                               :validation_error_msg => 'Must be a 11 character YouTube ID'} %>
+        <%= f.label :youtube_url, 'YouTube video ID' %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <%= f.select(:reviewgroup_id, Reviewgroup.select(current_user), include_blank: 'Select a saved group') %>
+        <%= f.label 'Select Review group' %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <%= f.text_field :affiliate_tag, data: { validation: 'custom',
+                                                 validation_regexp: '[a-zA-Z0-9]-20$',
+                                                 validation_error_msg: 'Should be a valid Amazon affiliate tag ending with -20'}  %>
+        <%= f.label :affiliate_tag, 'Your Amazon Affiliate Tag goes here' %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <%= f.submit 'Save Review' %>
+      </div>
+    </div>
+<% end %>
+
+<script type="text/javascript" charset="utf-8">
+  $.validate({
+    form : '.edit_review'
+  });
+</script>

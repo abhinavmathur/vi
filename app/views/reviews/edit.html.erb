@@ -1,0 +1,8 @@
+<div class="container">
+  <% if @review.has_amazon_product? %>
+      <%= render 'reviews/edit_youtube_form' %>
+  <% else %>
+      <h1>Normal form</h1>
+      <%= render 'reviews/edit_normal_form' %>
+  <% end %>
+</div>

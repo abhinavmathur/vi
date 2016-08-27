@@ -26,11 +26,27 @@ class ReviewCreationService
 
   end
 
+  def update_review!(updated_review)
+    #prevent api request from happening again
+    unless updated_review.youtube_url == params[:review][:youtube_url].to_s
+      unless Review.youtube_video_belongs_to_user?(user, params[:review][:youtube_url])
+        return ['E', 'The YouTube video ID is either invalid/private/non-embeddable or does not belong to you', updated_review]
+      end
+    end
+
+    if updated_review.update(review_params)
+      updated_review.update(slug: params[:review][:title].to_s)
+      return ['S', 'Your review was updated successfully', updated_review]
+    else
+      return ['E', 'Your review was not updated', updated_review]
+    end
+  end
+
 
 
   private
   def review_params
     params.require(:review).permit(:title, :description, :youtube_url,  :affiliate_tag,
-                                   :affiliate_link, :publish, :tags)
+                                   :affiliate_link, :publish, :tags, :reviewgroup_id)
   end
 end

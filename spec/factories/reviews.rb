@@ -16,6 +16,7 @@
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  reviewer_id       :integer
+#  reviewgroup_id    :integer
 #
 
 FactoryGirl.define do

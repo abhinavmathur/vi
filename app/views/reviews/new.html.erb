@@ -30,6 +30,7 @@
 
 <script type="text/javascript" charset="utf-8">
   $('select').material_select();
+  <% unless action_name == :edit %>
   if(/[?&]product_id=/.test(location.search))
   {}
   else
@@ -37,4 +38,5 @@
     window.location.href = '/products/new';
     toastr.warning('You need to search for a product first to make a review');
   }
+  <% end %>
 </script>

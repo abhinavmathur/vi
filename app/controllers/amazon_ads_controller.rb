@@ -1,5 +1,6 @@
 class AmazonAdsController < ApplicationController
 
+  before_action :authenticate_user!
   before_action :set_review
   before_action :set_amazon_ad, only: [:edit, :update, :destroy]
 

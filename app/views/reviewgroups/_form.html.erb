@@ -1,0 +1,32 @@
+<%= form_for [@user, @reviewgroup] do |f| %>
+    <div class="row">
+      <div class="input-field col s12">
+        <%= f.text_field :title %>
+        <%= f.label :title %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <%= f.text_field :short_description %>
+        <%= f.label :short_description %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <%= f.select(:category_id, Category.select)%>
+        <%= f.label :category %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <%= f.submit %>
+      </div>
+    </div>
+<% end %>
+
+<script type="text/javascript" charset="utf-8">
+  $('#reviewgroup_category_id').material_select();
+</script>

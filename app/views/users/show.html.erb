@@ -1,0 +1,4 @@
+<%= @user.username %>
+<% if user_signed_in? %>
+<%= link_to 'Create a Review group', new_user_reviewgroup_path(current_user), class: 'btn' %>
+<% end %>

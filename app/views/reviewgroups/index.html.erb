@@ -1,0 +1,6 @@
+<% @reviewgroups.each do |reviewgroup| %>
+    <p><%= reviewgroup.title %></p>
+    <small><%= reviewgroup.short_description %></small>
+    <%= link_to 'Edit', edit_user_reviewgroup_path(current_user, reviewgroup) %>
+    <%= link_to 'Delete', user_reviewgroup_path(current_user, reviewgroup), method: :delete %>
+<% end %>

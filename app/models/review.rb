@@ -16,6 +16,7 @@
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  reviewer_id       :integer
+#  reviewgroup_id    :integer
 #
 
 class Review < ActiveRecord::Base
@@ -35,6 +36,10 @@ class Review < ActiveRecord::Base
         :title,
         [:title, :id],
     ]
+  end
+
+  def has_amazon_product?
+    affiliate_tag.present?
   end
 
   def self.youtube_video_belongs_to_user?(user, video_id)

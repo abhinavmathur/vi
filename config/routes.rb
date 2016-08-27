@@ -7,8 +7,12 @@ Rails.application.routes.draw do
       post '/redirect_to_website' => 'reviews#redirect_to_website'
     end
   end
+
   resources :products, except: [:index, :destroy]
   devise_for :users, :controllers => { :omniauth_callbacks => 'omniauth_callbacks' }
+  resources :users, only: :show do
+    resources :reviewgroups, except: :show
+  end
   root 'app#index'
 
   resources :places, except: :index

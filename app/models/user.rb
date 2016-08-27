@@ -34,6 +34,7 @@ class User < ActiveRecord::Base
   recommends :reviews, :products
   extend FriendlyId
   friendly_id :uid, use: [:slugged, :finders]
+  has_many :reviewgroups
   acts_as_commontator
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

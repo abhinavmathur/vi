@@ -1,3 +1,4 @@
+<% user = User.find(@review.reviewer_id) %>
 <div class="row">
   <div class="col s12 m8 l8 review-panel">
     <h1 class="flow-text center"><%= @review.title %></h1>
@@ -9,13 +10,14 @@
 
     </div>
     <div class="chip">
-      <%= link_to User.find(@review.reviewer_id).username, '#' %><!--Todo 'Implement User'> -->
-    </div>
-    <%= link_to 'Visit product website', redirect_to_website_review_path(affiliate_website: @review.affiliate_link), method: :post, target: '_blank'%>
 
-    <p class="description flow-text">
-      <%= @review.description %>
-    </p>
+      <%= link_to user.username, user_path(user) %>
+    </div>
+    <%= link_to 'Visit product website',  redirect_to_website_review_path(affiliate_website: @review.affiliate_link), class: 'link-website', method: :post, target: '_blank'%>
+
+    <%= simple_format(SimpleText.new(@review.description, @review).get_text, class: 'flow-text') %>
+
+
     <div class="related-reviews">
       <% related_reviews =  Review.where(reviewer_id: @review.reviewer_id).where('id != ?', @review.id).all %>
       <% if related_reviews.size == 0 %>
@@ -96,7 +98,7 @@
                     <% end %>
                     <span class="title truncate"><%= link_to review.title, review_path(review) %></span>
                     <div class="chip">
-                      <%= link_to User.find(review.reviewer_id).username, '#' %><!--Todo 'Implement User'> -->
+                      <%= link_to user.username, user_path(user) %>
                     </div>
                   </li>
               <% end %>
@@ -152,4 +154,19 @@
 <script type="text/javascript" charset="utf-8">
   $('.modal-trigger').leanModal();
   $('.carousel').carousel();
+  $('.external_link').click(function (e) {
+    e.preventDefault();
+    $.ajax({
+      url: 'http://localhost:3000/reviews/<%= @review.slug %>/redirect_to_website',
+      type: 'POST',
+      data: { affiliate_website: "<%= @review.affiliate_link %>"},
+      success: function () {
+        window.open('<%= @review.affiliate_link %>', 'New Window' )
+      },
+      error: function () {
+        alert('There was a problem with the link. Please try again')
+      }
+    });
+
+  })
 </script>

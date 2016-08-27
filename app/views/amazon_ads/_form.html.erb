@@ -1,0 +1,28 @@
+<%= form_for [@review, @amazon_ad] do |f| %>
+    <div class="row">
+      <div class="input-field col s12">
+        <%= f.text_field :link_id %>
+        <%= f.label :link_id %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <%= f.text_field :title %>
+        <%= f.label :title %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <%= f.text_field :asins %>
+        <%= f.label :asins %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <%= f.submit %>
+      </div>
+    </div>
+<% end %>

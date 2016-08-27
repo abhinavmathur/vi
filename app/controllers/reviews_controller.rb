@@ -40,7 +40,15 @@ class ReviewsController < ApplicationController
   end
 
   def update
-
+    product_from_params = params[:product_id].to_i
+    error_symbol, message, obj = ReviewCreationService.new(params, current_user, product_from_params).update_review!(@review)
+    if error_symbol == 'S'
+      flash[:notice] = message.to_s
+      redirect_to review_path(obj) and return
+    else
+      flash[:error] = message.to_s
+      redirect_to edit_review_path(obj)
+    end
   end
 
   def destroy
@@ -52,22 +60,30 @@ class ReviewsController < ApplicationController
   end
 
   def redirect_to_website
-    unless params[:affiliate_website].present?
-      flash[:error] = 'Affiliate website link not found'
-      redirect_to review_path(@review)
-    end
-
     unless Click.exists?(review_id: @review.id, user_id: current_user.id)
       ClickPointWorker.perform_async(@review.id, current_user.id)
       DeleteClicksWorker.perform_at(12.hours.from_now, @review.id, current_user.id)
     end
-    redirect_to params[:affiliate_website]
+    respond_to do |format|
+      format.html {
+        unless params[:affiliate_website].present?
+          flash[:error] = 'Affiliate website link not found'
+          redirect_to review_path(@review)
+        end
+
+        redirect_to params[:affiliate_website]
+      }
+      format.js {
+        redirect_to @review.affiliate_link
+      }
+    end
+
   end
 
   private
   def review_params
     params.require(:review).permit(:title, :description, :youtube_url, :affiliate_tag,
-                                   :affiliate_link,  :publish, :tags)
+                                   :affiliate_link,  :publish, :tags, :reviewgroup_id)
   end
 
   def set_review
