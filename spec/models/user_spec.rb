@@ -27,6 +27,10 @@
 #  stripe_id              :string
 #  admin                  :boolean          default(FALSE)
 #  manager                :boolean          default(FALSE)
+#  card_last4             :string
+#  card_exp_month         :string
+#  card_exp_year          :string
+#  card_brand             :string
 #
 
 require 'rails_helper'

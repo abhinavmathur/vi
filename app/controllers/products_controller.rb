@@ -39,6 +39,16 @@ class ProductsController < ApplicationController
   end
 
   def update
+    if params[:product][:product_images].present?
+      params[:product][:product_images].to_s.split(',').each do |image|
+        mime = File.extname(image)
+        unless permitted_mimes.include?(mime)
+          params[:product].delete(:product_images)
+          flash[:error] = 'Images supplied did not match the permitted mime types. Links should end with .jpg or .png'
+          redirect_to edit_product_path(@product) and return
+        end
+      end
+    end
     if @product.update(product_params)
       flash[:notice] = 'Product was updated successfully'
       redirect_to product_path(@product)
@@ -52,12 +62,16 @@ class ProductsController < ApplicationController
 
   private
   def product_params
-    params.require(:product).permit(:title, :description, :category, :company, :tags)
+    params.require(:product).permit(:title, :description, :category, :company, :tags, :product_images)
   end
 
   def review_params
     params.require(:review).permit(:title, :description, :youtube_url, :affiliate_tag,
                                    :affiliate_link, :publish)
+  end
+
+  def permitted_mimes
+    ['.jpg', '.png', '.jpeg']
   end
 
 

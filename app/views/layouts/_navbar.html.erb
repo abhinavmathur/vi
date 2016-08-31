@@ -3,15 +3,13 @@
     <a href="/" class="brand-logo"><span class="brand-logo main-font logo">Vivieu</span></a>
     <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 
-    <ul class="right hide-on-med-and-down buttons">
-      <li>
-        <div class="hide-on-med-and-down" style=" width: 500px !important">
-          <%= form_tag search_reviews_path, method: :get do %>
-              <%= text_field_tag :q, params[:q], placeholder: 'Search Reviews' %>
-          <% end %>
-        </div>
-      </li>
+    <ul class="right hide-on-large-only">
+      <li><i class="material-icons search-icon left" style="cursor: pointer;">search</i></li>
+    </ul>
 
+
+    <ul class="right hide-on-med-and-down buttons">
+      <li><i class="material-icons search-icon left" style="cursor: crosshair;">search</i></li>
       <% if user_signed_in? %>
           <li class="bold-text"><a href="#">Welcome <%= current_user.username %> !</a></li>
           <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
@@ -29,3 +27,35 @@
     </ul>
   </div>
 </nav>
+<div class="nav-search" style="display:none">
+  <nav>
+    <div class="nav-wrapper white">
+      <form action="/search" accept-charset="UTF-8" method="get">
+        <div class="input-field">
+          <input name="utf8" type="hidden" value="&#x2713;" />
+          <input id="search" name="q" id="q" type="search" required>
+          <label for="search"><i class="material-icons" style="color: black">search</i></label>
+          <i class="material-icons close-button" style="color: black">close</i>
+        </div>
+      </form>
+    </div>
+  </nav>
+</div>
+<script type="text/javascript" charset="utf-8">
+  $(".search-icon").click(function() {
+    $(".nav-search").fadeToggle();
+  });
+  $('.close-button').click(function() {
+    if ($('#search').val() == "") {
+      $(".nav-search").slideUp();
+    } else {
+      $('#search').val('')
+    }
+  });
+  document.onkeydown = function(evt) {
+    evt = evt || window.event;
+    if (evt.keyCode == 27) {
+      $(".nav-search").slideUp();
+    }
+  };
+</script>

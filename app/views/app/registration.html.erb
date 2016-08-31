@@ -1,0 +1,69 @@
+<div class="container">
+  <div class="row">
+    <div class="col s6">
+      <%= form_tag cards_path, method: :post, :id=> 'payment-form' do %>
+                  <span class="payment-errors">
+                  </span>
+
+          <div class="row">
+            <div class="input-field col s12">
+              <input value="4242424242424242" id="card-number" type="number"
+                     class="validate" data-stripe="number" placeholder="Card Number">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="input-field col s4">
+              <input value="123" type="number" size="3" data-stripe="cvc" placeholder="CVC" data-validation="cvv"/>
+            </div>
+            <div class="input-field col s4">
+              <input  type="number" size="2" data-stripe="exp-month" placeholder="Month"/>
+            </div>
+            <div class="input-field col s4">
+              <input value="123" type="number" size="4" data-stripe="exp-year" placeholder="Year"/>
+            </div>
+          </div>
+
+          <button type="submit" class="btn waves-effect">Join Vivieu !</button>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+  $(function() {
+    var $form = $('#payment-form');
+    $form.submit(function(event) {
+      // Disable the submit button to prevent repeated clicks:
+      $form.find('.submit').prop('disabled', true);
+      $form.find('button').text('Creating your account... ');
+
+      // Request a token from Stripe:
+      Stripe.card.createToken($form, stripeResponseHandler);
+
+      // Prevent the form from being submitted:
+      return false;
+    });
+  });
+  function stripeResponseHandler(status, response) {
+    var $form = $('#payment-form');
+
+    if (response.error) {
+      // Show the errors on the form
+      $form.find('.payment-errors').text(response.error.message);
+      $form.find('button').prop('disabled', false);
+      $form.find('button').text('Try again !');
+    } else {
+      // response contains id and card, which contains additional card details
+      var token = response.id;
+      // Insert the token into the form so it gets submitted to the server
+      $form.append($('<input type="hidden" name="stripeToken" />').val(token));
+      $form.append($('<input type="hidden" name="card_last4" />').val(response.card.last4));
+      $form.append($('<input type="hidden" name="card_exp_month" />').val(response.card.exp_month));
+      $form.append($('<input type="hidden" name="card_exp_year" />').val(response.card.exp_year));
+      $form.append($('<input type="hidden" name="card_type" />').val(response.card.brand));
+      // and submit
+      $form.get(0).submit();
+    }
+  };
+</script>

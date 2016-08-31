@@ -25,6 +25,7 @@ class Review < ActiveRecord::Base
   belongs_to :reviewfiable, polymorphic: true
   acts_as_commontable
   searchkick
+  visitable
 
   has_many :clicks
   has_one :amazon_ad

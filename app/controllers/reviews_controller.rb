@@ -1,7 +1,7 @@
 class ReviewsController < ApplicationController
 
   before_action :authenticate_user!, except: :show
-  before_action :set_review, except: [:new, :create, :search]
+  before_action :set_review, except: [:new, :create]
 
   def new
     @review = Review.new
@@ -28,6 +28,7 @@ class ReviewsController < ApplicationController
   end
 
   def show
+    ahoy.track 'Viewed review', id: @review.id
     if current_user
       unless current_user.dislikes?(@review)
         current_user.like(@review)
@@ -53,10 +54,6 @@ class ReviewsController < ApplicationController
 
   def destroy
 
-  end
-
-  def search
-    @reviews = Review.search(params[:q].present? ? params[:q] : '*')
   end
 
   def redirect_to_website

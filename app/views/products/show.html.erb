@@ -20,21 +20,29 @@
         </div>
     <% end %>
   </div>
-  <div class="col s12 m5 l5">
-    <div class="image-box">
-      <% if @product.asin.present? %>
-          <% if @product.product_images.nil? %>
-              <img src="http://images.amazon.com/images/P/<%= @product.asin %>.01.LZZZZZZZ.jpg" alt="Amazon Image" />
+  <% unless @product.product_images.length < 1 %>
+      <div class="col s12 m5 l5">
+        <div class="image-box">
+          <% if @product.asin.present? %>
+              <% if @product.product_images.nil? %>
+                  <img src="http://images.amazon.com/images/P/<%= @product.asin %>.01.LZZZZZZZ.jpg" alt="Amazon Image" />
+              <% else %>
+                  <% @product.product_images.split(',').each do |image|%>
+                      <img src="<%= image.to_s %>" alt="<%= @product.title %> from amazon">i
+                  <% end %>
+              <% end %>
           <% else %>
               <% @product.product_images.split(',').each do |image|%>
-                  <img src="<%= image.to_s %>" alt="Amazon Image">i
+                  <img src="<%= image.to_s %>" alt="<%= @product.title %>">
               <% end %>
           <% end %>
+        </div>
+      </div>
       <% else %>
-          <%= image_tag 'no.png' %>
-      <% end %>
-    </div>
+  <div class="col s12 m5 l5">
+    <%= image_tag('no.png', alt: 'No image supplied for this product') %>
   </div>
+  <% end %>
 </div>
 <br>
 

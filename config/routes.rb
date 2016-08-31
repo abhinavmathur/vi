@@ -1,12 +1,13 @@
 Rails.application.routes.draw do
   mount Commontator::Engine => '/commontator'
   resources :reviews, except: :index do
-    get '/search', to: 'reviews#search', as: :search, on: :collection
     resources :amazon_ads, except: [:index, :show]
     member do
       post '/redirect_to_website' => 'reviews#redirect_to_website'
     end
   end
+
+  resource :cards, only: [:create, :update]
 
   resources :products, except: [:index, :destroy]
   devise_for :users, :controllers => { :omniauth_callbacks => 'omniauth_callbacks' }
@@ -14,6 +15,9 @@ Rails.application.routes.draw do
     resources :reviewgroups, except: :show
   end
   root 'app#index'
+  get '/pricing' => 'app#pricing', as: :pricing
+  get '/registration' => 'app#registration'
+  get '/search', to: 'app#search', as: :search
 
   resources :places, except: :index
   resources :categories, only: :index

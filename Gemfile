@@ -86,3 +86,5 @@ gem 'sinatra', :require => false
 gem 'acts-as-taggable-on', '~> 4.0'
 gem 'commontator', '~> 4.11.1'
 gem 'cocoon'
+gem 'stripe'
+gem 'ahoy_matey'
