@@ -19,6 +19,10 @@ Rails.application.routes.draw do
   get '/registration' => 'app#registration'
   get '/search', to: 'app#search', as: :search
 
+  namespace :reviewer do
+    root 'dashboard#index'
+  end
+
   resources :places, except: :index
   resources :categories, only: :index
 

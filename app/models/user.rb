@@ -31,6 +31,7 @@
 #  card_exp_month         :string
 #  card_exp_year          :string
 #  card_brand             :string
+#  google_plus            :string
 #
 
 class User < ActiveRecord::Base
@@ -58,6 +59,7 @@ class User < ActiveRecord::Base
       user.token = auth.credentials.token
       user.refresh_token = auth.credentials.refresh_token
       user.password = Devise.friendly_token.first(12)
+      user.google_plus = auth.extra.raw_info.profile
       user.save!
     end
   end
