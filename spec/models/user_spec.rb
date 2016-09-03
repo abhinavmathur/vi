@@ -31,6 +31,7 @@
 #  card_exp_month         :string
 #  card_exp_year          :string
 #  card_brand             :string
+#  google_plus            :string
 #
 
 require 'rails_helper'

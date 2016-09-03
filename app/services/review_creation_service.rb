@@ -35,7 +35,6 @@ class ReviewCreationService
     end
 
     if updated_review.update(review_params)
-      updated_review.update(slug: params[:review][:title].to_s)
       return ['S', 'Your review was updated successfully', updated_review]
     else
       return ['E', 'Your review was not updated', updated_review]

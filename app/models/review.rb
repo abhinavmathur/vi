@@ -17,15 +17,21 @@
 #  updated_at        :datetime         not null
 #  reviewer_id       :integer
 #  reviewgroup_id    :integer
+#  visit_id          :integer
 #
 
 class Review < ActiveRecord::Base
   extend FriendlyId
-  friendly_id :slug_candidates, use: [:slugged, :finders]
+  friendly_id :title, use: [:slugged, :finders]
   belongs_to :reviewfiable, polymorphic: true
   acts_as_commontable
   searchkick
   visitable
+
+
+  def should_generate_new_friendly_id?
+    title_changed?
+  end
 
   has_many :clicks
   has_one :amazon_ad

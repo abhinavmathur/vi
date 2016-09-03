@@ -127,3 +127,28 @@ def create
       redirect_to new_review_path(product_id: product_id)
     end
   end
+
+
+  ==================
+  AJAX POST
+  ++++++++++++++++++
+
+
+  $('.external_link').click(function (e) {
+      e.preventDefault();
+      <% if user_signed_in? %>
+      $.ajax({
+        url: 'http://localhost:3000/reviews/<%= @review.slug %>/redirect_to_website',
+        type: 'POST',
+        data: { affiliate_website: "<%= @review.affiliate_link %>"},
+        success: function () {
+          window.open('<%= @review.affiliate_link %>', 'newPage' )
+        },
+        error: function (e) {
+          alert('There was a problem with the link. Please contact the reviewer to fix it')
+        }
+      });
+      <% else %>
+      $('#modal2').openModal();
+      <% end %>
+    });

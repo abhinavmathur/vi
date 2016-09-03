@@ -1,0 +1,2 @@
+module Reviewer::DashboardHelper
+end
