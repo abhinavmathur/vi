@@ -61,21 +61,15 @@ class ReviewsController < ApplicationController
       ClickPointWorker.perform_async(@review.id, current_user.id)
       DeleteClicksWorker.perform_at(12.hours.from_now, @review.id, current_user.id)
     end
-    respond_to do |format|
-      format.html {
-        unless params[:affiliate_website].present?
-          flash[:error] = 'Affiliate website link not found'
-          redirect_to review_path(@review)
-        end
 
-        redirect_to params[:affiliate_website]
-      }
-      format.js {
-        redirect_to @review.affiliate_link
-      }
+    unless params[:affiliate_website].present?
+      flash[:error] = 'Affiliate website link not found'
+      redirect_to review_path(@review)
     end
-
+    redirect_to params[:affiliate_website]
   end
+
+
 
   private
   def review_params
