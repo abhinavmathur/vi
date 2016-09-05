@@ -4,4 +4,25 @@
     m.async=1;m.src=("file:"==location.protocol?"https:":"")+"//s.reembed.com/G-1qdjWn.js";
     b.parentNode.insertBefore(m,b)})("reEmbed","script",window,document,"api");
     $(".button-collapse").sideNav();
+
+    /*SCRIPT TO CONTROL THE SEARCHBAR*/
+
+    $(".search-icon").click(function() {
+      $(".nav-search").fadeToggle();
+    });
+    $('.close-button').click(function() {
+      if ($('#search').val() == "") {
+        $(".nav-search").slideUp();
+      } else {
+        $('#search').val('')
+      }
+    });
+    document.onkeydown = function(evt) {
+      evt = evt || window.event;
+      if (evt.keyCode == 27) {
+        $(".nav-search").slideUp();
+      }
+    };
+
+
 </script>

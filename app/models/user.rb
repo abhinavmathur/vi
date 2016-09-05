@@ -32,6 +32,7 @@
 #  card_exp_year          :string
 #  card_brand             :string
 #  google_plus            :string
+#  reviewer               :boolean          default(FALSE)
 #
 
 class User < ActiveRecord::Base
