@@ -23,6 +23,17 @@ class Product < ActiveRecord::Base
   extend FriendlyId
   friendly_id :slug_candidates, use: [:slugged, :finders]
 
+
+  searchkick
+
+  def search_data
+    {
+        title: title,
+        description: description,
+        tags: tags,
+    }
+  end
+
   has_many :reviews, as: :reviewfiable
 
   validates :title, :description, :company, :tags, presence: true

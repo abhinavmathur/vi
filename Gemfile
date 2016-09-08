@@ -88,3 +88,6 @@ gem 'commontator', '~> 4.11.1'
 gem 'cocoon'
 gem 'stripe'
 gem 'ahoy_matey'
+gem 'searchjoy'
+gem 'jquery-slick-rails'
+

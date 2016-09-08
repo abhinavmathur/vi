@@ -11,7 +11,8 @@
     <ul class="right hide-on-med-and-down buttons">
       <li><i class="material-icons search-icon left" style="cursor: crosshair;">search</i></li>
       <% if user_signed_in? %>
-          <li class="bold-text"><a href="#">Welcome <%= Geocoder.search('173.230.179.216').first.country_code %> !</a></li>
+          <li><%= image_tag(current_user.avatar, class: 'avatar-image') %></li>
+          <li class="bold-text"><a href="#">Welcome <%= current_user.username %> !</a></li>
           <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
           <li><a href="badges.html" class="waves-effect"><i class="material-icons right">cloud_upload</i>Upload a review</a></li>
       <% else %>
@@ -27,7 +28,7 @@
     </ul>
   </div>
 </nav>
-<div class="nav-search" style="display:none">
+<div class="nav-search" style="display:none; z-index: 9999">
   <nav>
     <div class="nav-wrapper white">
       <form action="/search" accept-charset="UTF-8" method="get">

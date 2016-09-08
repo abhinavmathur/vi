@@ -28,7 +28,7 @@
                   <img src="http://images.amazon.com/images/P/<%= @product.asin %>.01.LZZZZZZZ.jpg" alt="Amazon Image" />
               <% else %>
                   <% @product.product_images.split(',').each do |image|%>
-                      <img src="<%= image.to_s %>" alt="<%= @product.title %> from amazon">i
+                      <img src="<%= image.to_s %>" alt="<%= @product.title %> from amazon">
                   <% end %>
               <% end %>
           <% else %>
@@ -38,10 +38,10 @@
           <% end %>
         </div>
       </div>
-      <% else %>
-  <div class="col s12 m5 l5">
-    <%= image_tag('no.png', alt: 'No image supplied for this product') %>
-  </div>
+  <% else %>
+      <div class="col s12 m5 l5">
+        <%= image_tag('no.png', alt: 'No image supplied for this product') %>
+      </div>
   <% end %>
 </div>
 <br>
@@ -69,13 +69,17 @@
 
 
 <script type="text/javascript" charset="utf-8">
-  $('.image-box').slick({
-    infinite: true,
-    lazyLoad: 'ondemand',
-    speed: 500,
-    arrows: true,
-    autoplay: true,
-    fade: true,
-    cssEase: 'linear'
+  $(document).on('turbolinks:load', function(){
+    $('.image-box').slick({
+      infinite: true,
+      lazyLoad: 'ondemand',
+      speed: 500,
+      arrows: true,
+      autoplay: true,
+      fade: true,
+      cssEase: 'linear',
+      adaptiveHeight: true
+    });
   });
+
 </script>

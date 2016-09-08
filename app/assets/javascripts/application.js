@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require ahoy
 //= require toastr
+//= require jquery.slick
 //= require rails.validations
 //= require commontator/application
 //= require materialize-tags.min

@@ -28,33 +28,43 @@
       <% else  %>
 
           <% related_reviews.take(4).each do |review| %>
-              <div class="card col s12 m6 l3" style="min-height: 270px !important">
-                <div class="card-image waves-effect waves-block waves-light">
-                  <img src="http://i3.ytimg.com/vi/<%= review.youtube_url %>/hqdefault.jpg">
-                </div>
-                <div class="card-content">
-                  <h6><%= link_to truncate(review.title, length: 50), review_path(review) %></h6>
+
+
+              <div class="col s10 m6 l3">
+                <div class="card" style="min-height: 270px !important;">
+                  <div class="card-image">
+                    <img src="http://i3.ytimg.com/vi/<%= review.youtube_url %>/hqdefault.jpg">
+                  </div>
+                  <div class="card-content">
+                    <h6><%= link_to truncate(review.title, length: 50), review_path(review) %></h6>
+                    <div class="chip">
+                      <img src="<%= user.avatar %>" alt="Reviewer picture">
+                      <small class="truncate"><%= user.username %></small>
+                    </div>
+                  </div>
                 </div>
               </div>
+
+
           <% end %>
       <% end %>
     </div>
 
-
-
-
-    <script type="text/javascript">
-      amzn_assoc_placement = "adunit0";
-      amzn_assoc_tracking_id = "raaaaj5000-20";
-      amzn_assoc_ad_mode = "manual";
-      amzn_assoc_ad_type = "smart";
-      amzn_assoc_marketplace = "amazon";
-      amzn_assoc_region = "US";
-      amzn_assoc_title = "My Amazon Picks";
-      amzn_assoc_linkid = "86b164ce94b0977a4be1dc4748d2d352";
-      amzn_assoc_asins = "1338099132,B00AP06III,059035342X,0545162076";
-    </script>
-    <script src="//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US"></script>
+    <% if @review.amazon_ad.present? %>
+        <script type="text/javascript">
+          amzn_assoc_placement = "adunit0";
+          amzn_assoc_search_bar = "false";
+          amzn_assoc_tracking_id = "<%= @review.affiliate_tag %>";
+          amzn_assoc_ad_mode = "manual";
+          amzn_assoc_ad_type = "smart";
+          amzn_assoc_marketplace = "amazon";
+          amzn_assoc_region = "US";
+          amzn_assoc_title = "<%= @review.amazon_ad.title %>";
+          amzn_assoc_asins = "<%= @review.amazon_ad.asins %>";
+          amzn_assoc_linkid = "<%= @review.amazon_ad.link_id %>";
+        </script>
+        <script src="//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US"></script>
+    <% end %>
   </div>
 
 
@@ -118,16 +128,16 @@
         <h2 class="flow-text center">Recommended Reviews</h2>
         <% unless current_user %>
             <% Review.all.take(10).each do |review| %>
-                <%= link_to review.title, review_path(review) %>
+                <%= render partial: 'reviews/partials/recommended_reviews', locals: { review: review, user: user } %>
             <% end %>
         <% else %>
             <% if current_user.recommended_reviews.count < 10 %>
                 <% Review.all.take(10).each do |review| %>
-                    <%= link_to review.title, review_path(review) %>
+                    <%= render partial: 'reviews/partials/recommended_reviews', locals: { review: review, user: user } %>
                 <% end %>
             <% else %>
                 <%  current_user.recommended_reviews.each do |review| %>
-                    <%= link_to review.title, review_path(review) %>
+                    <%= render partial: 'reviews/partials/recommended_reviews', locals: { review: review, user: user } %>
                 <% end %>
             <% end %>
         <% end %>

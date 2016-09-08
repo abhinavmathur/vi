@@ -1,3 +1,19 @@
-<% @reviews.each do |review| %>
-    <%= link_to truncate(review.title, length: 25), review_path(review) %>
+<% @all_results.each do |result| %>
+    <% if result.class.to_s == 'Review' %>
+        <%= link_to truncate(result.title, length: 40),  review_path(result), id: 'search_result', data: { obj: result.class.to_s, id: result.id}%>
+    <% else %>
+        <%= link_to truncate(result.title, length: 40),  product_path(result), id: 'search_result', data: { obj: result.class.to_s, id: result.id}%>
+    <% end %>
 <% end %>
+
+
+<script type="text/javascript" charset="utf-8">
+$('#search_result').click(function(e){
+  e.preventDefault();
+  $.ajax({
+    type: 'POST',
+    url: '/search_joy',
+    data: { obj: $(this).data('obj'), query: '<%= params[:q] %>', results_count: '<%= @all_results.total_count %>', id: $(this).data('id')}
+  });
+})
+</script>

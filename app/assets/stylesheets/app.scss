@@ -3,6 +3,8 @@
   font-weight: 500;
 }
 
+
+/*Rules for show more feature*/
 .showmore { line-height:18px; }
 .showmore_content { position:relative; overflow:hidden; }
 .showmore_trigger { width:100%; height:45px; line-height:45px; cursor:pointer; }
@@ -50,4 +52,24 @@
 
 nav .nav-wrapper form, nav .nav-wrapper form .input-field{
   height: 100%;
+}
+
+.slick-prev:before {
+  color: black !important;
+  font-size: 25px !important;
+  margin-right: 10px !important;
+}
+
+
+.slick-next:before {
+  color: black !important;
+  font-size: 25px !important;
+}
+
+/*Main page CSS*/
+.avatar-image {
+  width: 50px;
+  height: 50px;
+  margin-top: 7px;
+  border: 1px solid white;
 }

@@ -25,8 +25,17 @@ class Review < ActiveRecord::Base
   friendly_id :title, use: [:slugged, :finders]
   belongs_to :reviewfiable, polymorphic: true
   acts_as_commontable
-  searchkick
   visitable
+
+  searchkick
+
+  def search_data
+    {
+        title: title,
+        description: description,
+        tags: tags,
+    }
+  end
 
 
   def should_generate_new_friendly_id?

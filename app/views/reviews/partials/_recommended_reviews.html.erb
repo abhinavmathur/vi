@@ -1,0 +1,27 @@
+<div class="col s12">
+  <%= link_to review_path(review) do %>
+      <div class="card-panel recommended-reviews grey lighten-5 z-depth-1 hoverable">
+        <div class="row valign-wrapper">
+          <div class="col s4">
+            <img src="http://i3.ytimg.com/vi/<%= review.youtube_url %>/hqdefault.jpg" alt="" class="responsive-img ">
+          </div>
+          <div class="col s8">
+              <span class="black-text truncate">
+                <%= review.title %>
+              </span>
+            <div class="chip">
+              <img src="<%= user.avatar %>" alt="Reviewer picture">
+              <%= user.username %>
+            </div>
+          </div>
+        </div>
+      </div>
+  <% end %>
+</div>
+
+<style>
+  .recommended-reviews {
+    padding-top: 8px !important;
+    padding-bottom: 1px !important;
+  }
+</style>

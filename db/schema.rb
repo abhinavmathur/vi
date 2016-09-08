@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160905171235) do
+ActiveRecord::Schema.define(version: 20160905175546) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -188,6 +188,23 @@ ActiveRecord::Schema.define(version: 20160905171235) do
   add_index "reviews", ["reviewer_id"], name: "index_reviews_on_reviewer_id", using: :btree
   add_index "reviews", ["reviewfiable_id", "reviewfiable_type"], name: "index_reviews_on_reviewfiable_id_and_reviewfiable_type", using: :btree
   add_index "reviews", ["title"], name: "index_reviews_on_title", using: :btree
+
+  create_table "searchjoy_searches", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "search_type"
+    t.string   "query"
+    t.string   "normalized_query"
+    t.integer  "results_count"
+    t.datetime "created_at"
+    t.integer  "convertable_id"
+    t.string   "convertable_type"
+    t.datetime "converted_at"
+  end
+
+  add_index "searchjoy_searches", ["convertable_id", "convertable_type"], name: "index_searchjoy_searches_on_convertable_id_and_convertable_type", using: :btree
+  add_index "searchjoy_searches", ["created_at"], name: "index_searchjoy_searches_on_created_at", using: :btree
+  add_index "searchjoy_searches", ["search_type", "created_at"], name: "index_searchjoy_searches_on_search_type_and_created_at", using: :btree
+  add_index "searchjoy_searches", ["search_type", "normalized_query", "created_at"], name: "index_searchjoy_searches_on_search_type_and_normalized_query_an", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "username",               default: ""

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   mount Commontator::Engine => '/commontator'
+
+
   resources :reviews, except: :index do
     resources :amazon_ads, except: [:index, :show]
     member do
@@ -18,18 +20,24 @@ Rails.application.routes.draw do
   get '/pricing' => 'app#pricing', as: :pricing
   get '/registration' => 'app#registration'
   get '/search', to: 'app#search', as: :search
+  post '/search_joy', to: 'app#search_joy'
 
-  namespace :reviewer do
-    root 'dashboard#index'
-  end
+
 
   resources :places, except: :index
   resources :categories, only: :index
+
+  authenticate :user, lambda { |u| u.reviewer? } do
+    namespace :reviewer do
+      root 'dashboard#index'
+    end
+  end
 
   authenticate :user, lambda { |u| u.admin? } do
     require 'sidekiq/web'
     Sidekiq::Web.set :session_secret, Rails.application.secrets[:secret_token]
     Sidekiq::Web.set :sessions, Rails.application.config.session_options
+    mount Searchjoy::Engine, at: 'admin/searchjoy'
     mount Sidekiq::Web => '/sidekiq'
     namespace :admin do
       root 'dashboard#index'
