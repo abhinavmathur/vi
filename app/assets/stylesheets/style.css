@@ -1,0 +1,34 @@
+.breadcrumbs-review {
+    padding-top: 10px !important;
+    background-color: #FFC736;
+}
+
+.title-review {
+    padding-top: 15px !important;
+    padding-bottom: 25px !important;
+
+
+    background: #FF8008; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #FF8008 , #FFC837); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #FF8008 , #FFC837); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+.reviewer-image-review {
+    width: 80px;
+    height: 80px;
+    margin-top: 25px;
+    border: 2px solid white;
+    border-radius: 50px;
+}
+
+.blur {
+    box-shadow: 0 0 10px .1px;
+    background-color: #ffffff;
+    border-radius: 2px;
+    overflow: auto;
+}
+
+body {
+    background-color: #F1F1F1;
+}

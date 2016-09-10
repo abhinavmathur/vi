@@ -4,6 +4,25 @@
   We have made sure that the ads are not intrusive or annoying in any way. <br>
   Please consider supporting us by disabling your ad blocker.
 </div>
+
+<% require 'amazon/ecs' %>
+<% links =  Amazon::Ecs.similarity_lookup("0974514055") %>
+<% links.items.each do |item| %>
+
+    <%= item.get('ASIN') %>
+    <%=item.get('ItemAttributes/Title') %>
+<% end %>
+
+
+
+
+
+
+
+
+
+
+
 <% products = Product.order('created_at DESC') %>
 
 <% products.each do |product| %>

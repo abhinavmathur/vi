@@ -67,9 +67,11 @@ class ReviewsController < ApplicationController
       redirect_to review_path(@review)
     end
     if cookies[:convertable_id].present?
-      search = Searchjoy::Search.find cookies[:convertable_id]
-      search.convert
-      cookies.delete(:convertable_id)
+      begin
+        search = Searchjoy::Search.find cookies[:convertable_id]
+        search.convert
+        cookies.delete(:convertable_id)
+      end
     end
     redirect_to params[:affiliate_website]
   end
