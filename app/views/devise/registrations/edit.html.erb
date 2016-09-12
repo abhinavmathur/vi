@@ -1,27 +1,74 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<div class="container">
+  <div class="row">
+    <div class="col s12">
+      <h2>Edit</h2>
 
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= f.error_notification %>
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+          <div class="row">
+            <div class="input-field col s12">
+              <%= f.text_field :username, data: { validation: 'required'} %>
+              <%= f.label :username %>
+            </div>
+          </div>
 
-  <div class="form-inputs">
-    <%= f.input :email, required: true, autofocus: true %>
+          <div class="row">
+            <div class="input-field col s12">
+              <%= f.email_field :email, data: { validation: 'required'} %>
+              <%= f.label :email %>
+            </div>
+          </div>
 
-    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-      <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
-    <% end %>
+          <div class="row">
+            <div class="input-field col s12">
+              <%= f.label 'Describe about yourself and/or your channel' %>
+              <%= f.text_area :description, class: 'materialize-textarea' %>
+            </div>
+          </div>
 
-    <%= f.input :password, autocomplete: "off", hint: "leave it blank if you don't want to change it", required: false %>
-    <%= f.input :password_confirmation, required: false %>
-    <%= f.input :current_password, hint: "we need your current password to confirm your changes", required: true %>
+          <div class="row">
+            <div class="input-field col s12">
+              <%= f.country_select(:country_code, priority_countries: %w(US CA IN GB DE IT BR FR ES MX CN JP AU NL)) %>
+              <%= f.label 'Select your country' %>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="input-field col s12">
+              <p>ONLY AMAZON AFFILIATES - Choose the countries whose affiliate programs you have registered</p>
+              <%= f.text_field :affiliate_countries %>
+            </div>
+          </div>
+          <div><%= f.submit "Sign up" %></div>
+      <% end %>
+    </div>
   </div>
+</div>
+<script type="text/javascript" charset="utf-8">
+  $.validate({
+    form : "#edit_user"
+  });
+  var citynames = new Bloodhound({
+    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    prefetch: {
+      /*Todo change to vivieu in production*/
+      url: 'http://localhost:3000/assets/affiliate_countries.json',
+      filter: function(list) {
+        return $.map(list, function(cityname) {
+          return { name: cityname };
+        });
+      }
+    }
+  });
 
-  <div class="form-actions">
-    <%= f.button :submit, "Update" %>
-  </div>
-<% end %>
+  citynames.initialize();
 
-<h3>Cancel my account</h3>
-
-<p>Unhappy? <%= link_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
-
-<%= link_to "Back", :back %>
+  $('#user_affiliate_countries').materialtags({
+    typeaheadjs: {
+      name: 'affiliate_countries',
+      displayKey: 'name',
+      valueKey: 'name',
+      source: citynames.ttAdapter()
+    }
+  });
+</script>

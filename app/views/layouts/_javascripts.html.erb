@@ -1,28 +1,41 @@
 <script type="text/javascript" charset="utf-8">
-    (function(r,e,E,m,b){E[r]=E[r]||{};E[r][b]=E[r][b]||function(){
+  (function(r,e,E,m,b){E[r]=E[r]||{};E[r][b]=E[r][b]||function(){
         (E[r].q=E[r].q||[]).push(arguments)};b=m.getElementsByTagName(e)[0];m=m.createElement(e);
     m.async=1;m.src=("file:"==location.protocol?"https:":"")+"//s.reembed.com/G-1qdjWn.js";
     b.parentNode.insertBefore(m,b)})("reEmbed","script",window,document,"api");
-    $(".button-collapse").sideNav();
+  $(".button-collapse").sideNav();
 
-    /*SCRIPT TO CONTROL THE SEARCHBAR*/
+  /*SCRIPT TO CONTROL THE SEARCHBAR*/
 
-    $(".search-icon").click(function() {
-      $(".nav-search").fadeToggle();
-    });
-    $('.close-button').click(function() {
-      if ($('#search').val() == "") {
-        $(".nav-search").slideUp();
-      } else {
-        $('#search').val('')
-      }
-    });
-    document.onkeydown = function(evt) {
-      evt = evt || window.event;
-      if (evt.keyCode == 27) {
-        $(".nav-search").slideUp();
-      }
-    };
+  $(".search-icon").click(function() {
+    $(".nav-search").fadeToggle();
+  });
+  $('.close-button').click(function() {
+    if ($('#search').val() == "") {
+      $(".nav-search").slideUp();
+    } else {
+      $('#search').val('')
+    }
+  });
+  document.onkeydown = function(evt) {
+    evt = evt || window.event;
+    if (evt.keyCode == 27) {
+      $(".nav-search").slideUp();
+    }
+  };
 
-
+  /*This function checks whether a user has country_code field in the database and then updates it */
+  <% if user_signed_in? %>
+    <% if current_user.country_code.nil? %>
+      $.ajax({
+        method: 'POST',
+        url: '/set_country',
+        /*Todo: change value to request.location.country_code*/
+        data: { country_code: "<%= Geocoder.search("200.79.231.170").first.country_code %>"},
+        error: function(){
+          console.log('Country NOT set')
+        }
+    })
+    <% end %>
+  <% end %>
 </script>

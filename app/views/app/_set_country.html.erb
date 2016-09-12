@@ -1,0 +1,17 @@
+<div id="modal-country" class="modal">
+  <div class="modal-content">
+    <h4 class="center flow-text">Country confirmation</h4>
+    <!--Todo Change to request.location.country -->
+    <p>Hey <%= current_user.username %> ! We just wanted to confirm your country as it helps us to show you
+    the right website. Currently, your country is set to <%= Geocoder.search("200.79.231.170").first.country %>.You can
+    change your country by visiting the Settings Tab or by clicking the settings link below</p>
+  </div>
+  <div class="modal-footer">
+    <%= link_to 'Settings', edit_user_registration_path,
+                class: 'modal-action modal-close waves-effect waves-green btn right' %>
+    <%= link_to '!#',
+                class: 'modal-action modal-close btn-floating red left' do %>
+        <i class="material-icons">close</i>
+    <% end %>
+  </div>
+</div>

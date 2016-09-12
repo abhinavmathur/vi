@@ -33,6 +33,8 @@
 #  card_brand             :string
 #  google_plus            :string
 #  reviewer               :boolean          default(FALSE)
+#  country_code           :string
+#  affiliate_countries    :string
 #
 
 FactoryGirl.define do

@@ -16,6 +16,7 @@
 //= require toastr
 //= require jquery.slick
 //= require rails.validations
+//= require twitter/typeahead.min
 //= require commontator/application
 //= require materialize-tags.min
 //= require show_more.min

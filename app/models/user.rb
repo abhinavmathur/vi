@@ -33,6 +33,8 @@
 #  card_brand             :string
 #  google_plus            :string
 #  reviewer               :boolean          default(FALSE)
+#  country_code           :string
+#  affiliate_countries    :string
 #
 
 class User < ActiveRecord::Base
@@ -42,11 +44,13 @@ class User < ActiveRecord::Base
   friendly_id :uid, use: [:slugged, :finders]
   has_many :reviewgroups
   acts_as_commontator
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable,
   :omniauth_providers => [:google_oauth2]
+
+  validates :username, :email, presence: true, uniqueness: true
+
 
 
 
@@ -63,5 +67,9 @@ class User < ActiveRecord::Base
       user.google_plus = auth.extra.raw_info.profile
       user.save!
     end
+  end
+
+  def self.country_name(country_code)
+    ISO3166::Country[country_code].name || nil
   end
 end

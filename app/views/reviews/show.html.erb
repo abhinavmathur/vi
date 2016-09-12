@@ -97,7 +97,9 @@
         <div class="row">
           <div class="col s12">
             <% if product.asin.present? %>
-                <img src="http://images.amazon.com/images/P/<%= product.asin %>.01.MZZZZZZZ.jpg" alt="">
+                <img src="http://images.amazon.com/images/P/<%= product.asin %>.01.LZZZZZZZ.jpg"
+                     class="materialboxed responsive-img"
+                     alt="image for <%= product.title %>" data-caption="<%= product.title %>">
             <% elsif product.product_images.present? %>
                 <% first_image = product.product_images.split(',').first %>
                 <img src="<%= first_image %>" alt="<%= product %> image">

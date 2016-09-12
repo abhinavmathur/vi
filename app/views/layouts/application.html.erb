@@ -35,5 +35,8 @@
   <%= yield %>
 </div>
 <%= render 'layouts/javascripts' %>
+<% if current_user && current_user.country_code.nil? %>
+    <%= render 'app/set_country' %>
+<% end %>
 </body>
 </html>

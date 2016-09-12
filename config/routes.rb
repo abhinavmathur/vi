@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   mount Commontator::Engine => '/commontator'
-
+  devise_for :users, :controllers => { :omniauth_callbacks => 'omniauth_callbacks', registrations: 'registrations' }
 
   resources :reviews, except: :index do
     resources :amazon_ads, except: [:index, :show]
@@ -12,15 +12,16 @@ Rails.application.routes.draw do
   resource :cards, only: [:create, :update]
 
   resources :products, except: [:index, :destroy]
-  devise_for :users, :controllers => { :omniauth_callbacks => 'omniauth_callbacks' }
   resources :users, only: :show do
     resources :reviewgroups, except: :show
   end
   root 'app#index'
   get '/pricing' => 'app#pricing', as: :pricing
-  get '/registration' => 'app#registration'
+  get '/register' => 'app#register'
   get '/search', to: 'app#search', as: :search
   post '/search_joy', to: 'app#search_joy'
+  post '/set_country' => 'app#set_country'
+
 
 
 
