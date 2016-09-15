@@ -3,7 +3,7 @@
 
 </script>
 
-<%= form_for Review.new do |f| %>
+<%= form_for Review.new, validate: :review_validators do |f| %>
 
     <script>$("input[name='product_id']").val(getURLParameter('product_id'));</script>
     <input type="hidden" name="product_id" value="">
@@ -11,24 +11,14 @@
 
     <div class="row">
       <div class="input-field col s12">
-        <%= f.text_field :title, data: { validation: 'required'}  %>
+        <%= f.text_field :title %>
         <%= f.label :title %>
       </div>
-    </div>
+      <div class="title-error">
 
-    <div class="row">
-      <div class="input-field col s12">
-        <%= f.text_area :description, class: 'materialize-textarea', data: { validation: 'required'} %>
-        <%= f.label :description %>
       </div>
     </div>
 
-    <div class="row">
-      <div class="input-field col s12">
-        <%= f.text_field :tags, data: { validation: 'required'} %>
-        <%= f.label :tags %>
-      </div>
-    </div>
 
     <div class="row">
       <div class="input-field col s12">
@@ -37,20 +27,24 @@
       </div>
     </div>
 
+
     <div class="row">
       <div class="input-field col s12">
-        <%= f.text_field :youtube_url, data: { validation: 'length', validation_length: '11-11',
-         :validation_error_msg => 'Must be a 11 character YouTube ID'} %>
-        <%= f.label :youtube_url, 'YouTube video ID' %>
+        <%= f.text_field :youtube_url %>
+        <%= f.label :youtube_url, 'YouTube Video ID' %>
+      </div>
+      <div class="youtube-error">
+
       </div>
     </div>
 
     <div class="row">
       <div class="input-field col s12">
-        <%= f.text_field :affiliate_tag, data: { validation: 'custom',
-                                                                  validation_regexp: '[a-zA-Z0-9]-20$',
-        validation_error_msg: 'Should be a valid Amazon affiliate tag ending with -20'}  %>
+        <%= f.text_field :affiliate_tag %>
         <%= f.label :affiliate_tag, 'Your Amazon Affiliate Tag goes here' %>
+      </div>
+      <div class="affiliate-error">
+
       </div>
     </div>
 
@@ -61,9 +55,6 @@
     </div>
 <% end %>
 
-<script type="text/javascript" charset="utf-8">
-  $('#review_reviewgroup_id').material_select();
-  $.validate({
-    form : '#new_review'
-  });
-</script>
+<%= yield(:review_validators) %>
+
+<%= render 'javascripts/reviews/youtube_form' %>

@@ -1,0 +1,9 @@
+<% unless @error.blank? %>
+if(!$(".affiliate-error").children().length > 0)
+{
+  $(".affiliate-error").append('<span class="help-block form-error">That affiliate tag is being used by another user</span>');
+}
+else{
+  $('.affiliate-error').empty();
+}
+<% end %>

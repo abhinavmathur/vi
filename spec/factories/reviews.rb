@@ -18,6 +18,7 @@
 #  reviewer_id       :integer
 #  reviewgroup_id    :integer
 #  visit_id          :integer
+#  target_countries  :string
 #
 
 FactoryGirl.define do

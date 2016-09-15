@@ -52,8 +52,6 @@ class User < ActiveRecord::Base
   validates :username, :email, presence: true, uniqueness: true
 
 
-
-
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.username = auth.info.email.to_s.split('@')[0].to_s

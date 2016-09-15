@@ -41,8 +41,8 @@ class GeoLink
   end
 
   def simple_link
-    if $country_suffix.key? @country_code
-      "#{STARTING_LINK}#{$country_suffix[@country_code]}"
+    if $country_suffix.key? @country_code.to_sym
+      "#{STARTING_LINK}#{$country_suffix[@country_code.to_sym]}"
     else
       "#{STARTING_LINK}.com"
     end
@@ -67,17 +67,16 @@ class GeoLink
       return 'CN'
     elsif country_name == 'Japan'
       return 'JP'
+    else
+      ISO3166::Country.find_country_by_name(country_name).gec || 'US'
     end
-    ISO3166::Country.find_country_by_name(country_name).gec || 'US'
   end
 
   private
   def suffix_code(review)
     user_affiliate_countries = User.find_by(id: review.reviewer_id).affiliate_countries.to_s.split(',')
     user_affiliate_countries.each do |country|
-      puts country
       user_country_code = GeoLink.get_country_code(country)
-      puts user_country_code
       if user_country_code == @country_code
         return $country_hash[@country_code.to_sym]
       end

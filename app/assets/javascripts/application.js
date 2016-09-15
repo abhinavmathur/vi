@@ -18,6 +18,7 @@
 //= require rails.validations
 //= require twitter/typeahead.min
 //= require commontator/application
+//= require sisyphus.min
 //= require materialize-tags.min
 //= require show_more.min
 //= require turbolinks

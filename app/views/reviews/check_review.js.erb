@@ -1,0 +1,21 @@
+
+if(!$(".<%= @error %>").children().length > 0)
+{
+  $(".title-error").append('<span class="help-block form-error">That title is already in use</span>');
+
+}
+else if(!$(".youtube-id-error").children().length > 0)
+{
+  $('.youtube-id-error').append('<span class="help-block form-error">That YouTube ID is already in use</span>');
+}
+else if(!$(".affiliate-tag-error").children().length > 0)
+{
+  $('.affiliate-tag-error').append('<span class="help-block form-error">That affiliate tag is being used by another user</span>');
+
+}
+else {
+
+
+}
+
+

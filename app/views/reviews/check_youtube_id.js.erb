@@ -1,0 +1,8 @@
+<% unless @error == '' %>
+if(!$(".youtube-id-error").children().length > 0)
+{
+  $('.youtube-id-error').append('<span class="help-block form-error">That YouTube ID is already in use</span>');
+}
+<% else %>
+$('.error-box').empty();
+<% end %>

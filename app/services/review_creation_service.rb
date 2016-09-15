@@ -19,9 +19,9 @@ class ReviewCreationService
       review.affiliate_link =  "http://www.amazon.com/dp/#{review.reviewfiable.asin}/?tag=#{review.affiliate_tag}"
     end
     if review.save
-      return ['S', 'Your review was saved successfully', review]
+      return ['S', 'Your review was saved successfully !', review]
     else
-      return ['E', 'Your review was not created', review]
+      return ['E', review.errors.full_messages.to_sentence, review]
     end
 
   end

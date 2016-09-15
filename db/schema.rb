@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160910183823) do
+ActiveRecord::Schema.define(version: 20160912013418) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -183,6 +183,7 @@ ActiveRecord::Schema.define(version: 20160910183823) do
     t.integer  "reviewer_id"
     t.integer  "reviewgroup_id"
     t.integer  "visit_id"
+    t.string   "target_countries"
   end
 
   add_index "reviews", ["reviewer_id"], name: "index_reviews_on_reviewer_id", using: :btree

@@ -18,6 +18,7 @@
 #  reviewer_id       :integer
 #  reviewgroup_id    :integer
 #  visit_id          :integer
+#  target_countries  :string
 #
 
 class Review < ActiveRecord::Base
@@ -27,6 +28,7 @@ class Review < ActiveRecord::Base
   acts_as_commontable
   visitable
 
+  validates_uniqueness_of :youtube_url, message: ' is already in use'
   searchkick
 
   def search_data

@@ -1,7 +1,7 @@
 class ReviewsController < ApplicationController
 
   before_action :authenticate_user!, except: :show
-  before_action :set_review, except: [:new, :create]
+  before_action :set_review, except: [:new, :create, :check_title, :check_youtube_id, :check_affiliate_tag]
 
   def new
     @review = Review.new
@@ -55,6 +55,18 @@ class ReviewsController < ApplicationController
   def destroy
 
   end
+
+  def check_affiliate_tag
+    affiliate_tag = params[:affiliate_tag]
+    reviews = Review.all.map
+    reviews.each do |review|
+      if review.reviewer_id == current_user.id
+        @error = 'affiliate-error' and return
+      end
+    end
+  end
+
+
 
   def redirect_to_website
     unless Click.exists?(review_id: @review.id, user_id: current_user.id)

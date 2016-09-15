@@ -92,4 +92,4 @@ gem 'searchjoy'
 gem 'jquery-slick-rails'
 gem 'country_select'
 gem 'twitter-typeahead-rails', :git => "git://github.com/yourabi/twitter-typeahead-rails.git"
-gem 'countries'
+gem 'countries', :require => 'countries/global'

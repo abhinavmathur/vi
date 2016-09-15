@@ -1,0 +1,8 @@
+<% unless @error == '' %>
+if(!$(".title-error").children().length > 0)
+{
+  $(".title-error").append('<span class="help-block form-error">That title is already in use</span>');
+}
+<% else %>
+$('.title-error').empty();
+<% end %>
