@@ -11,7 +11,7 @@ class CreateReviews < ActiveRecord::Migration
       t.boolean :has_youtube_link, default: false
       t.integer :reviewfiable_id
       t.string :reviewfiable_type
-      t.boolean :publish
+      t.boolean :publish, default: false
       t.string :slug
 
 

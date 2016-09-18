@@ -11,7 +11,7 @@
 #  affiliate_link    :string
 #  reviewfiable_id   :integer
 #  reviewfiable_type :string
-#  publish           :boolean
+#  publish           :boolean          default(FALSE)
 #  slug              :string
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
@@ -28,7 +28,12 @@ class Review < ActiveRecord::Base
   acts_as_commontable
   visitable
 
-  validates_uniqueness_of :youtube_url, message: ' is already in use'
+  has_many :clicks
+  has_one :amazon_ad
+
+  validates_presence_of :title
+  #Todo uncomment this line
+  #validates_uniqueness_of :youtube_url, message: ' is already in use'
   searchkick
 
   def search_data
@@ -44,10 +49,6 @@ class Review < ActiveRecord::Base
     title_changed?
   end
 
-  has_many :clicks
-  has_one :amazon_ad
-
-  validates_presence_of :title, :description, :tags
 
   def slug_candidates
     [

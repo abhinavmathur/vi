@@ -9,9 +9,20 @@
 
 <div class="container">
   <div class="row">
-    <div class="col s12">
+    <div class="col s3">
       <%= link_to new_review_amazon_ad_path(@review), class: 'btn waves-effect waves-light' do %>
-          Create a native Ad<i class="material-icons right">send</i>
+          Create an ad<i class="material-icons right">send</i>
+      <% end %>
+    </div>
+    <div class="col s3">
+      <% if @review.publish? %>
+          <%= link_to publish_review_review_path(@review), class: 'btn red waves-effect waves-light', method: :put do %>
+              Unpublish<i class="material-icons right">remove_circle</i>
+          <% end %>
+      <% else %>
+          <%= link_to publish_review_review_path(@review), class: 'btn waves-effect waves-light', method: :put do %>
+              Publish<i class="material-icons right">publish</i>
+          <% end %>
       <% end %>
     </div>
   </div>

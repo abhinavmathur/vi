@@ -5,9 +5,12 @@ class ProductsController < ApplicationController
 
   def new
     @product = Product.new
+    authorize @product, :create?
   end
 
   def create
+    product = Product.new
+    authorize product, :create?
     unless params[:product][:asin].nil?
       result, result_item = Product.from_amazon(params[:product][:asin])
       if result == 'notice'
@@ -31,7 +34,7 @@ class ProductsController < ApplicationController
   end
 
   def edit
-
+  authorize @product, :update?
   end
 
   def show
@@ -39,6 +42,7 @@ class ProductsController < ApplicationController
   end
 
   def update
+    authorize @product, :update?
     if params[:product][:product_images].present?
       params[:product][:product_images].to_s.split(',').each do |image|
         mime = File.extname(image)
@@ -56,6 +60,10 @@ class ProductsController < ApplicationController
       flash[:error] = 'Something went wrong. Please check the form'
       render :edit
     end
+  end
+
+  def destroy
+    authorize @product, :destroy?
   end
 
 

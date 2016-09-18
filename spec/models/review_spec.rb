@@ -11,7 +11,7 @@
 #  affiliate_link    :string
 #  reviewfiable_id   :integer
 #  reviewfiable_type :string
-#  publish           :boolean
+#  publish           :boolean          default(FALSE)
 #  slug              :string
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null

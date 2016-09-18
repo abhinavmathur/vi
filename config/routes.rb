@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     resources :amazon_ads, except: [:index, :show]
     member do
       post '/redirect_to_website' => 'reviews#redirect_to_website'
+      put '/publish_review' => 'reviews#publish_review'
     end
   end
 

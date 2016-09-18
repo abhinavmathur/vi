@@ -20,4 +20,10 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+ pundit:
+   default: 'You cannot perform this action.'
+   review_policy:
+     update?: 'You dont have sufficient rights to perform this action'
+     create?: 'You need to register as a reviewer to create reviews'
+     destroy?: 'You dont have sufficient rights to perform this action'
+     show?: 'The review which you are trying to view is not online yet'

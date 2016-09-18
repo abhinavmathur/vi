@@ -3,7 +3,7 @@
 
 </script>
 
-<%= form_for Review.new, validate: :review_validators do |f| %>
+<%= form_for Review.new do |f| %>
 
     <script>$("input[name='product_id']").val(getURLParameter('product_id'));</script>
     <input type="hidden" name="product_id" value="">
@@ -13,9 +13,6 @@
       <div class="input-field col s12">
         <%= f.text_field :title %>
         <%= f.label :title %>
-      </div>
-      <div class="title-error">
-
       </div>
     </div>
 
@@ -33,18 +30,12 @@
         <%= f.text_field :youtube_url %>
         <%= f.label :youtube_url, 'YouTube Video ID' %>
       </div>
-      <div class="youtube-error">
-
-      </div>
     </div>
 
     <div class="row">
       <div class="input-field col s12">
         <%= f.text_field :affiliate_tag %>
         <%= f.label :affiliate_tag, 'Your Amazon Affiliate Tag goes here' %>
-      </div>
-      <div class="affiliate-error">
-
       </div>
     </div>
 
@@ -54,7 +45,5 @@
       </div>
     </div>
 <% end %>
-
-<%= yield(:review_validators) %>
 
 <%= render 'javascripts/reviews/youtube_form' %>

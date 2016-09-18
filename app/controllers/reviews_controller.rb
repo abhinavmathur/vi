@@ -5,22 +5,26 @@ class ReviewsController < ApplicationController
 
   def new
     @review = Review.new
+    authorize @review, :create?
   end
 
   def create
+    authorize Review.new, :create?
     @product
+    #Code block checks for validity of the product id supplied from params
     product_id = params[:product_id].to_i
-
     if Product.exists?(id: product_id)
       @product = Product.find_by(id: product_id)
     else
       flash[:error] = 'Wrong product ID supplied'
       redirect_to root_path
     end
+
+    #create Review from ReviewCreationService service. Code 'S' means passed.
     error_symbol, message, obj = ReviewCreationService.new(params, current_user, @product).create_review!
     if error_symbol == 'S'
       flash[:notice] = message.to_s
-      redirect_to review_path(obj) and return
+      redirect_to edit_review_path(obj)
     else
       flash[:error] = message.to_s
       redirect_to new_review_path(product_id: product_id)
@@ -28,6 +32,7 @@ class ReviewsController < ApplicationController
   end
 
   def show
+    authorize @review, :show?
     ahoy.track 'Viewed review', id: @review.id
     if current_user
       unless current_user.dislikes?(@review)
@@ -37,15 +42,16 @@ class ReviewsController < ApplicationController
   end
 
   def edit
-
+    authorize @review, :update?
   end
 
   def update
+    authorize @review, :update?
     product_from_params = params[:product_id].to_i
     error_symbol, message, obj = ReviewCreationService.new(params, current_user, product_from_params).update_review!(@review)
     if error_symbol == 'S'
       flash[:notice] = message.to_s
-      redirect_to review_path(obj) and return
+      redirect_to edit_review_path(obj) and return
     else
       flash[:error] = message.to_s
       redirect_to edit_review_path(obj)
@@ -53,16 +59,28 @@ class ReviewsController < ApplicationController
   end
 
   def destroy
-
+    authorize @review, :destroy?
+    @review.destroy
+    redirect_to root_path
   end
 
-  def check_affiliate_tag
-    affiliate_tag = params[:affiliate_tag]
-    reviews = Review.all.map
-    reviews.each do |review|
-      if review.reviewer_id == current_user.id
-        @error = 'affiliate-error' and return
+  def publish_review
+    if @review.publish?
+      @review.update(publish: false)
+      flash[:notice] = 'Your review was unpublished'
+      redirect_to edit_review_path(@review)
+    else
+      unless @review.description.to_s.length > 30
+        flash[:error] = @review.description.to_s.length
+        redirect_to edit_review_path(@review) and return
       end
+      unless @review.tags.to_s.split(',').length >= 2
+        flash[:error] = 'Your review should have atleast two description tags !'
+        redirect_to edit_review_path(@review) and return
+      end
+      @review.update(publish: true)
+      flash[:notice] = 'Your review is now online !'
+      redirect_to review_path(@review)
     end
   end
 

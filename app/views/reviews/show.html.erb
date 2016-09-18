@@ -131,7 +131,8 @@
                     <% end %>
                     <span class="title truncate"><%= link_to review.title, review_path(review) %></span>
                     <div class="chip">
-                      <%= link_to user.username, user_path(user) %>
+                      <%review_user = User.find(review.reviewer_id) %>
+                      <%= link_to review_user.username, user_path(review_user) %>
                     </div>
                   </li>
               <% end %>
@@ -147,18 +148,25 @@
       <div class="col s12 recommended-reviews">
         <h2 class="flow-text center">Recommended Reviews</h2>
         <% review_items = Review.where('id != ?', @review.id).take(10) %>
+        <!--If not current_user, then show top 10 reviews-->
         <% unless current_user %>
             <% review_items.each do |review| %>
-                <%= render partial: 'reviews/partials/recommended_reviews', locals: { review: review, user: User.find_by(id: review.reviewer_id) } %>
+                <% review_user = User.find(review.reviewer_id) %>
+                <%= render partial: 'reviews/partials/recommended_reviews',
+                           locals: { review: review, user: review_user } %>
             <% end %>
         <% else %>
             <% if current_user.recommended_reviews.count < 10 %>
                 <% review_items.each do |review| %>
-                    <%= render partial: 'reviews/partials/recommended_reviews', locals: { review: review, user: User.find_by(id: review.reviewer_id) } %>
+                    <% review_user = User.find(review.reviewer_id) %>
+                    <%= render partial: 'reviews/partials/recommended_reviews',
+                               locals: { review: review, user: review_user } %>
                 <% end %>
             <% else %>
                 <%  current_user.recommended_reviews.each do |review| %>
-                    <%= render partial: 'reviews/partials/recommended_reviews', locals: { review: review, user: User.find_by(id: review.reviewer_id) } %>
+                    <%review_user = User.find(review.reviewer_id) %>
+                    <%= render partial: 'reviews/partials/recommended_reviews',
+                               locals: { review: review, user: review_user } %>
                 <% end %>
             <% end %>
         <% end %>
