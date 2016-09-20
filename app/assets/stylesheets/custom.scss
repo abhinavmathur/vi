@@ -1,0 +1,73 @@
+body {
+  background-color: #e3f2fd;
+}
+/* main nav bar */
+
+.main-nav {
+  font-family: 'Baloo thambi';
+  padding-left: 40px;
+  & .brand-logo {
+    font-family: 'Baloo Thambi';
+    font-size: 300% !important;
+
+  }
+}
+/* footer */
+.site-footer {
+  padding: 20px;
+  li {
+    display: inline-block;
+  }
+  a {
+  padding-left: 10px;
+ }
+}
+/* jumbotron */
+
+.jumbotron {
+  padding-bottom: 40px;
+  color: white;
+  text-align: center;
+  h1 {
+    font-size: 800%;
+    font-family: 'Baloo Thambi';
+  }
+  p {
+    font-size: 150%;
+  }
+}
+.search-bar {
+
+  width: 300px;
+  color: white;
+}
+/* sub nav bar */
+.sub-nav-bar {
+  ul {
+
+    display: inline-block;
+    margin: auto;
+  }
+  a {
+
+    font-family: 'Baloo thambi';
+    text-transform: lowercase;
+    font-size: 130%;
+    color: #1976d2;
+  }
+}
+
+.dropdown-content li a {
+  color: #1976d2;
+}
+/* product info */
+.product-info {
+  padding: 60px 0;
+}
+
+/* slider */
+.image-box {
+  background-color: white;
+  width: 250px;
+  height: 400px;
+}

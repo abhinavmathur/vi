@@ -22,26 +22,3 @@
 
 
 /* The CSS below contains global settings*/
-
-
-/*CSS styles for the whole website text*/
-* {
-    font-family: 'Roboto', sans-serif;
-}
-
-nav {
-    font-family: 'Baloo Thambi', cursive;
-}
-
-
-/*CSS style for error message shown by */
-.message {
-    padding-top: 35px;
-    color: red !important;
-}
-
-.form-error {
-    color: red !important;
-}
-
-

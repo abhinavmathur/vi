@@ -1,6 +1,6 @@
 <nav>
-  <div class="nav-wrapper white nav-wrapper-top">
-    <a href="/" class="brand-logo"><span class="brand-logo main-font blue-text logo">Vivieu</span></a>
+  <div class="nav-wrapper main-nav blue darken-4">
+    <a href="/" class="brand-logo">Vivieu</a>
     <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 
     <ul class="right hide-on-large-only">
@@ -10,13 +10,24 @@
 
     <ul class="right hide-on-med-and-down buttons">
       <li><i class="material-icons search-icon left" style="cursor: crosshair;">search</i></li>
+
       <% if user_signed_in? %>
-          <li class="bold-text blue-text"><a href="#"><%= link_to current_user.username, user_path(current_user) %> !</a></li>
-          <li class="blue-text"><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
-          <li><a href="badges.html" class="waves-effect white-text"><i class="material-icons right">cloud_upload</i>Upload a review</a></li>
+          <ul id="dropdown1" class="dropdown-content">
+            <li><%= link_to 'Dashboard' %></li>
+            <li><%= link_to 'Profile' %></li>
+            <li class="divider"></li>
+            <li><%= link_to 'Log out', destroy_user_session_path, method: :delete %></li>
+          </ul>
+
+          <!-- <li class="blue-text"><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li> -->
+          <!-- <li><a href="badges.html" class="waves-effect white-text"><i class="material-icons right">cloud_upload</i>Upload a review</a></li> -->
+          <li class="bold-text">Hello :<%= link_to user_path(current_user), class: "dropdown-button", data: {activates: "dropdown1"} do %>
+            <%= current_user.username %><i class="large material-icons right">perm_identity</i></li>
+            <% end %>
+            <!-- <%= link_to current_user.username, user_path(current_user) %></li> -->
       <% else %>
           <li><%= link_to 'Login', new_user_session_path %></li>
-          <li><a href="#" class="waves-effect"><i class="material-icons right">cloud_upload</i>Upload a review</a></li>
+          <!-- <li><a href="#" class="waves-effect"><i class="material-icons right">cloud_upload</i>Upload a review</a></li> -->
       <% end %>
     </ul>
     <ul class="side-nav" id="mobile-demo">
