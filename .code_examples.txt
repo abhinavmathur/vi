@@ -327,3 +327,11 @@ def check_title
   ---------------------------------------------------------------------------------------------
 
 =======================================================================================
+
+acts as taggable code
+ActsAsTaggableOn::Tagging.includes(:tag).where(context: 'deshanatags').map { |tagging| { 'id' => tagging.tag_id.to_s, 'name' => tagging.tag.name } }.uniq
+
+
+
+
+

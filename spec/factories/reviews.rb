@@ -23,10 +23,9 @@
 
 FactoryGirl.define do
   factory :review do
-    title "MyString"
-    description "MyText"
-    product nil
-    tags "MyString"
-    youtube_url "MyString"
+    sequence(:title) { |n| "review#{n}" }
+    description "Lorem Ipsum"
+    tags "Camera,Electronics"
+    youtube_url "youtube_url"
   end
 end

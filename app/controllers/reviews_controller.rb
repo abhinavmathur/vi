@@ -115,6 +115,11 @@ class ReviewsController < ApplicationController
   end
 
   def set_review
-    @review = Review.friendly.find(params[:id])
+    begin
+      @review = Review.friendly.find(params[:id])
+    rescue
+      flash[:error] = 'The review you were looking for could not be found'
+      redirect_to root_path
+    end
   end
 end

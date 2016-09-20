@@ -90,4 +90,8 @@ class Product < ActiveRecord::Base
     main_category = Category.find_or_create_by(name: main_category || 'Other')
     [sub_category, main_category]
   end
+
+  def self.permitted_mimes
+    %w(.jpg .png .jpeg)
+  end
 end

@@ -20,8 +20,8 @@
 
 FactoryGirl.define do
   factory :product do
-    title "MyString"
-    description "MyText"
+    sequence(:title) { |n| "product#{n}" }
+    sequence(:description) { |n| "description Lorem #{n}" }
     category nil
     company "MyString"
     tags "MyString"

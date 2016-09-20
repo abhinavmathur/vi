@@ -38,7 +38,13 @@ class AmazonAdsController < ApplicationController
   end
 
   def set_amazon_ad
-    @amazon_ad = AmazonAd.find(params[:id])
+    begin
+      @amazon_ad = AmazonAd.find(params[:id])
+    rescue
+      flash[:error] = 'The Amazon Ad ID you entered was incorrect'
+      redirect_to edit_review_path(@review)
+    end
+
   end
 
   def amazon_ad_params

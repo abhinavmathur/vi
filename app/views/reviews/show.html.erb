@@ -29,8 +29,8 @@
       </div>
     </div>
   </div>
-
 </div>
+
 <div class="row">
   <div class="col s12 m8 l8 review-panel">
     <div class="video">
@@ -39,21 +39,16 @@
       </iframe>
     </div>
 
-
     <div class="card-panel white">
       <%= simple_format(SimpleText.new(@review.description, @review).get_text, class: 'flow-text review-description') %>
     </div>
-
 
     <div class="related-reviews">
       <% related_reviews =  Review.where(reviewer_id: @review.reviewer_id).where('id != ?', @review.id).all %>
       <% if related_reviews.size == 0 %>
           <p class="center flow-text">No other reviews by this reviewer</p>
-      <% else  %>
-
+      <% else %>
           <% related_reviews.take(4).each do |review| %>
-
-
               <div class="col s10 m6 l3 offset-s1">
                 <div class="card" style="min-height: 270px !important; max-height: 270px !important">
                   <div class="card-image">
@@ -68,8 +63,6 @@
                   </div>
                 </div>
               </div>
-
-
           <% end %>
       <% end %>
     </div>
@@ -231,6 +224,7 @@
       </div>
     </div>
 <% end %>
+
 <script type="text/javascript" charset="utf-8">
   $('.modal-trigger').leanModal();
   $('.carousel').carousel();

@@ -46,7 +46,7 @@ class ProductsController < ApplicationController
     if params[:product][:product_images].present?
       params[:product][:product_images].to_s.split(',').each do |image|
         mime = File.extname(image)
-        unless permitted_mimes.include?(mime)
+        unless Product.permitted_mimes.include?(mime)
           params[:product].delete(:product_images)
           flash[:error] = 'Images supplied did not match the permitted mime types. Links should end with .jpg or .png'
           redirect_to edit_product_path(@product) and return
@@ -79,11 +79,16 @@ class ProductsController < ApplicationController
   end
 
   def permitted_mimes
-    ['.jpg', '.png', '.jpeg']
+
   end
 
 
   def set_product
-    @product = Product.friendly.find(params[:id])
+    begin
+      @product = Product.friendly.find(params[:id])
+    rescue
+      flash[:error] = 'The product you were looking for could not be found'
+      redirect_to root_path
+    end
   end
 end

@@ -19,6 +19,7 @@
 //= require twitter/typeahead.min
 //= require commontator/application
 //= require sisyphus.min
+//= require afile.min
 //= require materialize-tags.min
 //= require show_more.min
 //= require turbolinks

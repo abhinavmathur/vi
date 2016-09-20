@@ -72,6 +72,10 @@ class GeoLink
     end
   end
 
+  def self.get_country_code_raw(country_name = 'United States')
+    ISO3166::Country.find_country_by_name(country_name).gec || 'US'
+  end
+
   private
   def suffix_code(review)
     user_affiliate_countries = User.find_by(id: review.reviewer_id).affiliate_countries.to_s.split(',')

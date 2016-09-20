@@ -26,7 +26,7 @@ class CardsController < ApplicationController
   end
 
   def update
-
+#todo BP update card functionality
   end
 
   private
