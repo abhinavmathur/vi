@@ -1,31 +1,34 @@
-<div class="container">
-  <div class="input-field col s12">
-    <select name="choose-form" required>
-      <option value="" disabled selected>Choose your option</option>
-      <optgroup label="Choose this for Amazon product">
-        <option value="1">Amazon Product form</option>
-      </optgroup>
-      <optgroup label="Choose this for Custom product">
-        <option value="2">Custom Product form</option>
-      </optgroup>
-    </select>
-    <label>Choose form</label>
-  </div>
-</div>
-<br>
-<div class="container" id="product-form-container">
-</div>
+
+    <div class="card form-card">
+      <div class="card-content">
+        <div class="input-field col s12">
+          <select name="choose-form" required>
+            <option value="" disabled selected>Choose your option</option>
+            <optgroup label="Choose this for Amazon product">
+              <option value="1">Amazon Product form</option>
+            </optgroup>
+            <optgroup label="Choose this for Custom product">
+              <option value="2">Custom Product form</option>
+            </optgroup>
+          </select>
+          <label>Choose form</label>
+        </div>
+      </div>
+      <br>
+      <div class="container" id="product-form-container">
+      </div>
+    </div>
 
 <script type="text/javascript" charset="utf-8">
-  $('select[name=choose-form]').change(function(e)
+$('select[name=choose-form]').change(function(e)
+{
+  if($('select[name=choose-form]').val() == '1')
   {
-    if($('select[name=choose-form]').val() == '1')
-    {
-      $('#product-form-container').html("<%= j render partial: 'products/amazon_form' %>");
-    }
-    if($('select[name=choose-form]').val() == '2')
-    {
-      $('#product-form-container').html("<%= j render partial: 'products/normal_form' %>");
-    }
-  })
+    $('#product-form-container').html("<%= j render partial: 'products/amazon_form' %>");
+  }
+  if($('select[name=choose-form]').val() == '2')
+  {
+    $('#product-form-container').html("<%= j render partial: 'products/normal_form' %>");
+  }
+})
 </script>
