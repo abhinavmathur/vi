@@ -1,73 +1,72 @@
 <div class="container">
-<div class="row product-info">
-  <div class="col s12 m6">
-    <div class="card blue darken-3">
-      <div class="card-content white-text">
-      <h4 class="white-text"><%= @product.title %></h4>
-      <!-- <p><i class="material-icons">work</i><%= @product.company.titleize %></p> -->
-      <div class="divider">
-      </div>
-      <br>
-      <% unless @product.user_id.nil? %>
+  <div class="row product-info">
+    <div class="col s12 m6">
+      <div class="card blue darken-3">
+        <div class="card-content white-text">
+          <h4 class="white-text"><%= @product.title %></h4>
+          <!-- <p><i class="material-icons">work</i><%= @product.company.titleize %></p> -->
+          <div class="divider">
+          </div>
+          <br>
+          <% unless @product.user_id.nil? %>
           <p>Added by: <%= link_to User.find(@product.user_id).username, '#' %></p>
-      <% else %>
+          <% else %>
           <p>Added from Amazon</p>
           <p>ASIN: <%= @product.asin %></p>
-      <% end %>
-
-   </div>
-  </div>
-</div>
-<div class="col s12 m6">
-    <div class="carousel">
-<% unless @product.product_images.length < 1 %>
-  <% if @product.asin.present? %>
-    <% if @product.product_images.nil? %>
-      <a class="carousel-item" href="#"><img  src="http://images.amazon.com/images/P/<%= @product.asin %>.01.LZZZZZZZ.jpg" alt="Amazon Image" /></a>
-    <% else %>
-    <% @product.product_images.split(',').each do |image|%>
-      <a class="carousel-item"><img src="<%= image.to_s %>" alt="<%= @product.title %> from amazon"></a>
-        <% end %>
-    <% end %>
-<% else %>
-    <% @product.product_images.split(',').each do |image|%>
-        <a class="carousel-item"><img src="<%= image.to_s %>" alt="<%= @product.title %>"></a>
-    <% end %>
-<% end %>
-<% else %>
-    <div class="col s12 m5 l5">
-      <%= image_tag('no.png', alt: 'No image supplied for this product') %>
-    </div>
-<% end %>
-
-
-
-  </div>
-</div>
-
-  <!-- <% unless @product.product_images.length < 1 %>
-      <div class="col s12 m5 l5">
-        <div class="image-box">
-          <% if @product.asin.present? %>
-              <% if @product.product_images.nil? %>
-                  <img  src="http://images.amazon.com/images/P/<%= @product.asin %>.01.LZZZZZZZ.jpg" alt="Amazon Image" />
-              <% else %>
-                  <% @product.product_images.split(',').each do |image|%>
-                      <img src="<%= image.to_s %>" alt="<%= @product.title %> from amazon">
-                  <% end %>
-              <% end %>
-          <% else %>
-              <% @product.product_images.split(',').each do |image|%>
-                  <img src="<%= image.to_s %>" alt="<%= @product.title %>">
-              <% end %>
           <% end %>
+
         </div>
       </div>
-  <% else %>
-      <div class="col s12 m5 l5">
-        <%= image_tag('no.png', alt: 'No image supplied for this product') %>
+    </div>
+    <div class="col s12 m6">
+
+    </div>
+      <!-- <div class="carousel">
+        <% unless @product.product_images.length < 1 %>
+        <% if @product.asin.present? %>
+        <% if @product.product_images.nil? %>
+        <a class="carousel-item" href="#"><img  src="http://images.amazon.com/images/P/<%= @product.asin %>.01.LZZZZZZZ.jpg" alt="Amazon Image" /></a>
+        <% else %>
+        <% @product.product_images.split(',').each do |image|%>
+        <a class="carousel-item"><img src="<%= image.to_s %>" alt="<%= @product.title %> from amazon"></a>
+        <% end %>
+        <% end %>
+        <% else %>
+        <% @product.product_images.split(',').each do |image|%>
+        <a class="carousel-item"><img src="<%= image.to_s %>" alt="<%= @product.title %>"></a>
+        <% end %>
+        <% end %>
+        <% else %>
+        <div class="col s12 m5 l5">
+          <%= image_tag('no.png', alt: 'No image supplied for this product') %>
+        </div>
+        <% end %>
       </div>
-  <% end %> -->
+    </div> -->
+
+    <!-- <% unless @product.product_images.length < 1 %>
+    <div class="col s12 m5 l5">
+    <div class="image-box">
+    <% if @product.asin.present? %>
+    <% if @product.product_images.nil? %>
+    <img  src="http://images.amazon.com/images/P/<%= @product.asin %>.01.LZZZZZZZ.jpg" alt="Amazon Image" />
+    <% else %>
+    <% @product.product_images.split(',').each do |image|%>
+    <img src="<%= image.to_s %>" alt="<%= @product.title %> from amazon">
+    <% end %>
+    <% end %>
+    <% else %>
+    <% @product.product_images.split(',').each do |image|%>
+    <img src="<%= image.to_s %>" alt="<%= @product.title %>">
+    <% end %>
+    <% end %>
+  </div>
+</div>
+<% else %>
+<div class="col s12 m5 l5">
+<%= image_tag('no.png', alt: 'No image supplied for this product') %>
+</div>
+<% end %> -->
 </div>
 
 
@@ -75,7 +74,8 @@
   <div class="col s12 m12">
     <div class="card">
       <div class="card-content">
-        <span class="card-title">Description</span>
+        <span class="card-title blue-text">Description</span>
+
         <div class="">
           <%= @product.description.html_safe %>
         </div>
@@ -88,42 +88,26 @@
   <div class="col s12 m12">
     <div class="card">
       <div class="card-content">
-      <span class="card-title">Related Video Reviews</span>
+        <span class="card-title blue-text">Related Video Reviews</span>
         <div class="row">
           <% if @product.reviews.count == 0 %>
-              <p class="flow-text center">No reviews of this product yet</p>
+          <p class="flow-text center">No reviews of this product yet</p>
           <% else %>
-              <% @product.reviews.each do |review| %>
-                  <%= link_to review.title, review_path(review) %>
-              <% end %>
+          <% @product.reviews.each do |review| %>
+          <%= link_to review.title, review_path(review) %>
+          <% end %>
           <% end %>
         </div>
         <% @product.tags.split(',').each_with_index do |tag, index| %>
-            <% if index > 5 %>
-                <% break %>
-            <% end %>
-            <div class="blue darken-4 white-text chip">
-              <%= tag.to_s %>
-            </div>
+        <% if index > 5 %>
+        <% break %>
         <% end %>
+        <div class="blue darken-4 white-text chip">
+          <%= tag.to_s %>
         </div>
+        <% end %>
       </div>
     </div>
   </div>
 </div>
-
-<!-- <script type="text/javascript" charset="utf-8">
-  $(document).on('turbolinks:load', function(){
-    $('.image-box').slick({
-      infinite: true,
-      lazyLoad: 'ondemand',
-      speed: 500,
-      arrows: true,
-      autoplay: true,
-      fade: true,
-      cssEase: 'linear',
-      adaptiveHeight: true
-    });
-  });
-
-</script> -->
+</div>

@@ -64,7 +64,7 @@ body {
 }
 /* product info */
 .product-info {
-  padding: 60px 0 0 0;
+  padding: 20px 0 0 0;
   h4 {
     font-weight: bold;
   }
@@ -103,9 +103,9 @@ body {
 
 }
 .headliner {
-  padding: 40px;
-  color: white;
-  background-color: blue;
+  padding: 20px 0;
+
+
   font-family: 'Baloo thambi';
 
 
@@ -117,4 +117,13 @@ body {
 /* form */
 .form-card {
   padding-bottom: 50px;
+}
+/* log in background */
+.log-in-background {
+  width: 100%;
+  background-color: black;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
