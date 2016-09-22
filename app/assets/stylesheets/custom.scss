@@ -9,7 +9,7 @@ body {
   font-family: 'Baloo thambi';
 
 
-  padding-left: 40px;
+  padding: 0 40px;
   & .brand-logo {
     font-family: 'Baloo Thambi';
     font-size: 300% !important;
@@ -151,4 +151,10 @@ body {
     & .indicator {
     background-color: blue;
   }
+}
+#down-arrow {
+  font-size: 60% !important;
+}
+.feed-card .col {
+  padding: 0;
 }

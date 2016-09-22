@@ -1,10 +1,11 @@
-<nav>
-  <div class="nav-wrapper main-nav blue darken-4">
-    <a href="/" class="brand-logo left hide-on-med-and-down">Vivieu</a>
-    <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+<div class="navbar-fixed">
+  <nav>
+    <div class="nav-wrapper main-nav blue darken-4">
+      <a href="/" class="brand-logo left hide-on-med-and-down">Vivieu</a>
+      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 
 
-    <!-- <ul class="right hide-on-large-only">
+      <!-- <ul class="right hide-on-large-only">
       <li><i class="material-icons search-icon left" style="cursor: pointer;">search</i></li>
     </ul> -->
 
@@ -20,52 +21,57 @@
       <!-- <li><i class="material-icons search-icon left" style="cursor: crosshair;">search</i></li> -->
 
       <% if user_signed_in? %>
-          <ul id="dropdown1" class="dropdown-content">
-            <li><%= link_to 'Dashboard', user_path(current_user) %></li>
-            <li><%= link_to 'Settings', edit_user_registration_path %></li>
-            <li class="divider"></li>
-            <li><%= link_to 'Log out', destroy_user_session_path, method: :delete %></li>
-          </ul>
+      <ul id="dropdown1" class="dropdown-content">
+        <li><%= link_to 'Dashboard', user_path(current_user) %></li>
+        <li><%= link_to 'Settings', edit_user_registration_path %></li>
+        <li class="divider"></li>
+        <li><%= link_to 'Log out', destroy_user_session_path, method: :delete %></li>
+      </ul>
 
 
-            <li class="bold-text">
-              <a href="#" class="dropdown-button" data-activates="dropdown1">
-                <%= current_user.username %><i class="large material-icons right">perm_identity</i>
-              </a>
-            </li>
+      <li class="bold-text">
+        <a href="#" class="dropdown-button" data-activates="dropdown1">
+          <%= current_user.username %><i class="large material-icons right">perm_identity</i><i class="material-icons right">arrow_drop_down</i>
+        </a>
+      </li>
 
 
-            <!-- <%= link_to current_user.username, user_path(current_user) %></li> -->
+      <!-- <%= link_to current_user.username, user_path(current_user) %></li> -->
       <% else %>
-          <li><%= link_to 'Login', new_user_session_path %></li>
-          <!-- <li><a href="#" class="waves-effect"><i class="material-icons right">cloud_upload</i>Upload a review</a></li> -->
-      <% end %>
-    </ul>
-    <ul class="side-nav" id="mobile-demo">
-    <% if user_signed_in? %>
-      <li id="logo"><%= link_to 'Viveau' %></li>
-      <li>
-        <div class="divider">
-        </div>
-      </li>
-      <li>
-        <form class="mobile-search" method="get" action="/search">
-          <div class="input-field">
-            <input  id="search" type="search" placeholder=" search" required>
-            <label for="search"><i class="black-text material-icons right">search</i></label>
-            <i class="material-icons">close</i>
+      <ul id="dropdown2" class="dropdown-content">
+        <li><%= link_to 'Sign in with Google', user_google_oauth2_omniauth_authorize_path %></li>
+      </ul>
+
+      <li><a href="#" class="dropdown-button" data-activates="dropdown2">Login<i class="material-icons right">arrow_drop_down</i></a>
+
+        <% end %>
+      </ul>
+      <ul class="side-nav" id="mobile-demo">
+        <% if user_signed_in? %>
+        <li id="logo"><%= link_to 'Viveau' %></li>
+        <li>
+          <div class="divider">
           </div>
-        </form>
-      </li>
-      <li><%= link_to 'Dashboard' %></li>
-      <li><%= link_to 'Profile' %></li>
-      <li class="divider"></li>
-      <li><%= link_to 'Log out', destroy_user_session_path, method: :delete%></li>
+        </li>
+        <li>
+          <form class="mobile-search" method="get" action="/search">
+            <div class="input-field">
+              <input  id="search" type="search" placeholder=" search" required>
+              <label for="search"><i class="black-text material-icons right">search</i></label>
+              <i class="material-icons">close</i>
+            </div>
+          </form>
+        </li>
+        <li><%= link_to 'Dashboard' %></li>
+        <li><%= link_to 'Profile' %></li>
+        <li class="divider"></li>
+        <li><%= link_to 'Log out', destroy_user_session_path, method: :delete%></li>
 
-    <% else %>
-      <li><%= link_to 'Log in', new_user_session_path %></li>
-    <% end %>
-  </ul>
-  </div>
+        <% else %>
+        <li><%= link_to 'Log in', new_user_session_path %></li>
+        <% end %>
+      </ul>
+    </div>
 
-</nav>
+  </nav>
+</div>

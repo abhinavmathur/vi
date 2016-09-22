@@ -14,9 +14,12 @@ $(document).on('turbolinks:load', function(){
     accordion : true
   });
   $('.slider').slider({
-    
+
   });
   $('.tabs-wrapper').pushpin({
     top: $('.tabs-wrapper').offset().top
+  });
+  $('.tooltipped').tooltip({
+
   });
 });
