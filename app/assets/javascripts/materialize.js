@@ -17,9 +17,21 @@ $(document).on('turbolinks:load', function(){
 
   });
   $('.tabs-wrapper').pushpin({
-    top: $('.tabs-wrapper').offset().top
+    top: 200,
+    offset: 60,
+    bottom: 500
+
   });
   $('.tooltipped').tooltip({
 
   });
+  $('.modal-trigger').leanModal({
+    dismissible: true,
+    opacity: .5,
+    in_duration: 300,
+    out_duration: 200,
+    starting_top: '4%',
+    ending_top: '10%'
+
+  })
 });

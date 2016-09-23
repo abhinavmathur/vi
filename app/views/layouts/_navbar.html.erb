@@ -4,51 +4,40 @@
       <a href="/" class="brand-logo left hide-on-med-and-down">Vivieu</a>
       <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 
-
-      <!-- <ul class="right hide-on-large-only">
-      <li><i class="material-icons search-icon left" style="cursor: pointer;">search</i></li>
-    </ul> -->
-
-
-    <ul class="right hide-on-med-and-down buttons">
-      <form class="nav-search-bar left">
-        <div class="input-field">
-          <input id="search" type="search" placeholder="search for a review" required>
-          <label for="search"><i class="material-icons">search</i></label>
-          <i class="material-icons">close</i>
-        </div>
-      </form>
-      <!-- <li><i class="material-icons search-icon left" style="cursor: crosshair;">search</i></li> -->
-
-      <% if user_signed_in? %>
-      <ul id="dropdown1" class="dropdown-content">
-        <li><%= link_to 'Dashboard', user_path(current_user) %></li>
-        <li><%= link_to 'Settings', edit_user_registration_path %></li>
-        <li class="divider"></li>
-        <li><%= link_to 'Log out', destroy_user_session_path, method: :delete %></li>
-      </ul>
+      <ul class="right hide-on-med-and-down buttons">
+        <form class="nav-search-bar left">
+          <div class="input-field">
+            <input id="search" type="search" placeholder="search for a review" required>
+            <label for="search"><i class="material-icons">search</i></label>
+            <i class="material-icons">close</i>
+          </div>
+        </form>
 
 
-      <li class="bold-text">
-        <a href="#" class="dropdown-button" data-activates="dropdown1">
-          <%= current_user.username %><i class="large material-icons right">perm_identity</i><i class="material-icons right">arrow_drop_down</i>
-        </a>
-      </li>
+        <% if user_signed_in? %>
+        <ul id="dropdown1" class="dropdown-content">
+          <li><%= link_to 'Dashboard', user_path(current_user) %></li>
+          <li><%= link_to 'Settings', edit_user_registration_path %></li>
+          <li class="divider"></li>
+          <li><%= link_to 'Log out', destroy_user_session_path, method: :delete %></li>
+        </ul>
 
 
-      <!-- <%= link_to current_user.username, user_path(current_user) %></li> -->
-      <% else %>
-      <ul id="dropdown2" class="dropdown-content">
-        <li><%= link_to 'Sign in with Google', user_google_oauth2_omniauth_authorize_path %></li>
-      </ul>
+        <li class="bold-text">
+          <a href="#" class="dropdown-button" data-activates="dropdown1">
+            <%= current_user.username %><i class="large material-icons right">perm_identity</i><i class="material-icons right">arrow_drop_down</i>
+          </a>
+        </li>
 
-      <li><a href="#" class="dropdown-button" data-activates="dropdown2">Login<i class="material-icons right">arrow_drop_down</i></a>
-
+        <% else %>
+        <a class="btn red modal-trigger" href="#modal1">Log In</a>
         <% end %>
       </ul>
+
+
       <ul class="side-nav" id="mobile-demo">
         <% if user_signed_in? %>
-        <li id="logo"><%= link_to 'Viveau' %></li>
+        <li id="logo"><%= link_to 'Viveau', root_path %></li>
         <li>
           <div class="divider">
           </div>
@@ -72,6 +61,17 @@
         <% end %>
       </ul>
     </div>
-
   </nav>
+</div>
+
+<!-- modal content  -->
+<div id="modal1" class="purple darken-4 white-text center modal">
+  <div class="modal-content">
+    <h4>Log In</h4>
+    <p>Sign in with the one and only Google.</p>
+    <p>Fast and Secure!</p>
+    <%= link_to 'Google', user_google_oauth2_omniauth_authorize_path,
+    class: "modal-action modal-close btn purple-text white" %>
+
+  </div>
 </div>
