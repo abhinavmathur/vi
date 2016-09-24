@@ -6,7 +6,7 @@
 </div>
 
 <% require 'amazon/ecs' %>
-<% links =  Amazon::Ecs.similarity_lookup("0974514055") %>
+<% links =  Amazon::Ecs.similarity_lookup("B019Z6HS86") %>
 <% links.items.each do |item| %>
 
     <%= item.get('ASIN') %>

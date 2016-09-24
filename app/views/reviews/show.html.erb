@@ -225,14 +225,5 @@
     </div>
 <% end %>
 
-<script type="text/javascript" charset="utf-8">
-  $('.modal-trigger').leanModal();
-  $('.carousel').carousel();
-  $('.review-description').find('.external_link').each(function(index)
-  {
-    var text = $(this).text();
-    $(this).html('<a class="link-website" target="_blank" rel="nofollow" data-method="post" href="/reviews/<%= @review.slug %>/redirect_to_website?affiliate_website=<%= @review.affiliate_link %>">'+ text +'</a>')
-  });
 
-
-</script>
+<%= render 'javascripts/reviews/show' %>

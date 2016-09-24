@@ -2,23 +2,25 @@
 #
 # Table name: products
 #
-#  id             :integer          not null, primary key
-#  title          :string           default("")
-#  description    :text
-#  category_id    :integer
-#  company        :string
-#  tags           :string
-#  asin           :string
-#  slug           :string
-#  adult          :boolean          default(FALSE)
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  product_images :text
-#  sub_category   :string
-#  user_id        :integer
+#  id               :integer          not null, primary key
+#  title            :string           default("")
+#  description      :text
+#  category_id      :integer
+#  company          :string
+#  tags             :string
+#  asin             :string
+#  slug             :string
+#  adult            :boolean          default(FALSE)
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  product_images   :text
+#  sub_category     :string
+#  user_id          :integer
+#  similar_products :text
 #
 
 class Product < ActiveRecord::Base
+  serialize :similar_products
   belongs_to :category
   extend FriendlyId
   friendly_id :slug_candidates, use: [:slugged, :finders]
@@ -59,11 +61,12 @@ class Product < ActiveRecord::Base
       sub_category = Product.get_category_info(result)[0]
       product_images = ActionController::Base.helpers.strip_tags(result.get_elements('LargeImage/URL').join(', '))
       asin = ActionController::Base.helpers.strip_tags(result.get_element('ASIN').to_s)
-      unless Product.exists?(asin: asin)
+       unless Product.exists?(asin: asin)
         product = Product.create(title: title, description: description,
                                  company: company, tags: tags, asin: asin,
                                  product_images: product_images,
                                  category_id: category.id, sub_category: sub_category)
+        SimilarProducts.new(asin).create!
         return 'notice', product
       end
       return 'error', 'The product you searched for already exists'
