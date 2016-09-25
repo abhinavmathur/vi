@@ -38,7 +38,9 @@ Rails.application.routes.draw do
   authenticate :user, lambda { |u| u.admin? } do
     require 'sidekiq/web'
     Sidekiq::Web.set :session_secret, Rails.application.secrets[:secret_token]
+=begin
     Sidekiq::Web.set :sessions, Rails.application.config.session_options
+=end
     mount Searchjoy::Engine, at: 'admin/searchjoy'
     mount Sidekiq::Web => '/sidekiq'
     namespace :admin do

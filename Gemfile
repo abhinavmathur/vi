@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.6'
-gem 'rake', '11.2.2'
+gem 'rake', '11.3.0'
 # Use SCSS for stylesheets
 gem 'nokogiri'
 gem 'sass-rails', '~> 5.0'
@@ -93,5 +93,4 @@ gem 'jquery-slick-rails'
 gem 'country_select'
 gem 'twitter-typeahead-rails', :git => "git://github.com/yourabi/twitter-typeahead-rails.git"
 gem 'countries', :require => 'countries/global'
-gem "pundit"
 
