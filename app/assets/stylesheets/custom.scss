@@ -156,3 +156,21 @@ body {
   padding: 0;
 
 }
+.caption{
+  font-family: 'Baloo thambi';
+}
+.slider.slider-home {
+  & .indicators {
+    position: absolute;
+    display: inline-block;
+    text-align: right;
+    right: 70px;
+    bottom: 70px;
+    z-index: 2;
+
+  }
+  & .indicator-item {
+    background-color: none;
+    box-shadow: 1px 1px 5px grey;
+  }
+}

@@ -1,5 +1,6 @@
 $(document).on('turbolinks:load', function(){
   $('ul.tabs').tabs();
+  $('.parallax').parallax();
   Materialize.updateTextFields();
   $('.dropdown-button').dropdown({
     inDuration: 300,
@@ -13,8 +14,8 @@ $(document).on('turbolinks:load', function(){
   $('.collapsible').collapsible({
     accordion : true
   });
-  $('.slider').slider({
-
+  $('.slider.slider-home').slider({
+    height: 450
   });
   $('.tabs-wrapper').pushpin({
     top: 200,
@@ -33,5 +34,5 @@ $(document).on('turbolinks:load', function(){
     starting_top: '4%',
     ending_top: '10%'
 
-  })
+  });
 });
