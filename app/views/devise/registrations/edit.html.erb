@@ -1,11 +1,18 @@
+<div class=" blue darken-3 row headliner">
+  <div class="container">
+    <h2 class="white-text">Settings</h2>
+  </div>
+</div>
+
 <div class="container">
   <div class="row">
-    <div class="col s12">
-      <h2>Edit</h2>
-
+    <div class="col s12 m8">
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <div class="card">
+        <div class="card-content">
           <div class="row">
             <div class="input-field col s12">
+              <i class="material-icons prefix">account_circle</i>
               <%= f.text_field :username, data: { validation: 'required'} %>
               <%= f.label :username %>
             </div>
@@ -13,6 +20,7 @@
 
           <div class="row">
             <div class="input-field col s12">
+              <i class="material-icons prefix">email</i>
               <%= f.email_field :email, data: { validation: 'required'} %>
               <%= f.label :email %>
             </div>
@@ -20,13 +28,22 @@
 
           <div class="row">
             <div class="input-field col s12">
-              <%= f.label 'Describe about yourself and/or your channel' %>
+              <i class="material-icons prefix">comment</i>
+              <%= f.label 'Describe about yourself' %>
+              <%= f.text_area :description, class: 'materialize-textarea' %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <i class="material-icons prefix">comment</i>
+              <%= f.label 'Describe your channel' %>
               <%= f.text_area :description, class: 'materialize-textarea' %>
             </div>
           </div>
 
           <div class="row">
             <div class="input-field col s12">
+              <i class="material-icons prefix">language</i>
               <%= f.country_select(:country_code, priority_countries: %w(US CA IN GB DE IT BR FR ES MX CN JP AU NL)) %>
               <%= f.label 'Select your country' %>
             </div>
@@ -34,41 +51,108 @@
 
           <div class="row">
             <div class="input-field col s12">
-              <p>ONLY AMAZON AFFILIATES - Choose the countries whose affiliate programs you have registered</p>
+
+              <%= f.label 'Amazon Affiliates' %>
               <%= f.text_field :affiliate_countries %>
             </div>
           </div>
-          <div><%= f.submit "Sign up" %></div>
-      <% end %>
+          <div class="row">
+            <div class="col s12">
+              <%= f.submit "Save", class: "btn blue waves-effect waves-light" %>
+              <%= link_to "Cancel", root_path, class: "btn red waves-effect waves-light"%>
+            </div>
+          </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col s12 m4">
+      <div class="tabs-wrapper">
+        <div class="blue darken-2 card">
+          <div class="white-text card-content">
+
+            <span class="card-title">Need help?</span>
+            <p>click below for more info</p>
+          </div>
+
+        </div>
+
+        <ul class="collapsible" data-collapsible="accordion">
+          <li>
+            <div class="collapsible-header">
+              <i class="material-icons">perm_identity</i>Username
+            </div>
+            <div class="red white-text collapsible-body">
+              <p>Pick anything you want. Be creative!. The more interesting and unique it is, the more likely people will watch your videos.
+              </p>
+            </div>
+          </li>
+          <li>
+            <div class="collapsible-header">
+              <i class="material-icons">email</i>Email
+            </div>
+            <div class="purple white-text collapsible-body">
+              <p>You email will be your main point of contact.  Other users will give you useful feedback as well as praise through your email so pick an email that you use often</p>
+            </div>
+          </li>
+          <li>
+            <div class="collapsible-header">
+              <i class="material-icons">comment</i>Describe yourself
+            </div>
+            <div class="pink white-text collapsible-body">
+              <p>Write about yourself! Put down any hobbies you might have, things you like.  Here is you chance to express yourself so be as expressive as possible.</p>
+            </div>
+          </li>
+          <li>
+            <div class="collapsible-header">
+              <i class="material-icons">my_location</i>Select your country
+            </div>
+            <div class="grey white-text collapsible-body">
+              <p>Pick where your from.  This will help the us determine how to connect you to amazon so that you can get paid so make sure you pick the right one</p>
+            </div>
+          </li>
+          <li>
+            <div class="collapsible-header">
+              <i class="material-icons">star</i>Amazon affiliates
+            </div>
+            <div class="orange white-text collapsible-body">
+              <p>Pick your amazon affiliate.  We only support Amazon as an affiliate partner</p>
+            </div>
+          </li>
+
+        </ul>
+       </div>
     </div>
   </div>
+
 </div>
 <script type="text/javascript" charset="utf-8">
-  $.validate({
-    form : "#edit_user"
-  });
-  var citynames = new Bloodhound({
-    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-    queryTokenizer: Bloodhound.tokenizers.whitespace,
-    prefetch: {
-      /*Todo change to vivieu in production*/
-      url: 'http://localhost:3000/assets/affiliate_countries.json',
-      filter: function(list) {
-        return $.map(list, function(cityname) {
-          return { name: cityname };
-        });
-      }
+$.validate({
+  form : "#edit_user"
+});
+var citynames = new Bloodhound({
+  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+  queryTokenizer: Bloodhound.tokenizers.whitespace,
+  prefetch: {
+    /*Todo change to vivieu in production*/
+    url: 'http://localhost:3000/assets/affiliate_countries.json',
+    filter: function(list) {
+      return $.map(list, function(cityname) {
+        return { name: cityname };
+      });
     }
-  });
+  }
+});
 
-  citynames.initialize();
+citynames.initialize();
 
-  $('#user_affiliate_countries').materialtags({
-    typeaheadjs: {
-      name: 'affiliate_countries',
-      displayKey: 'name',
-      valueKey: 'name',
-      source: citynames.ttAdapter()
-    }
-  });
+$('#user_affiliate_countries').materialtags({
+  typeaheadjs: {
+    name: 'affiliate_countries',
+    displayKey: 'name',
+    valueKey: 'name',
+    source: citynames.ttAdapter()
+  }
+});
 </script>

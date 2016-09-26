@@ -1,1 +1,38 @@
-<h1>Welcome !</h1>
+<div class="slider slider-home">
+  <ul class="slides">
+    <li>
+      <%= image_tag 'alpaca.jpg' %>
+      
+      <div class="caption left">
+        <h1>Viveau</h1>
+        <h5>The #1 source for video reviews!</h5>
+        <a class='btn red'>Learn More</a>
+      </div>
+    </li>
+
+    <li>
+    </li>
+    <li>
+    </li>
+    <li>
+    </li>
+  </ul>
+</div>
+
+
+<!-- <div class="jumbotron light-blue darken-3 center-align">
+  <div class="row">
+    <div class="col s12">
+      <h1>Vivieu</h1>
+      <p>the #1 source for video reviews !</p>
+    </div>
+  </div>
+</div> -->
+<div class="container">
+  <div class="row">
+    <%= render 'layouts/subnavbar' %>
+  </div>
+  <div class="row">
+    <%= render 'layouts/feed' %>
+  </div>
+</div>

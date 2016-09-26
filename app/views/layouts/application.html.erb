@@ -21,22 +21,24 @@
     Stripe.setPublishableKey('<%= ENV['stripe_publishable_key'] %>');
   </script>
   <%= csrf_meta_tags %>
-
-
-
 </head>
 <body>
 
 
 <%= render 'layouts/navbar' %>
 <%= render 'layouts/flash_messages' %>
-<br>
-<div class="yield">
-  <%= yield %>
-</div>
+
+<%= yield %>
+
 <%= render 'layouts/javascripts' %>
+
+
+<%= render 'layouts/floating_button' %>
+
+
 <% if current_user && current_user.country_code.nil? %>
     <%= render 'app/set_country' %>
 <% end %>
+<%= render 'layouts/footer' %>
 </body>
 </html>

@@ -1,43 +1,77 @@
-<nav>
-  <div class="nav-wrapper white nav-wrapper-top">
-    <a href="/" class="brand-logo"><span class="brand-logo main-font blue-text logo">Vivieu</span></a>
-    <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-
-    <ul class="right hide-on-large-only">
-      <li><i class="material-icons search-icon left" style="cursor: pointer;">search</i></li>
-    </ul>
-
-
-    <ul class="right hide-on-med-and-down buttons">
-      <li><i class="material-icons search-icon left" style="cursor: crosshair;">search</i></li>
-      <% if user_signed_in? %>
-          <li class="bold-text blue-text"><a href="#"><%= link_to current_user.username, user_path(current_user) %> !</a></li>
-          <li class="blue-text"><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
-          <li><a href="badges.html" class="waves-effect white-text"><i class="material-icons right">cloud_upload</i>Upload a review</a></li>
-      <% else %>
-          <li><%= link_to 'Login', new_user_session_path %></li>
-          <li><a href="#" class="waves-effect"><i class="material-icons right">cloud_upload</i>Upload a review</a></li>
-      <% end %>
-    </ul>
-    <ul class="side-nav" id="mobile-demo">
-      <li><a href="sass.html">Sass</a></li>
-      <li><a href="badges.html">Components</a></li>
-      <li><a href="collapsible.html">Javascript</a></li>
-      <li><a href="mobile.html">Mobile</a></li>
-    </ul>
-  </div>
-</nav>
-<div class="nav-search" style="display:none; z-index: 9999">
+<div class="navbar-fixed">
   <nav>
-    <div class="nav-wrapper white">
-      <form action="/search" accept-charset="UTF-8" method="get">
-        <div class="input-field">
-          <input name="utf8" type="hidden" value="&#x2713;" />
-          <input id="search" name="q" id="q" type="search" required>
-          <label for="search"><i class="material-icons" style="color: black">search</i></label>
-          <i class="material-icons close-button" style="color: black">close</i>
-        </div>
-      </form>
+    <div class="nav-wrapper main-nav blue darken-4">
+      <a href="/" class="brand-logo left hide-on-med-and-down">Vivieu</a>
+      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+
+      <ul class="right hide-on-med-and-down buttons">
+        <form class="nav-search-bar left">
+          <div class="input-field">
+            <input id="search" type="search" placeholder="search for a review" required>
+            <label for="search"><i class="material-icons">search</i></label>
+            <i class="material-icons">close</i>
+          </div>
+        </form>
+
+
+        <% if user_signed_in? %>
+        <ul id="dropdown1" class="dropdown-content">
+          <li><%= link_to 'Dashboard', user_path(current_user) %></li>
+          <li><%= link_to 'Settings', edit_user_registration_path %></li>
+          <li class="divider"></li>
+          <li><%= link_to 'Log out', destroy_user_session_path, method: :delete %></li>
+        </ul>
+
+
+        <li class="bold-text">
+          <a href="#" class="dropdown-button" data-activates="dropdown1">
+            <%= current_user.username %><i class="large material-icons right">perm_identity</i><i class="material-icons right">arrow_drop_down</i>
+          </a>
+        </li>
+
+        <% else %>
+        <a class="btn red modal-trigger" href="#modal1">Log In</a>
+        <% end %>
+      </ul>
+
+
+      <ul class="side-nav" id="mobile-demo">
+        <% if user_signed_in? %>
+        <li id="logo"><%= link_to 'Viveau', root_path %></li>
+        <li>
+          <div class="divider">
+          </div>
+        </li>
+        <li>
+          <form class="mobile-search" method="get" action="/search">
+            <div class="input-field">
+              <input  id="search" type="search" placeholder=" search" required>
+              <label for="search"><i class="black-text material-icons right">search</i></label>
+              <i class="material-icons">close</i>
+            </div>
+          </form>
+        </li>
+        <li><%= link_to 'Dashboard' %></li>
+        <li><%= link_to 'Profile' %></li>
+        <li class="divider"></li>
+        <li><%= link_to 'Log out', destroy_user_session_path, method: :delete%></li>
+
+        <% else %>
+        <li><%= link_to 'Log in', new_user_session_path %></li>
+        <% end %>
+      </ul>
     </div>
   </nav>
+</div>
+
+<!-- modal content  -->
+<div id="modal1" class="purple darken-4 white-text center modal">
+  <div class="modal-content">
+    <h4>Log In</h4>
+    <p>Sign in with the one and only Google.</p>
+    <p>Fast and Secure!</p>
+    <%= link_to 'Google', user_google_oauth2_omniauth_authorize_path,
+    class: "modal-action modal-close btn purple-text white" %>
+
+  </div>
 </div>

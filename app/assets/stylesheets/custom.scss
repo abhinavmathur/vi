@@ -1,0 +1,176 @@
+$light-blue: #1976d2;
+
+body {
+  background-color: hsl(0, 0%, 95%);
+}
+/* main nav bar */
+
+.main-nav {
+  font-family: 'Baloo thambi';
+
+
+  padding: 0 40px;
+  & .brand-logo {
+    font-family: 'Baloo Thambi';
+    font-size: 300% !important;
+
+  }
+}
+/* footer */
+.site-footer {
+  padding: 20px;
+  li {
+    display: inline-block;
+  }
+  a {
+    padding-left: 10px;
+  }
+}
+/* jumbotron */
+
+.jumbotron {
+  padding-bottom: 40px;
+  color: white;
+  text-align: center;
+  h1 {
+    font-size: 800%;
+    font-family: 'Baloo Thambi';
+  }
+  p {
+    font-size: 150%;
+  }
+}
+.search-bar {
+
+  width: 300px;
+  color: white;
+}
+/* sub nav bar */
+.sub-nav-bar {
+
+  li.tab a{
+
+    font-family: 'Baloo thambi';
+    text-transform: lowercase;
+    font-size: 130%;
+    color: #1976d2 ;
+  }
+}
+
+.dropdown-content li a {
+  color: #1976d2;
+}
+/* product info */
+.product-info {
+  padding: 40px 0 0 0;
+  h4 {
+
+  }
+}
+
+/* slider */
+.image-box {
+  background-color: white;
+  width: 250px;
+  height: 400px;
+}
+
+.nav-search-bar {
+
+  font-style:  italic;
+  display: inline-block;
+  padding: 0 20px;
+
+}
+.mobile-search input {
+  margin: 0;
+}
+.side-nav #logo a {
+  font-size: 200%;
+  color: blue;
+}
+
+/* tags */
+.chip {
+
+}
+.headliner {
+  padding: 20px 0;
+
+
+  font-family: 'Baloo thambi';
+
+
+  h1 {
+    margin: 0;
+
+  }
+}
+/* form */
+.form-card {
+  padding-bottom: 50px;
+}
+/* log in background */
+.log-in-background {
+  width: 100%;
+  background-color: black;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* pin plugin */
+.pin-top {
+  position: relative;
+  width: 300px;
+}
+.pin-bottom {
+  position: relative;
+  width: 300px;
+}
+.pinned {
+  position: fixed !important;
+  width: 300px;
+}
+/* slider plugin */
+.indicator-item.active {
+  background-color: #1976d2 !important;
+}
+.product-card {
+  margin: 0;
+}
+
+/* tab slider */
+.tabs {
+  .tab a:hover {
+    color: blue;
+  }
+    & .indicator {
+    background-color: blue;
+  }
+}
+#down-arrow {
+  font-size: 60% !important;
+}
+.feed-card .col {
+  padding: 0;
+
+}
+.caption{
+  font-family: 'Baloo thambi';
+}
+.slider.slider-home {
+  & .indicators {
+    position: absolute;
+    display: inline-block;
+    text-align: right;
+    right: 70px;
+    bottom: 70px;
+    z-index: 2;
+
+  }
+  & .indicator-item {
+    background-color: none;
+    box-shadow: 1px 1px 5px grey;
+  }
+}
