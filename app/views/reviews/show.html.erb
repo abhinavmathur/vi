@@ -1,112 +1,7 @@
 <% user = User.find(@review.reviewer_id) %>
 <% product = @review.reviewfiable %>
 <link rel="author" href="<%= user.google_plus %>">
-<<<<<<< HEAD
-<div class="row">
-  <div class="col s12 breadcrumbs-review">
-    <a href="/" class="breadcrumb">Vivieu</a>
-    <a href="#" class="breadcrumb">Second</a>
-    <a href="#" class="breadcrumb">Third</a>
-  </div>
-  <div class="row title-review">
-    <div class="col s12 m8">
-      <h3 class="title-imp white-text">
-        <%= @review.title %>
-      </h3>
-    </div>
 
-    <div class="col s4">
-      <div class="row valign-wrapper">
-        <div class="col s4">
-          <img src="<%= user.avatar %>" alt="" class="reviewer-image-review">
-        </div>
-        <div class="col s8">
-          <h5 class="white-text truncate flow-text">
-            <%= user.username %>
-          </h5>
-          <span><%= @review.created_at.to_time %></span>
-          <%= link_to 'Check my Reviews', user_path(user), class: 'btn waves-effect white black-text'%>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col s12 m8 l8 review-panel">
-    <div class="video">
-      <iframe width="854" height="480"
-              src="https://www.youtube.com/embed/<%= @review.youtube_url %>">
-      </iframe>
-    </div>
-
-    <div class="card-panel white">
-      <%= simple_format(SimpleText.new(@review.description, @review).get_text, class: 'flow-text review-description') %>
-    </div>
-
-    <div class="related-reviews">
-      <% related_reviews =  Review.where(reviewer_id: @review.reviewer_id).where('id != ?', @review.id).all %>
-      <% if related_reviews.size == 0 %>
-          <p class="center flow-text">No other reviews by this reviewer</p>
-      <% else %>
-          <% related_reviews.take(4).each do |review| %>
-              <div class="col s10 m6 l3 offset-s1">
-                <div class="card" style="min-height: 270px !important; max-height: 270px !important">
-                  <div class="card-image">
-                    <img src="http://i3.ytimg.com/vi/<%= review.youtube_url %>/hqdefault.jpg">
-                  </div>
-                  <div class="card-content">
-                    <h6><%= link_to truncate(review.title, length: 50), review_path(review) %></h6>
-                    <div class="chip">
-                      <img src="<%= user.avatar %>" alt="Reviewer picture">
-                      <small class="truncate"><%= user.username %></small>
-                    </div>
-                  </div>
-                </div>
-              </div>
-          <% end %>
-      <% end %>
-=======
-<!-- <nav>
-<div class="nav-wrapper">
-<div class="blue-text col s12 breadcrumbs-review">
-<a href="/" class="breadcrumb">Vivieu</a>
-<a href="#" class="breadcrumb">Second</a>
-<a href="#" class="breadcrumb">Third</a>
-</div>
-</div>
-</nav> -->
-
-<!-- <div class="col s4">
-<div class="row valign-wrapper">
-<div class="col s4">
-<img src="<%= user.avatar %>" alt="" class="reviewer-image-review">
-</div>
-<div class="col s8">
-<h5 class="white-text truncate flow-text">
-<%= user.username %>
-</h5>
-<span><%= @review.created_at.to_time %></span>
-<%= link_to 'Check my Reviews', user_path(user), class: 'btn waves-effect white black-text'%>
-</div>
-</div>
-</div> -->
-
-
-
-<div class="grey darken-4 row">
-  <div class="container">
-    <div class="col s12 m12 l12 review-panel">
-      <div class="video-container">
-
-        <iframe width="854" height="480"
-        src="https://www.youtube.com/embed/<%= @review.youtube_url %>"></iframe>
-
-      </div>
->>>>>>> 772e5c3f79273c25bfa3339b283d1757265c9708
-    </div>
-  </div>
-</div>
 <div class="row">
   <div class="col s12 m8 l8">
     <div class="white-text blue darken-3 card">
@@ -123,74 +18,59 @@
         </div>
         <br>
         <p><a class="btn red waves-light">+ follow</a><p>
-        </div>
       </div>
-      <div class="card">
-        <div class="card-content">
-          <div class="row">
+    </div>
+    <div class="card">
+      <div class="card-content">
+        <div class="row">
 
-            <i class="material-icons">favorite_border</i><span class="icon-text">1,222</span>
-            <i class="material-icons">play_arrow</i><span class="icon-text">2 000 000</span>
-            <a class="btn blue right"><i class="material-icons">share</i></a>
-          </div>
-          <p class="grey-text text-darken-3">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
+          <i class="material-icons">favorite_border</i><span class="icon-text">1,222</span>
+          <i class="material-icons">play_arrow</i><span class="icon-text">2 000 000</span>
+          <a class="btn blue right"><i class="material-icons">share</i></a>
         </div>
+        <p class="grey-text text-darken-3">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
       </div>
-      <div class="card">
-        <div class="card-content">
-          <span class="card-title">Categories</span>
-          <p><div class="blue white-text chip">Watches</div>
-            <div class="blue white-text chip">Animals</div></p>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-content">
-            <span class="card-title">Comments</span>
-          </div>
-        </div>
+    </div>
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">Categories</span>
+        <p><div class="blue white-text chip">Watches</div>
+        <div class="blue white-text chip">Animals</div></p>
       </div>
-      <div class="col s12 m4">
-        <div class="card related-products">
-          <div class="card-content">
-            <span class="card-title blue-text">Reviewed Product</span>
-            <div class="row">
-              <div class="col s12 m4">
-                <img src="http://www.drivergear.vw.com/SiteData/Products/3_14259_14318_vdrg017844.JPG">
-              </div>
-              <div class="col s12 m8">
-                <span>Casio model a19w black colour watch for men, Classic Design</span>
-                <a class="btn waves-light blue">VIEW</a>
-              </div>
-            </div>
+    </div>
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">Comments</span>
+      </div>
+    </div>
+  </div>
+  <div class="col s12 m4">
+    <div class="card related-products">
+      <div class="card-content">
+        <span class="card-title blue-text">Reviewed Product</span>
+        <div class="row">
+          <div class="col s12 m4">
+            <img src="http://www.drivergear.vw.com/SiteData/Products/3_14259_14318_vdrg017844.JPG">
           </div>
-        </div>
-        <h5>Related Products</h5>
-        <div class="card related-products">
-          <div class="card-content">
-
-            <div class="row">
-              <div class="col s12 m4">
-                <img src="http://www.drivergear.vw.com/SiteData/Products/3_14259_14318_vdrg017844.JPG">
-              </div>
-              <div class="col s12 m8">
-                <span>Casio model a19w black colour watch for men, Classic Design</span>
-                <a class="btn waves-light blue">VIEW</a>
-              </div>
-
+          <div class="col s12 m8">
+            <span>Casio model a19w black colour watch for men, Classic Design</span>
+            <a class="btn waves-light blue">VIEW</a>
           </div>
         </div>
       </div>
-      <div class="card related-products">
-        <div class="card-content">
+    </div>
+    <h5>Related Products</h5>
+    <div class="card related-products">
+      <div class="card-content">
 
-          <div class="row">
-            <div class="col s12 m4">
-              <img src="http://www.drivergear.vw.com/SiteData/Products/3_14259_14318_vdrg017844.JPG">
-            </div>
-            <div class="col s12 m8">
-              <span>Casio model a19w black colour watch for men, Classic Design</span>
-              <a class="btn waves-light blue">VIEW</a>
-            </div>
+        <div class="row">
+          <div class="col s12 m4">
+            <img src="http://www.drivergear.vw.com/SiteData/Products/3_14259_14318_vdrg017844.JPG">
+          </div>
+          <div class="col s12 m8">
+            <span>Casio model a19w black colour watch for men, Classic Design</span>
+            <a class="btn waves-light blue">VIEW</a>
+          </div>
 
         </div>
       </div>
@@ -207,9 +87,24 @@
             <a class="btn waves-light blue">VIEW</a>
           </div>
 
+        </div>
       </div>
     </div>
-  </div>
+    <div class="card related-products">
+      <div class="card-content">
+
+        <div class="row">
+          <div class="col s12 m4">
+            <img src="http://www.drivergear.vw.com/SiteData/Products/3_14259_14318_vdrg017844.JPG">
+          </div>
+          <div class="col s12 m8">
+            <span>Casio model a19w black colour watch for men, Classic Design</span>
+            <a class="btn waves-light blue">VIEW</a>
+          </div>
+
+        </div>
+      </div>
+    </div>
 
   </div>
 </div>
@@ -220,101 +115,101 @@
 </div> -->
 
 
-  <div class="related-reviews">
-    <% related_reviews =  Review.where(reviewer_id: @review.reviewer_id).where('id != ?', @review.id).all %>
-    <% if related_reviews.size == 0 %>
-    <p class="center flow-text">No other reviews by this reviewer</p>
-    <% else  %>
+<div class="related-reviews">
+  <% related_reviews =  Review.where(reviewer_id: @review.reviewer_id).where('id != ?', @review.id).all %>
+  <% if related_reviews.size == 0 %>
+      <p class="center flow-text">No other reviews by this reviewer</p>
+  <% else  %>
 
-    <% related_reviews.take(4).each do |review| %>
+      <% related_reviews.take(4).each do |review| %>
 
 
-    <div class="col s10 m6 l3 offset-s1">
-      <div class="card" style="min-height: 270px !important; max-height: 270px !important">
-        <div class="card-image">
-          <img src="http://i3.ytimg.com/vi/<%= review.youtube_url %>/hqdefault.jpg">
-        </div>
-        <div class="card-content">
-          <h6><%= link_to truncate(review.title, length: 50), review_path(review) %></h6>
-          <div class="chip">
-            <img src="<%= user.avatar %>" alt="Reviewer picture">
-            <small class="truncate"><%= user.username %></small>
+          <div class="col s10 m6 l3 offset-s1">
+            <div class="card" style="min-height: 270px !important; max-height: 270px !important">
+              <div class="card-image">
+                <img src="http://i3.ytimg.com/vi/<%= review.youtube_url %>/hqdefault.jpg">
+              </div>
+              <div class="card-content">
+                <h6><%= link_to truncate(review.title, length: 50), review_path(review) %></h6>
+                <div class="chip">
+                  <img src="<%= user.avatar %>" alt="Reviewer picture">
+                  <small class="truncate"><%= user.username %></small>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
 
 
-    <% end %>
-    <% end %>
-  </div>
-
-  <% if @review.amazon_ad.present? %>
-  <%= render 'reviews/partials/amazon_ad', review: @review %>
+      <% end %>
   <% end %>
+</div>
+
+<% if @review.amazon_ad.present? %>
+    <%= render 'reviews/partials/amazon_ad', review: @review %>
+<% end %>
 </div>
 
 
 
 
-  <% if product.reviews.count > 1 %>
-  <div class="row">
-    <div class="col s12">
-      <h2 class="flow-text teal-text center">Similar Reviews</h2>
-      <ul class="collection">
-        <% product.reviews.where.not(id: @review.id).take(4).each do |review| %>
-        <li class="collection-item avatar">
-          <%= link_to review.title do %>
-          <i class="material-icons circle light-blue">play_arrow</i>
+<% if product.reviews.count > 1 %>
+    <div class="row">
+      <div class="col s12">
+        <h2 class="flow-text teal-text center">Similar Reviews</h2>
+        <ul class="collection">
+          <% product.reviews.where.not(id: @review.id).take(4).each do |review| %>
+              <li class="collection-item avatar">
+                <%= link_to review.title do %>
+                    <i class="material-icons circle light-blue">play_arrow</i>
 
+                <% end %>
+                <span class="title truncate"><%= link_to review.title, review_path(review) %></span>
+                <div class="chip">
+                  <%review_user = User.find(review.reviewer_id) %>
+                  <%= link_to review_user.username, user_path(review_user) %>
+                </div>
+              </li>
           <% end %>
-          <span class="title truncate"><%= link_to review.title, review_path(review) %></span>
-          <div class="chip">
-            <%review_user = User.find(review.reviewer_id) %>
-            <%= link_to review_user.username, user_path(review_user) %>
-          </div>
-        </li>
+        </ul>
+        <% if product.reviews.count > 4 %>
+            <%= link_to 'View all reviews for this product', product_path(product) %>
         <% end %>
-      </ul>
-      <% if product.reviews.count > 4 %>
-      <%= link_to 'View all reviews for this product', product_path(product) %>
-      <% end %>
+      </div>
     </div>
-  </div>
-  <% end %>
+<% end %>
 
-  <div class="row">
-    <div class="col s12 recommended-reviews">
-      <h2 class="flow-text center">Recommended Reviews</h2>
-      <% review_items = Review.where('id != ?', @review.id).take(10) %>
-      <!--If not current_user, then show top 10 reviews-->
-      <% unless current_user %>
-      <% review_items.each do |review| %>
-      <% review_user = User.find(review.reviewer_id) %>
-      <%= render partial: 'reviews/partials/recommended_reviews',
-      locals: { review: review, user: review_user } %>
-      <% end %>
-      <% else %>
-      <% if current_user.recommended_reviews.count < 10 %>
-      <% review_items.each do |review| %>
-      <% review_user = User.find(review.reviewer_id) %>
-      <%= render partial: 'reviews/partials/recommended_reviews',
-      locals: { review: review, user: review_user } %>
-      <% end %>
-      <% else %>
-      <%  current_user.recommended_reviews.each do |review| %>
-      <%review_user = User.find(review.reviewer_id) %>
-      <%= render partial: 'reviews/partials/recommended_reviews',
-      locals: { review: review, user: review_user } %>
-      <% end %>
-      <% end %>
-      <% end %>
-    </div>
+<div class="row">
+  <div class="col s12 recommended-reviews">
+    <h2 class="flow-text center">Recommended Reviews</h2>
+    <% review_items = Review.where('id != ?', @review.id).take(10) %>
+    <!--If not current_user, then show top 10 reviews-->
+    <% unless current_user %>
+        <% review_items.each do |review| %>
+            <% review_user = User.find(review.reviewer_id) %>
+            <%= render partial: 'reviews/partials/recommended_reviews',
+                       locals: { review: review, user: review_user } %>
+        <% end %>
+    <% else %>
+        <% if current_user.recommended_reviews.count < 10 %>
+            <% review_items.each do |review| %>
+                <% review_user = User.find(review.reviewer_id) %>
+                <%= render partial: 'reviews/partials/recommended_reviews',
+                           locals: { review: review, user: review_user } %>
+            <% end %>
+        <% else %>
+            <%  current_user.recommended_reviews.each do |review| %>
+                <%review_user = User.find(review.reviewer_id) %>
+                <%= render partial: 'reviews/partials/recommended_reviews',
+                           locals: { review: review, user: review_user } %>
+            <% end %>
+        <% end %>
+    <% end %>
   </div>
+</div>
 
-  <div class="row">
-    <div class="col s12">
-      <script type="text/javascript">
+<div class="row">
+  <div class="col s12">
+    <script type="text/javascript">
       amzn_assoc_placement = "adunit0";
       amzn_assoc_search_bar = "false";
       amzn_assoc_tracking_id = "raaaaj5000-20";
@@ -327,10 +222,10 @@
       amzn_assoc_default_search_phrase = "<%= @review.reviewfiable.title %>";
       amzn_assoc_default_category = "All";
       amzn_assoc_linkid = "2cc17c8830b0429d93f605725d681968";
-      </script>
-      <script src="//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US"></script>
-    </div>
+    </script>
+    <script src="//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US"></script>
   </div>
+</div>
 
 
 
@@ -348,42 +243,39 @@
   <div class="modal-footer">
     <small>Click outside of the box to close</small>
     <%= link_to redirect_to_website_review_path(affiliate_website: @review.affiliate_link),
-    class: 'waves-effect waves-light red btn right',method: :post, target: '_blank' do%>
-    View the website<i class="material-icons right">send</i>
+                class: 'waves-effect waves-light red btn right',method: :post, target: '_blank' do%>
+        View the website<i class="material-icons right">send</i>
     <% end %>
     <%= link_to 'View More', product_path(@review.reviewfiable), class: 'modal-action modal-close waves-effect light-blue btn-flat' %>
   </div>
 </div>
 
-<div class="container">
-  <%= commontator_thread(@review) %>
-</div>
+  <div class="container">
+    <%= commontator_thread(@review) %>
+  </div>
 
-<% unless user_signed_in? %>
-<div id="modal2" class="modal">
-  <div class="modal-content">
-    <h4>Login Required</h4>
-    <%= link_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path %>
-  </div>
-  <div class="modal-footer">
-    <small>Click outside the box to close</small>
-  </div>
-</div>
-<% end %>
-<<<<<<< HEAD
-=======
+  <% unless user_signed_in? %>
+      <div id="modal2" class="modal">
+        <div class="modal-content">
+          <h4>Login Required</h4>
+          <%= link_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path %>
+        </div>
+        <div class="modal-footer">
+          <small>Click outside the box to close</small>
+        </div>
+      </div>
+  <% end %>
 
 
 </div>
 <script type="text/javascript" charset="utf-8">
-$('.modal-trigger').leanModal();
-$('.carousel').carousel();
-$('.review-description').find('.external_link').each(function(index)
-{
-  var text = $(this).text();
-  $(this).html('<a class="link-website" target="_blank" rel="nofollow" data-method="post" href="/reviews/<%= @review.slug %>/redirect_to_website?affiliate_website=<%= @review.affiliate_link %>">'+ text +'</a>')
-});
->>>>>>> 772e5c3f79273c25bfa3339b283d1757265c9708
+  $('.modal-trigger').leanModal();
+  $('.carousel').carousel();
+  $('.review-description').find('.external_link').each(function(index)
+  {
+    var text = $(this).text();
+    $(this).html('<a class="link-website" target="_blank" rel="nofollow" data-method="post" href="/reviews/<%= @review.slug %>/redirect_to_website?affiliate_website=<%= @review.affiliate_link %>">'+ text +'</a>')
+  });
 
 
 <%= render 'javascripts/reviews/show' %>
