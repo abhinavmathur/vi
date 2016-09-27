@@ -16,6 +16,7 @@
  *= require slick
  *= require slick-theme
  *= require materialize-tags.min
+ *= require typeahead
  *= require commontator/application
  *= style
  */

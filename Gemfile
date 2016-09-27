@@ -46,7 +46,6 @@ group :development do
   gem 'spring'
 end
 
-gem 'rails_12factor', group: :production
 
 #My Gems
 gem 'pg'
@@ -55,7 +54,7 @@ gem 'figaro'
 gem 'friendly_id'
 gem 'select2-rails'
 gem 'gravatarify', '~> 3.0.0'
-gem 'markable', github: 'chrome/markable'
+gem 'markable', git: 'https://github.com/chrome/markable'
 gem 'jquery-turbolinks'
 gem 'pundit'
 gem 'faker'
@@ -65,7 +64,7 @@ gem 'jquery-ui-rails'
 gem 'kaminari'
 gem 'devise'
 gem 'simple_form'
-gem 'simple_form-materialize', github: 'patricklindsay/simple_form-materialize'
+gem 'simple_form-materialize', git: 'https://github.com/patricklindsay/simple_form-materialize'
 gem 'toastr-rails'
 gem 'underscore-rails'
 gem 'geocoder'
@@ -91,5 +90,5 @@ gem 'ahoy_matey'
 gem 'searchjoy'
 gem 'jquery-slick-rails'
 gem 'country_select'
-gem 'twitter-typeahead-rails', :git => "git://github.com/yourabi/twitter-typeahead-rails.git"
+gem 'twitter-typeahead-rails', :git => 'https://github.com/yourabi/twitter-typeahead-rails.git'
 gem 'countries', :require => 'countries/global'

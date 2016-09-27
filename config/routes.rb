@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   mount Commontator::Engine => '/commontator'
+
   devise_for :users, :controllers => { :omniauth_callbacks => 'omniauth_callbacks', registrations: 'registrations' }
 
   resources :reviews, except: :index do
@@ -32,6 +33,8 @@ Rails.application.routes.draw do
   authenticate :user, lambda { |u| u.reviewer? } do
     namespace :reviewer do
       root 'dashboard#index'
+      get '/autocomplete' => 'dashboard#autocomplete'
+      get 'product_search' => 'dashboard#product_search'
     end
   end
 

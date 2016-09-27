@@ -26,13 +26,13 @@ class Product < ActiveRecord::Base
   friendly_id :slug_candidates, use: [:slugged, :finders]
 
 
-  searchkick
+  searchkick match: :word_start, searchable: ['title']
 
   def search_data
     {
         title: title,
         description: description,
-        tags: tags,
+        tags: tags
     }
   end
 

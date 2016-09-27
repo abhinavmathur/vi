@@ -1,0 +1,30 @@
+<h1>Product Search Page</h1>
+<p>First search for the product to review</p>
+<input type="text" id="query" name="query" />
+
+
+<script>
+  var products = new Bloodhound({
+    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    remote: {
+      url: 'http://localhost:3000/reviewer/autocomplete?query=%QUERY',
+      wildcard: '%QUERY'
+    }
+  });
+
+  products.initialize();
+
+  $('#query').materialtags({
+    maxTags: 1,
+    typeaheadjs: {
+      hint: true,
+      highlight: true,
+      minLength: 1,
+      name: 'products',
+      displayKey: 'products',
+      valueKey: 'products',
+      source: products.ttAdapter()
+    }
+  });
+</script>
