@@ -8,7 +8,7 @@ class Reviewer::DashboardController < ApplicationController
   def autocomplete
     render json: Product.search(params[:query], {
         fields: ["title"],
-        limit: 10,
+        limit: 15,
         misspellings: {below: 5}
     }).map(&:title)
   end
