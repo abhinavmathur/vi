@@ -1,17 +1,12 @@
 <div class="navbar-fixed">
   <nav>
     <div class="nav-wrapper main-nav blue darken-4">
-      <a href="/" class="brand-logo left hide-on-med-and-down">Vivieu</a>
       <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 
-      <ul class="right hide-on-med-and-down buttons">
-        <form class="nav-search-bar left">
-          <div class="input-field">
-            <input id="search" type="search" placeholder="search for a review" required>
-            <label for="search"><i class="material-icons">search</i></label>
-            <i class="material-icons">close</i>
-          </div>
-        </form>
+      <ul class="hide-on-med-and-down buttons">
+        <li class="left"><a href="/" class="brand-logo left hide-on-med-and-down">Vivieu</a></li>
+
+
 
 
         <% if user_signed_in? %>
@@ -23,7 +18,7 @@
         </ul>
 
 
-        <li class="bold-text">
+        <li class="right bold-text">
           <a href="#" class="dropdown-button" data-activates="dropdown1">
             <%= current_user.username %><i class="large material-icons right">perm_identity</i><i class="material-icons right">arrow_drop_down</i>
           </a>
@@ -32,6 +27,14 @@
         <% else %>
         <a class="btn red modal-trigger" href="#modal1">Log In</a>
         <% end %>
+        
+        <li class="right"><form class="nav-search-bar">
+          <div class="input-field">
+            <input id="search" type="search" placeholder="search for a review" required>
+            <label for="search"><i class="material-icons">search</i></label>
+            <i class="material-icons">close</i>
+          </div>
+        </form></li>
       </ul>
 
 
