@@ -14,8 +14,11 @@ $(document).on('turbolinks:load', function(){
   $('.collapsible').collapsible({
     accordion : true
   });
+  $('.slider').slider({
+
+  });
   $('.slider.slider-home').slider({
-    height: 450
+    height: 500
   });
   $('.tabs-wrapper').pushpin({
     top: 200,

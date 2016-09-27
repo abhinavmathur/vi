@@ -78,7 +78,6 @@ body {
 .nav-search-bar {
 
   font-style:  italic;
-  display: inline-block;
   padding: 0 20px;
 
 }
@@ -172,5 +171,41 @@ body {
   & .indicator-item {
     background-color: none;
     box-shadow: 1px 1px 5px grey;
+  }
+}
+.review-card {
+  img {
+    width: 50px;
+    height: 250px;
+  }
+}
+.slider .indicators {
+  position: absolute;
+  display: inline-block;
+  right: 70px;
+  bottom: 70px;
+  z-index: 2;
+}
+
+.review-card {
+  & .card-title {
+    font-weight: 600;
+    font-size: 300%;
+  }
+}
+.video-likes {
+
+}
+.icon-text {
+  font-size: 120%;
+  line-height: 0;
+}
+.related-products {
+  img {
+    width: 100px;
+    height: 100px;
+  }
+  & .row {
+    margin: 0;
   }
 }
