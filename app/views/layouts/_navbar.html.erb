@@ -8,10 +8,10 @@
 
 
 
-
         <% if user_signed_in? %>
         <ul id="dropdown1" class="dropdown-content">
           <li><%= link_to 'Dashboard', user_path(current_user) %></li>
+          <li>  <a class="modal-trigger waves-effect waves-light" href="#review-title-modal">Create a Review</a></li>
           <li><%= link_to 'Settings', edit_user_registration_path %></li>
           <li class="divider"></li>
           <li><%= link_to 'Log out', destroy_user_session_path, method: :delete %></li>
@@ -25,7 +25,7 @@
         </li>
 
         <% else %>
-        <a class="btn red modal-trigger" href="#modal1">Log In</a>
+        <a class="btn red modal-trigger right" href="#login-modal">Log In</a>
         <% end %>
         
         <li class="right"><form class="nav-search-bar">
@@ -40,7 +40,7 @@
 
       <ul class="side-nav" id="mobile-demo">
         <% if user_signed_in? %>
-        <li id="logo"><%= link_to 'Viveau', root_path %></li>
+        <li id="logo"><%= link_to 'Vivieu', root_path %></li>
         <li>
           <div class="divider">
           </div>
@@ -68,7 +68,7 @@
 </div>
 
 <!-- modal content  -->
-<div id="modal1" class="purple darken-4 white-text center modal">
+<div id="login-modal" class="purple darken-4 white-text center modal">
   <div class="modal-content">
     <h4>Log In</h4>
     <p>Sign in with the one and only Google.</p>

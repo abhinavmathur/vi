@@ -31,7 +31,8 @@ class Review < ActiveRecord::Base
   has_many :clicks
   has_one :amazon_ad
 
-  validates_presence_of :title
+  validates :title, presence: true, uniqueness: { case_sensitive: false }, length: { minimum: 12}
+
   #Todo uncomment this line
   #validates_uniqueness_of :youtube_url, message: ' is already in use'
   searchkick

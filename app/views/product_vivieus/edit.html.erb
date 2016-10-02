@@ -1,0 +1,102 @@
+<div class="row">
+  <!--Review form-->
+  <div class="col s12 m8 l8">
+    <h2>Review details</h2>
+
+    <div id="review-error-messages">
+
+    </div>
+
+    <%= form_for @product_vivieu, html: { class: 'review-form'}, url: "/product_vivieus/#{@product_vivieu.id}", remote: true do |f| %>
+        <div class="row">
+          <div class="col s12 input-field">
+            <%= f.text_field :title, required: true, data: {validation: 'required'} %>
+            <%= f.label :title %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col s12 input-field">
+            <%= f.text_area :description, data: {validation: 'required'}, class: 'materialize-textarea' %>
+            <%= f.label :description %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col s12 input-field">
+            <%= f.text_field :tags, data: {validation: 'required'} %>
+            <%= f.label :tags %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col s12 input-field">
+            <%= f.text_field :youtube_url %>
+            <%= f.label :youtube_url, 'YouTube Video ID' %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col s12 input-field">
+            <a class="modal-trigger waves-effect waves-light btn youtube-button" href="#youtube-videos-modal">Modal</a>
+          </div>
+        </div>
+
+
+
+        <div class="row">
+          <div class="col s12 input-field">
+            <%= f.text_field :affiliate_link %>
+            <%= f.label :affiliate_link,
+                        'Your affiliate link goes here', placeholder: 'http://',
+                        data: { validation: 'url',
+                                error: 'Must be a valid link',
+                                suggestion: 'Should start with http or https'} %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col s12 input-field">
+            <%= f.text_field :affiliate_tag %>
+            <%= f.label :affiliate_tag %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col s12 input-field">
+            <%= f.submit 'Save' %>
+          </div>
+        </div>
+    <% end %>
+  </div>
+
+  <!--Product form-->
+  <div class="col s4">
+
+  </div>
+
+  <div class="append-modal">
+
+  </div>
+
+</div>
+<script type="text/javascript" charset="utf-8">
+
+  $('#hello').on('click', function()
+  {
+    if($('#hello').prop('checked')) {
+      alert('checked')
+    }
+    else
+    {
+      alert('unchecked')
+    }
+
+  });
+
+    $(".youtube-button").on('click', function(){
+      $('.append-modal').html("<%= j render partial: 'product_vivieus/partials/youtube_modal',
+       locals: { product_vivieu: @product_vivieu } %>")
+
+    })
+</script>

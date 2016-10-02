@@ -23,8 +23,9 @@
 //= require afile.min
 //= require materialize-tags.min
 //= require show_more.min
-//= require turbolinks
 //= require_tree .
+//= require turbolinks
+
 
 $(document).ready(function() {
     $('select').material_select();
@@ -36,3 +37,4 @@ $(document).ready(function() {
         hideText: 'Show less'
     });
 });
+

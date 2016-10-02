@@ -1,0 +1,2 @@
+module ProductVivieusHelper
+end

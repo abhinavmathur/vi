@@ -14,11 +14,20 @@ class ProductsController < ApplicationController
     unless params[:product][:asin].nil?
       result, result_item = Product.from_amazon(params[:product][:asin])
       if result == 'notice'
-        flash[:notice] = 'Product was created successfully'
-        redirect_to product_path(result_item)
+        respond_to do |format|
+          format.html {
+            flash[:notice] = 'Product was created successfully'
+            redirect_to product_path(result_item)
+          }
+          format.js
+        end
       else
-        flash[:error] = result_item
-        render :new
+        respond_to do |format|
+          format.html { render :action => 'new'
+          flash[:error] = result_item
+          }
+          format.js { render :action => 'new' }
+        end
       end
     else
       @product = Product.create(product_params)
@@ -34,7 +43,7 @@ class ProductsController < ApplicationController
   end
 
   def edit
-  authorize @product, :update?
+    authorize @product, :update?
   end
 
   def show
@@ -78,9 +87,6 @@ class ProductsController < ApplicationController
                                    :affiliate_link, :publish)
   end
 
-  def permitted_mimes
-
-  end
 
 
   def set_product
