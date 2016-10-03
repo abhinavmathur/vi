@@ -1,5 +1,3 @@
-<% if user_signed_in? %>
-$('#review-title-modal').openModal();
-<% else %>
-alert('Hello')
+<% unless user_signed_in? %>
+alert('Please login to post a review')
 <% end %>

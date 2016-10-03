@@ -28,7 +28,6 @@
 
 
 $(document).ready(function() {
-    $('select').material_select();
     $('.showmore').showMore({
         speedDown: 300,
         speedUp: 300,

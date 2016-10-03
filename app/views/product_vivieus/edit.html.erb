@@ -38,7 +38,7 @@
 
         <div class="row">
           <div class="col s12 input-field">
-            <a class="modal-trigger waves-effect waves-light btn youtube-button" href="#youtube-videos-modal">Modal</a>
+            <a class="modal-trigger-youtube waves-effect waves-light btn youtube-button" href="#youtube-videos-modal">Modal</a>
           </div>
         </div>
 
@@ -94,9 +94,72 @@
 
   });
 
-    $(".youtube-button").on('click', function(){
-      $('.append-modal').html("<%= j render partial: 'product_vivieus/partials/youtube_modal',
+  $(".youtube-button").on('click', function(){
+    $('.append-modal').html("<%= j render partial: 'product_vivieus/partials/youtube_modal',
        locals: { product_vivieu: @product_vivieu } %>")
 
-    })
+  })
+  $('.modal-trigger-youtube').leanModal({
+    ready: function () {
+      $.ajax({
+        url: '/product_vivieus/<%= @product_vivieu.id %>/youtube_videos',
+        dataType: 'json',
+        method: 'GET',
+        beforeSend: function() {
+          $('.youtube-videos').html('<h3 class="flow-text center">Videos loading ...</h3>');
+        },
+        success: function (data) {
+          $('.youtube-videos').empty().append('<input type="text" class="text-input" placeholder="Filter results" id="filter" value="" />');
+          for(var i = 0; i < data.youtube_videos.length; i++)
+          {
+            $('.youtube-videos').append("<li class='titles flow-text' data-id='"+ data.youtube_videos[i].id +"'>"+ data.youtube_videos[i].title +"<span class='badge badge-click blue white-text' data-badge-caption=''>Add</span></li>");
+          }
+          live_search();
+          badge_click();
+        },
+        timeout: 15000,
+        error: function(jqXHR, textStatus, errorThrown) {
+          if(textStatus==="timeout") {
+            $('.youtube-videos').empty().append('<h3 class="flow-text center red">Looks like there was a connection timeout.' +
+                ' Try again or put the YouTube ID manually'+'</h3>');
+          }
+        }
+      });
+    }
+  });
+
+  function live_search(){
+    $("#filter").keyup(function(){
+      // Retrieve the input field text and reset the count to zero
+      var filter = $(this).val(), count = 0;
+
+      // Loop through the comment list
+      $(".titles").each(function(){
+
+        // If the list item does not contain the text phrase fade it out
+        if ($(this).text().search(new RegExp(filter, "i")) < 0) {
+          $(this).fadeOut();
+
+          // Show the list item if the phrase matches and increase the count by 1
+        } else {
+          $(this).show();
+          count++;
+        }
+      });
+
+      // Update the count
+      var numberItems = count;
+      $("#filter-count").text("Number of Comments = "+count);
+    });
+  }
+
+  function badge_click()
+  {
+    $('.badge-click').css('cursor', 'pointer');
+    $('.badge-click').on('click', function(){
+      $('#review_youtube_url').val($(this).parent().data('id'))
+      $('#youtube-videos-modal').closeModal();
+    });
+  }
+
 </script>
