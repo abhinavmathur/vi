@@ -72,7 +72,7 @@
 
   <!--Product form-->
   <div class="col s4">
-
+    <%= render 'product_vivieus/partials/product_form' %>
   </div>
 
   <div class="append-modal">
@@ -85,11 +85,11 @@
   $('#hello').on('click', function()
   {
     if($('#hello').prop('checked')) {
-      alert('checked')
+      alert('checked');
     }
     else
     {
-      alert('unchecked')
+      alert('unchecked');
     }
 
   });
@@ -98,7 +98,8 @@
     $('.append-modal').html("<%= j render partial: 'product_vivieus/partials/youtube_modal',
        locals: { product_vivieu: @product_vivieu } %>")
 
-  })
+  });
+
   $('.modal-trigger-youtube').leanModal({
     ready: function () {
       $.ajax({
@@ -158,8 +159,47 @@
     $('.badge-click').css('cursor', 'pointer');
     $('.badge-click').on('click', function(){
       $('#review_youtube_url').val($(this).parent().data('id'))
+      Materialize.updateTextFields();
       $('#youtube-videos-modal').closeModal();
     });
   }
 
+</script>
+<script type="text/javascript" charset="utf-8">
+  var products = new Bloodhound({
+    datumTokenizer: Bloodhound.tokenizers.obj.whitespace,
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    remote: {
+      url: 'http://localhost:3000/product_vivieus/autocomplete?query=%QUERY',
+      wildcard: '%QUERY'
+    }
+  });
+
+  products.initialize();
+
+  $('#query').materialtags({
+    maxTags: 1,
+    typeaheadjs: {
+      hint: true,
+      highlight: true,
+      minLength: 1,
+      name: 'products',
+      source: products.ttAdapter()
+    }
+  });
+  $('#query').on('itemAdded', function(event) {
+    $('.add-button-insert').html('<a class="waves-effect waves-light add-product-btn btn" onclick="add_product()">Add Product</a>');
+  });
+  $('#query').on('itemRemoved', function(event) {
+    $('.add-button-insert').empty();
+  });
+
+  function add_product(){
+    var product_title = $('#query');
+    $.ajax({
+      method: 'POST',
+      url: 'http://localhost:3000/product_vivieus/add_product',
+      data: { title: product_title }
+    })
+  }
 </script>

@@ -3,6 +3,10 @@ Rails.application.routes.draw do
     member do
       get '/youtube_videos' => 'product_vivieus#youtube_videos'
     end
+    collection do
+      get '/autocomplete' => 'product_vivieus#autocomplete'
+      post '/add_product' => 'product_vivieus#add_product'
+    end
   end
   mount Commontator::Engine => '/commontator'
 

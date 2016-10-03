@@ -1,6 +1,6 @@
 class ProductVivieusController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_product_vivieu, except: [:new, :create]
+  before_action :set_product_vivieu, except: [:new, :create, :autocomplete, :youtube_videos, :add_product]
 
   def new
     render layout: false
@@ -64,7 +64,18 @@ class ProductVivieusController < ApplicationController
       flash[:error] = e.to_s
       redirect_to edit_product_vivieu_path(@product_vivieu)
     end
+  end
 
+  def autocomplete
+    render json: Product.search(params[:query], {
+        fields: ["title"],
+        limit: 15,
+        misspellings: {below: 5}
+    }).map(&:title)
+  end
+
+  def add_product
+    raise params.inspect
   end
 
   private
