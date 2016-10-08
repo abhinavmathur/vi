@@ -477,3 +477,38 @@ ActsAsTaggableOn::Tagging.includes(:tag).where(context: 'deshanatags').map { |ta
   </div>
 </div>
 </div>
+
+
+
+
+function back_to_previous_card() {
+    $.ajax({
+      method: 'GET',
+      dataType: 'json',
+      url: 'http://localhost:3000/product_vivieus/get_product_info',
+      beforeSend: function()
+      {
+        $.ajax({
+          method: 'POST',
+          dataType: 'JSON',
+          url: 'http://localhost:3000/product_vivieus/get_product_info?id=<%= @product_vivieu.reviewfiable_id %>'
+        })
+      },
+      success: function (data) {
+        var card = '<div class="card">' +
+            '<div class="card-content">' +
+            '<span class="card-title">' + data.title +
+            '</span><div class="divider">' +
+            '</div>' +
+            '<div class="center">' +
+            '<img src="'+ data.main_image +'" class="responsive-img" alt=""></div></div>' +
+            '<div class="card-action">' +
+            '<a href="http://localhost:3000/products/'+ data.slug +'">Visit Product page</a>' +
+            '<button onclick="show_product_form()">Wrong Product</button></div></div>'
+        $('.product-card').fadeOut(200, function(){
+          $(this).empty().html(card).fadeIn(200);
+        })
+
+      }
+    })
+  }

@@ -2,10 +2,11 @@ Rails.application.routes.draw do
   resources :product_vivieus, except: [:index, :show], path_names: { edit: 'create-a-vivieu'} do
     member do
       get '/youtube_videos' => 'product_vivieus#youtube_videos'
+      post '/amazon_product' => 'product_vivieus#amazon_product'
+      post '/add_product' => 'product_vivieus#add_product'
     end
     collection do
       get '/autocomplete' => 'product_vivieus#autocomplete'
-      post '/add_product' => 'product_vivieus#add_product'
     end
   end
   mount Commontator::Engine => '/commontator'

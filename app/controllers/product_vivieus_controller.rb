@@ -1,6 +1,6 @@
 class ProductVivieusController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_product_vivieu, except: [:new, :create, :autocomplete, :youtube_videos, :add_product]
+  before_action :set_product_vivieu, only: [:show, :edit, :update, :destroy, :amazon_product, :add_product]
 
   def new
     render layout: false
@@ -67,16 +67,38 @@ class ProductVivieusController < ApplicationController
   end
 
   def autocomplete
-    render json: Product.search(params[:query], {
+    @products = Product.search(params[:query], {
         fields: ["title"],
         limit: 15,
         misspellings: {below: 5}
-    }).map(&:title)
+    })
+
   end
 
   def add_product
-    raise params.inspect
+    if params[:product_id].present?
+      product_id = params[:product_id].to_i
+      product = Product.find(product_id)
+      if product.errors.any?
+        render :json => { :errors => product.errors.full_messages }, :status => 422
+      else
+        @product_vivieu.update(reviewfiable: product)
+        @product = product
+      end
+    end
   end
+
+  def amazon_product
+    asin = params[:product][:asin]
+    result, obj = Product.from_amazon(asin)
+    if result == 'duplicate' or result == 'notice'
+      @product_vivieu.update(reviewfiable: obj)
+      @product = obj
+    else
+      render json: obj, status: :unprocessable_entity
+    end
+  end
+
 
   private
   def create_review_params

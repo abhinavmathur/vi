@@ -1,5 +1,11 @@
 <div class="card">
   <div class="card-content">
+    <% if product.present? %>
+        <%= link_to 'Back', edit_product_vivieu_path(Review.find_by(reviewfiable: product)) %>
+        <!--<a class="btn-floating btn-large waves-effect waves-light red left" onclick="back_to_previous_card()">
+          <i class="material-icons left">arrow_back</i>
+        </a>-->
+    <% end %>
     <span class="card-title">Add a product</span>
     <div class="row">
       <div class="ajax-result">
@@ -14,7 +20,11 @@
     </div>
   </div>
   <div class="card-action">
-    <a href="#">This is a link</a>
+    <% if product.present? %>
+        <a class="waves-effect waves-light btn modal-trigger" onclick="amazon_modal()">Get from Amazon</a>
+    <% else %>
+        <a class="waves-effect waves-light btn modal-trigger" href="#amazon-modal">Get from Amazon</a>
+    <% end %>
     <a href="#">This is a link</a>
   </div>
 </div>

@@ -72,14 +72,27 @@
 
   <!--Product form-->
   <div class="col s4">
-    <%= render 'product_vivieus/partials/product_form' %>
+    <div class="product-card">
+      <% if @product_vivieu.reviewfiable.present? %>
+          <%= render partial: 'product_vivieus/partials/existing_product_card', locals: { product: @product_vivieu.reviewfiable} %>
+      <% else %>
+          <%= render partial: 'product_vivieus/partials/product_form', locals: { product: @product_vivieu.reviewfiable} %>
+      <% end %>
+
+    </div>
   </div>
 
   <div class="append-modal">
 
   </div>
 
+  <div id="amazon-modal" class="modal">
+    <div class="modal-content">
+      <%= render partial: 'product_vivieus/partials/amazon_product_form', locals: { id: @product_vivieu.id} %>
+    </div>
+  </div>
 </div>
+
 <script type="text/javascript" charset="utf-8">
 
   $('#hello').on('click', function()
@@ -166,40 +179,89 @@
 
 </script>
 <script type="text/javascript" charset="utf-8">
-  var products = new Bloodhound({
-    datumTokenizer: Bloodhound.tokenizers.obj.whitespace,
-    queryTokenizer: Bloodhound.tokenizers.whitespace,
-    remote: {
-      url: 'http://localhost:3000/product_vivieus/autocomplete?query=%QUERY',
-      wildcard: '%QUERY'
-    }
-  });
+  function search_script()
+  {
+    var products = new Bloodhound({
+      datumTokenizer: Bloodhound.tokenizers.obj.whitespace,
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      remote: {
+        url: 'http://localhost:3000/product_vivieus/autocomplete?query=%QUERY',
+        wildcard: '%QUERY'
+      }
+    });
 
-  products.initialize();
+    products.initialize();
 
-  $('#query').materialtags({
-    maxTags: 1,
-    typeaheadjs: {
-      hint: true,
-      highlight: true,
-      minLength: 1,
-      name: 'products',
-      source: products.ttAdapter()
-    }
-  });
-  $('#query').on('itemAdded', function(event) {
-    $('.add-button-insert').html('<a class="waves-effect waves-light add-product-btn btn" onclick="add_product()">Add Product</a>');
-  });
-  $('#query').on('itemRemoved', function(event) {
-    $('.add-button-insert').empty();
-  });
+    $('#query').materialtags({
+      maxTags: 1,
+      itemValue: 'id',
+      itemText: 'title',
+      typeaheadjs: {
+        hint: true,
+        highlight: true,
+        minLength: 1,
+        name: 'cities',
+        displayKey: 'title',
+        source: products.ttAdapter()
+      }
+    });
+    $('#query').on('itemAdded', function(event) {
+      $('.add-button-insert').html('<a class="waves-effect waves-light add-product-btn btn" onclick="add_product()">Add Product</a>');
+    });
+    $('#query').on('itemRemoved', function(event) {
+      $('.add-button-insert').empty();
+    });
+  }
+
+  search_script();
+
 
   function add_product(){
-    var product_title = $('#query');
+    var product_id = $('#query').val();
     $.ajax({
       method: 'POST',
-      url: 'http://localhost:3000/product_vivieus/add_product',
-      data: { title: product_title }
+      url: "http://localhost:3000/product_vivieus/<%= @product_vivieu.id %>/add_product",
+      data: { product_id: product_id },
+      success: function(data){
+        var product_array = [];
+        product_array.push('<div class="card-panel teal"><span>')
+        product_array.push('<h2 class="center">'+ data.title +'</h2>')
+        var first_image = data.product_images.split(',')[0];
+        product_array.push('<img class="responsive-img" src="'+ first_image +'">');
+        product_array.push('<a class="waves-effect waves-light red btn" onclick="show_product_form()">Wrong Product ?</a>')
+        product_array.push('</span></div>');
+        $('.product-card').fadeOut(1000, function(){
+          var card = product_array.join('');
+          $(this).html(card).fadeIn();
+        })
+      },
+      error: function(data){
+        console.log(data)
+      }
     })
   }
+
+  function show_product_form()
+  {
+    $('.product-card').fadeOut(200, function(){
+      $(this).html('<%= j render partial: 'product_vivieus/partials/product_form', locals: { product: @product_vivieu.reviewfiable} %>').fadeIn(500);
+      search_script();
+    })
+  }
+
+  function amazon_modal()
+  {
+    $('#amazon-modal').openModal();
+  }
+
+  function close_amazon_modal()
+  {
+    $('#amazon-modal').closeModal();
+  }
+
+
+
+
+
+
 </script>
