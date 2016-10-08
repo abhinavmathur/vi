@@ -9,36 +9,22 @@ class ProductsController < ApplicationController
   end
 
   def create
-    product = Product.new
-    authorize product, :create?
-    unless params[:product][:asin].nil?
-      result, result_item = Product.from_amazon(params[:product][:asin])
-      if result == 'notice'
-        respond_to do |format|
-          format.html {
-            flash[:notice] = 'Product was created successfully'
-            redirect_to product_path(result_item)
-          }
-          format.js
-        end
-      else
-        respond_to do |format|
-          format.html { render :action => 'new'
-          flash[:error] = result_item
-          }
-          format.js { render :action => 'new' }
-        end
+    if params[:product][:review_id].present?
+      review_id = params[:product][:review_id].to_i
+      unless Review.exists?(id: review_id)
+        redirect_to request.referer and return
+        flash[:error] = 'Invalid review_id supplied'
       end
+    end
+    @product = Product.create(product_params)
+    @product.user_id = current_user.id
+    if @product.save
+      Review.find_by(id: review_id).update(reviewfiable: @product)
+      flash[:notice] = 'Product was created successfully'
+      redirect_to product_path(@product)
     else
-      @product = Product.create(product_params)
-      @product.user_id = current_user.id
-      if @product.save
-        flash[:notice] = 'Product was created successfully'
-        redirect_to product_path(@product)
-      else
-        flash[:error] = 'Something went wrong. Please check the form'
-        render :new
-      end
+      flash[:error] = @product.errors.full_messages.to_sentence
+      render :new
     end
   end
 
@@ -52,6 +38,13 @@ class ProductsController < ApplicationController
 
   def update
     authorize @product, :update?
+    unless params[:product][:review_id].nil?
+      review_id = params[:product][:review_id].to_i
+      unless Review.exists?(id: review_id)
+        redirect_to request.referer and return
+        flash[:error] = 'Invalid review_id supplied'
+      end
+    end
     if params[:product][:product_images].present?
       params[:product][:product_images].to_s.split(',').each do |image|
         mime = File.extname(image)
@@ -63,8 +56,14 @@ class ProductsController < ApplicationController
       end
     end
     if @product.update(product_params)
+      Review.find_by(id: review_id).update(reviewfiable: @product)
       flash[:notice] = 'Product was updated successfully'
-      redirect_to product_path(@product)
+      if params[:product][:review_id].present?
+        review_id = params[:product][:review_id].to_i
+        redirect_to product_path(@product, review_id: review_id)
+      else
+        redirect_to product_path(@product)
+      end
     else
       flash[:error] = 'Something went wrong. Please check the form'
       render :edit
@@ -84,7 +83,7 @@ class ProductsController < ApplicationController
 
   def review_params
     params.require(:review).permit(:title, :description, :youtube_url, :affiliate_tag,
-                                   :affiliate_link, :publish)
+                                   :affiliate_link, :publish, :review_id)
   end
 
 

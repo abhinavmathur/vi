@@ -7,7 +7,7 @@
     </div>
   </div>
   <div class="card-action">
-    <a href="https://localhost:3000/products/<%= product.slug %>">Visit Product page</a>
+    <%= link_to 'Edit Product Details', edit_product_path(product, review_id: @product_vivieu.id) %>
     <button onclick="show_product_form()">Wrong Product</button>
   </div>
 </div>

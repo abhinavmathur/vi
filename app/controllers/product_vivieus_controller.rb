@@ -99,6 +99,11 @@ class ProductVivieusController < ApplicationController
     end
   end
 
+  def custom_product
+    product = Product.create(product_params)
+    product.user_id = current_user.id
+  end
+
 
   private
   def create_review_params
@@ -111,5 +116,9 @@ class ProductVivieusController < ApplicationController
 
   def set_product_vivieu
     @product_vivieu = Review.friendly.find(params[:id])
+  end
+
+  def product_params
+    params.require(:product).permit(:title, :description, :category_id, :company, :tags, :product_images)
   end
 end

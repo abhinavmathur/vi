@@ -20,13 +20,13 @@
 #
 
 class Product < ActiveRecord::Base
-  serialize :similar_products
+  attr_accessor :review_id
+
   belongs_to :category
   extend FriendlyId
   friendly_id :slug_candidates, use: [:slugged, :finders]
 
-
-  searchkick match: :word_start, searchable: ['title','asin']
+  searchkick match: :word_start, searchable: ['title']
 
   def search_data
     {
@@ -69,7 +69,7 @@ class Product < ActiveRecord::Base
                                             company: company, tags: tags, asin: asin,
                                             product_images: product_images,
                                             category_id: category.id, sub_category: sub_category)
-        SimilarProducts.new(asin).create!
+        SimilarProductsWorker.perform_async(asin)
         return 'notice', product
       else
         return 'error', result.error
