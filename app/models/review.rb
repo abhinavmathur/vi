@@ -32,9 +32,10 @@ class Review < ActiveRecord::Base
   has_one :amazon_ad
 
   validates :title, presence: true, uniqueness: { case_sensitive: false }, length: { minimum: 12}
+  validates :tags, presence: true, if: :published?
+  validates :youtube_url, presence: true, uniqueness: true, if: :published?
 
-  #Todo uncomment this line
-  #validates_uniqueness_of :youtube_url, message: ' is already in use'
+
   searchkick
 
   def search_data
@@ -44,7 +45,7 @@ class Review < ActiveRecord::Base
         tags: tags,
     }
   end
-
+  
 
   def should_generate_new_friendly_id?
     title_changed?
@@ -56,6 +57,10 @@ class Review < ActiveRecord::Base
         :title,
         [:title, :id],
     ]
+  end
+
+  def published?
+    publish?
   end
 
   def has_amazon_product?

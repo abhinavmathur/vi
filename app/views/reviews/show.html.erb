@@ -1,6 +1,6 @@
-<% user = User.find(@review.reviewer_id) %>
+<% user = User.find_by(id: @review.reviewer_id) %>
 <% product = @review.reviewfiable %>
-<link rel="author" href="<%= user.google_plus %>">
+
 
 <div class="row">
   <div class="col s12 m8 l8">
@@ -192,7 +192,7 @@
     <% else %>
         <% if current_user.recommended_reviews.count < 10 %>
             <% review_items.each do |review| %>
-                <% review_user = User.find(review.reviewer_id) %>
+                <% review_user = User.find_by(id: review.reviewer_id) %>
                 <%= render partial: 'reviews/partials/recommended_reviews',
                            locals: { review: review, user: review_user } %>
             <% end %>

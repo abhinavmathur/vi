@@ -68,6 +68,15 @@
           </div>
         </div>
     <% end %>
+    <div class="row">
+      <div class="col s12 publish-buttons">
+        <% if @product_vivieu.publish? %>
+            <%= link_to 'Unpublish Review', unpublish_product_vivieu_path(@product_vivieu), method: :patch, class: 'waves-effect waves-light red white-text btn' %>
+        <% else %>
+            <a class="waves-effect waves-light btn publish_review_form" onclick="publish_review_form()">Publish</a>
+        <% end %>
+      </div>
+    </div>
   </div>
 
   <!--Product form-->
@@ -200,7 +209,7 @@
         hint: true,
         highlight: true,
         minLength: 1,
-        name: 'cities',
+        name: 'title',
         displayKey: 'title',
         source: products.ttAdapter()
       }
@@ -257,6 +266,54 @@
   function close_amazon_modal()
   {
     $('#amazon-modal').closeModal();
+  }
+
+  function save_form()
+  {
+    var valuesToSubmit = $('.review-form').serialize();
+    $.ajax({
+      method: 'put',
+      url: 'http://localhost:3000/product_vivieus/<%= @product_vivieu.id %>/autosave_form',
+      data: valuesToSubmit,
+      success: function(){
+        toastr.success('Review saved', 'Success !')
+      }
+    })
+  }
+
+  function publish_review_form() {
+    var valuesToSubmit = $('.review-form').serialize();
+    $.ajax({
+      method: 'POST',
+      url: 'http://localhost:3000/product_vivieus/<%= @product_vivieu.id %>/publish',
+      data:  valuesToSubmit ,
+      beforeSend: function(){
+        $('.publish_review_form').text('Publishing...')
+      },
+      success: function(){
+        toastr.success('Your review is now live !', 'Success')
+        $('.publish-buttons').fadeOut(200, function () {
+          $(this).html('<%= link_to 'Unpublish Review', unpublish_product_vivieu_path(@product_vivieu), method: :post %>').fadeIn(200)
+        })
+      },
+      error: function(jqXHR, textStatus, errorThrown){
+        $('.publish_review_form').text('Publish')
+        if(textStatus==="timeout") {
+          toastr.error('Please check your internet connection or try again','Error')
+        }
+        else {
+          var errors = ['<ol>'];
+          var error_array = jqXHR.responseText.substring(1, jqXHR.responseText.length - 1).split(',')
+          for(var i = 0; i < error_array.length; i++)
+          {
+            errors.push('<li>'+ error_array[i] +'</li>')
+          }
+          $('#review-error-messages').html(errors.join(''))
+          toastr.error('Please check for errors in the error panel','Error')
+        }
+      },
+      timeout: 10000
+    })
   }
 
 

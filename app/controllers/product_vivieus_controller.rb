@@ -1,6 +1,6 @@
 class ProductVivieusController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_product_vivieu, only: [:show, :edit, :update, :destroy, :amazon_product, :add_product]
+  before_action :set_product_vivieu, only: [:edit, :update, :destroy, :amazon_product, :add_product, :publish, :unpublish]
 
   def new
     render layout: false
@@ -8,6 +8,7 @@ class ProductVivieusController < ApplicationController
 
   def create
     @product_vivieu = Review.create(create_review_params)
+    @product_vivieu.reviewer_id = current_user.id
     if @product_vivieu.save
       flash[:notice] = 'The title for your product review was successfully created !'
       redirect_to edit_product_vivieu_path(@product_vivieu)
@@ -44,6 +45,7 @@ class ProductVivieusController < ApplicationController
           redirect_to edit_product_vivieu_path(@product_vivieu) and return
         }
         format.js {
+          flash[:error] = 'There were error(s) while submitting the form'
           @errors = @product_vivieu.errors
         }
       end
@@ -99,10 +101,31 @@ class ProductVivieusController < ApplicationController
     end
   end
 
-  def custom_product
-    product = Product.create(product_params)
-    product.user_id = current_user.id
+  def publish
+    if @product_vivieu.update(edit_review_params.merge(publish: true))
+      respond_to do |format|
+        format.html {
+          redirect_to review_path(@product_vivieu) and return
+        }
+        format.json {
+          render json: nil, status: :ok
+        }
+      end
+    else
+      respond_to do |format|
+        format.json{
+          render json: @product_vivieu.errors.full_messages, status: 422
+        }
+      end
+    end
   end
+
+  def unpublish
+    @product_vivieu.update(publish: false)
+    flash[:notice] = 'The review was unpublished'
+    redirect_to edit_product_vivieu_path(@product_vivieu)
+  end
+
 
 
   private

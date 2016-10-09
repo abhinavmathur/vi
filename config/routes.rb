@@ -4,6 +4,8 @@ Rails.application.routes.draw do
       get '/youtube_videos' => 'product_vivieus#youtube_videos'
       post '/amazon_product' => 'product_vivieus#amazon_product'
       post '/add_product' => 'product_vivieus#add_product'
+      patch '/publish' => 'product_vivieus#publish'
+      patch '/unpublish' => 'product_vivieus#unpublish'
     end
     collection do
       get '/autocomplete' => 'product_vivieus#autocomplete'
