@@ -20,11 +20,11 @@
 #
 
 class Product < ActiveRecord::Base
-  serialize :similar_products
+  attr_accessor :review_id
+
   belongs_to :category
   extend FriendlyId
   friendly_id :slug_candidates, use: [:slugged, :finders]
-
 
   searchkick match: :word_start, searchable: ['title']
 
@@ -50,30 +50,34 @@ class Product < ActiveRecord::Base
   end
 
   def self.from_amazon(asin)
-    result = Amazon::Ecs.item_lookup(asin, {response_group: 'Medium, BrowseNodes'})
-    unless result.has_error?
-      item_attributes = result.get_element('ItemAttributes')
-      title = item_attributes.get('Title').to_s.gsub('&amp;', 'and')
-      description =  ActionController::Base.helpers.strip_tags(CGI.unescapeHTML((result.get_element('Content').to_s)))
-      company = item_attributes.get('Label')
-      tags =  "#{Product.get_category_info(result)[0]}, #{Product.get_category_info(result)[1].name}"
-      category = Product.get_category_info(result)[1]
-      sub_category = Product.get_category_info(result)[0]
-      product_images = ActionController::Base.helpers.strip_tags(result.get_elements('LargeImage/URL').join(', '))
-      asin = ActionController::Base.helpers.strip_tags(result.get_element('ASIN').to_s)
-       unless Product.exists?(asin: asin)
-        product = Product.create(title: title, description: description,
-                                 company: company, tags: tags, asin: asin,
-                                 product_images: product_images,
-                                 category_id: category.id, sub_category: sub_category)
-        SimilarProducts.new(asin).create!
-        return 'notice', product
-      end
-      return 'error', 'The product you searched for already exists'
+    if Product.exists?(asin: asin)
+      return 'duplicate', Product.find_by(asin: asin)
     else
-      return 'error', result.error
+      result = Amazon::Ecs.item_lookup(asin, {response_group: 'Medium, BrowseNodes'})
+      unless result.has_error?
+        item_attributes = result.get_element('ItemAttributes')
+        title = item_attributes.get('Title').to_s.gsub('&amp;', 'and')
+        description =  ActionController::Base.helpers.strip_tags(CGI.unescapeHTML((result.get_element('Content').to_s)))
+        company = item_attributes.get('Label')
+        tags =  "#{Product.get_category_info(result)[0]}, #{Product.get_category_info(result)[1].name}"
+        category = Product.get_category_info(result)[1]
+        sub_category = Product.get_category_info(result)[0]
+        product_images = ActionController::Base.helpers.strip_tags(result.get_elements('LargeImage/URL').join(', '))
+        asin = ActionController::Base.helpers.strip_tags(result.get_element('ASIN').to_s)
+
+        product = Product.create(title: title, description: description,
+                                            company: company, tags: tags, asin: asin,
+                                            product_images: product_images,
+                                            category_id: category.id, sub_category: sub_category)
+        SimilarProductsWorker.perform_async(asin)
+        return 'notice', product
+      else
+        return 'error', result.error
+      end
     end
+
   end
+
 
   #returns the sub category string, main category object
   def self.get_category_info(res)

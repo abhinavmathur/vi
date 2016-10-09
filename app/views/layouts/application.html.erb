@@ -27,18 +27,16 @@
 
 <%= render 'layouts/navbar' %>
 <%= render 'layouts/flash_messages' %>
-
 <%= yield %>
-
 <%= render 'layouts/javascripts' %>
-
-
-<%= render 'layouts/floating_button' %>
 
 
 <% if current_user && current_user.country_code.nil? %>
     <%= render 'app/set_country' %>
 <% end %>
+<div class="new-product">
+  <%= render partial: 'product_vivieus/partials/new_product_vivieu' %>
+</div>
 <%= render 'layouts/footer' %>
 </body>
 </html>

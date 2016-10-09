@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160920180255) do
+ActiveRecord::Schema.define(version: 20160929093840) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -135,6 +135,11 @@ ActiveRecord::Schema.define(version: 20160920180255) do
 
   add_index "points", ["reviewer_id"], name: "index_points_on_reviewer_id", using: :btree
 
+  create_table "product_vivieus", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "products", force: :cascade do |t|
     t.string   "title",            default: ""
     t.text     "description"
@@ -185,6 +190,7 @@ ActiveRecord::Schema.define(version: 20160920180255) do
     t.integer  "reviewgroup_id"
     t.integer  "visit_id"
     t.string   "target_countries"
+    t.string   "seo_description"
   end
 
   add_index "reviews", ["reviewer_id"], name: "index_reviews_on_reviewer_id", using: :btree

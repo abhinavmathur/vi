@@ -3,13 +3,18 @@
     <div class="col s12 m5">
       <div class="product-card card blue darken-3">
         <div class="card-content white-text">
+          <% if params[:review_id].present? %>
+              <% review = Review.find(params[:review_id]) %>
+              <%= link_to 'Back to Review Page', edit_product_vivieu_path(review) %>
+              <%= link_to 'Edit this page', edit_product_path(@product, review_id: review.id) %>
+          <% end %>
           <h4 class="white-text"><%= @product.title %></h4>
           <!-- <p><i class="material-icons">work</i><%= @product.company.titleize %></p> -->
           <div class="divider">
           </div>
           <br>
           <% unless @product.user_id.nil? %>
-              <p>Added by: <%= link_to User.find(@product.user_id).username, '#' %></p>
+              <p>Added by: <%= link_to User.find(@product.user_id).username, user_path %></p>
           <% else %>
               <p>Added from Amazon</p>
               <p>ASIN: <%= @product.asin %></p>

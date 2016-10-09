@@ -1,29 +1,141 @@
-<div class="container">
-  <% if @review.has_amazon_product? %>
-      <%= render 'reviews/edit_youtube_form' %>
-  <% else %>
-      <h1>Normal form</h1>
-      <%= render 'reviews/edit_normal_form' %>
-  <% end %>
-</div>
+<div class="row">
+<h1>Create a Review</h1>
+  <div class="col s8">
+    <%= form_for @review do |f| %>
+        <div class="row">
+          <div class="input-field col s12">
+            <%= f.text_field :title, data: { validation: 'required'}  %>
+            <%= f.label :title %>
+          </div>
+        </div>
 
-<div class="container">
-  <div class="row">
-    <div class="col s3">
-      <%= link_to new_review_amazon_ad_path(@review), class: 'btn waves-effect waves-light' do %>
-          Create an ad<i class="material-icons right">send</i>
-      <% end %>
-    </div>
-    <div class="col s3">
-      <% if @review.publish? %>
-          <%= link_to publish_review_review_path(@review), class: 'btn red waves-effect waves-light', method: :put do %>
-              Unpublish<i class="material-icons right">remove_circle</i>
-          <% end %>
-      <% else %>
-          <%= link_to publish_review_review_path(@review), class: 'btn waves-effect waves-light', method: :put do %>
-              Publish<i class="material-icons right">publish</i>
-          <% end %>
-      <% end %>
+        <div class="row">
+          <div class="input-field col s12">
+            <%= f.text_area :description, class: 'materialize-textarea', data: { validation: 'required'} %>
+            <%= f.label :description %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-field col s12">
+            <%= f.text_field :tags, data: { validation: 'required'} %>
+            <%= f.label :tags %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-field col s12">
+            <%= f.text_field :youtube_url, data: { validation: 'length', validation_length: '11-11',
+                                                   :validation_error_msg => 'Must be a 11 character YouTube ID'} %>
+            <%= f.label :youtube_url, 'YouTube video ID' %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-field col s12">
+            <%= f.select(:reviewgroup_id, Reviewgroup.select(current_user), include_blank: 'Select a saved group') %>
+            <%= f.label 'Select Review group' %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-field col s12">
+            <%= f.text_field :affiliate_tag, data: { validation: 'custom',
+                                                     validation_regexp: '[a-zA-Z0-9]-20$',
+                                                     validation_error_msg: 'Should be a valid Amazon affiliate tag ending with -20'}  %>
+            <%= f.label :affiliate_tag, 'Your Amazon Affiliate Tag goes here' %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-field col s12">
+            <%= f.text_field :affiliate_link %>
+            <%= f.label :affiliate_link, 'Your affiliate link goes here', placeholder: 'http://', data: { validation: 'url', error: 'Must be a valid link', suggestion: 'Should start with http or https'} %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-field col s12">
+            <%= f.submit 'Save Review' %>
+          </div>
+        </div>
+    <% end %>
+  </div>
+
+  <div class="col s4">
+    <a class="waves-effect waves-light btn modal-trigger" href="#add_product">Add a Product</a>
+
+    <!-- Modal Structure -->
+    <div id="add_product" class="modal">
+      <div class="modal-content">
+        <h2 class="center">Add a product</h2>
+        <div class="row">
+          <div class="col s12">
+            <ul class="tabs">
+              <li class="tab col s3"><a href="#test1" class="active">Add from Amazon</a></li>
+              <li class="tab col s3"><a  href="#test2">Custom Form</a></li>
+            </ul>
+          </div>
+          <div id="test1" class="col s12">
+            <%= form_for Product.new, remote: true do |f| %>
+                <div class="row" id="amazon_form">
+                  <div class="input-field col s12">
+                    <%= f.label :asin, 'ASIN code from Amazon' %>
+                    <%= f.text_field :asin, data: {validation: 'alphanumeric length', validation_length: 'max10'} %>
+                  </div>
+                </div>
+
+                <button class="red btn waves-effect waves-light" type="submit" name="action">Submit Amazon ASIN
+                  <i class="material-icons right">send</i>
+                </button>
+            <% end %>
+
+            <script type="text/javascript" charset="utf-8">
+              $.validate({
+                form : "#<%= action_name.to_s %>_<%= controller_name.singularize.to_s %>"
+              });
+            </script>
+
+          </div>
+          <div id="test2" class="col s12">
+            <%= render 'products/normal_form', locals: { remote: true } %>
+          </div>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a href="#" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+      </div>
     </div>
   </div>
 </div>
+
+<script type="text/javascript" charset="utf-8">
+  $.validate({
+    form : '.edit_review'
+  });
+
+</script>
+<script>
+  var products = new Bloodhound({
+    datumTokenizer: Bloodhound.tokenizers.obj.whitespace,
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    remote: {
+      url: 'http://localhost:3000/reviewer/autocomplete?query=%QUERY',
+      wildcard: '%QUERY'
+    }
+  });
+
+  products.initialize();
+
+  $('#query').materialtags({
+    maxTags: 1,
+    typeaheadjs: {
+      hint: true,
+      highlight: true,
+      minLength: 1,
+      name: 'products',
+      source: products.ttAdapter()
+    }
+  });
+</script>

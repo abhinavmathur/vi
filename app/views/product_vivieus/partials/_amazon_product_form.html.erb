@@ -1,0 +1,47 @@
+<%= form_for Product.new, remote: true, html: { id: 'amazon-form'}, url: "http://localhost:3000/product_vivieus/#{id}/amazon_product", method: :post do |f| %>
+    <div class="row" id="amazon_form">
+      <div class="input-field col s12">
+        <%= f.label :asin, 'ASIN code from Amazon' %>
+        <%= f.text_field :asin, data: {validation: 'alphanumeric length', validation_length: 'max10'} %>
+      </div>
+    </div>
+
+    <button class="red btn waves-effect waves-light" id="amazon-submit-button" type="submit" name="action">Submit Amazon ASIN
+      <i class="material-icons right">send</i>
+    </button>
+<% end %>
+
+<script type="text/javascript" charset="utf-8">
+  $.validate({
+    form : "#amazon-form"
+  });
+    $('#amazon-form').submit(function(e){
+      e.preventDefault();
+      var valuesToSubmit = $(this).serialize();
+      $.ajax({
+        type: "POST",
+        url: 'http://localhost:3000/product_vivieus/<%= id %>/amazon_product',
+        data: valuesToSubmit,
+        dataType: 'json',
+        success: function(data){
+          close_amazon_modal();
+          var product_array = [];
+          product_array.push('<div class="card-panel teal"><span>')
+          product_array.push('<h2 class="center">'+ data.title +'</h2>')
+          product_array.push('<img class="responsive-img" src="'+ data.main_image +'">');
+          product_array.push('<a class="waves-effect waves-light red btn" onclick="show_product_form()">Wrong Product ?</a>')
+          product_array.push('</span></div>');
+          $('.product-card').fadeOut(1000, function(){
+            var card = product_array.join('');
+            $(this).html(card).fadeIn();
+          });
+
+        },
+        error: function(jqXHR){
+          toastr.error(jqXHR.responseText)
+        }
+      })
+      return false;
+    })
+
+</script>

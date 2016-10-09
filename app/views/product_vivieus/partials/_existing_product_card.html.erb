@@ -1,0 +1,13 @@
+<div class="card">
+  <div class="card-content">
+    <span class="card-title"><%= product.title %></span>
+    <div class="divider"></div>
+    <div class="center">
+      <img src="<%= product.product_images.split(',').first %>" class="responsive-img" alt="">
+    </div>
+  </div>
+  <div class="card-action">
+    <%= link_to 'Edit Product Details', edit_product_path(product, review_id: @product_vivieu.id) %>
+    <button onclick="show_product_form()">Wrong Product</button>
+  </div>
+</div>

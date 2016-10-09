@@ -2,6 +2,9 @@
 <br>
 <div class="container">
   <%= form_for @product, validate: true do |f| %>
+
+      <%= f.hidden_field :review_id, value: params[:review_id] %>
+
       <div class="row" id="normal_form">
         <div class="input-field col s12">
           <%= f.select(:category_id, Category.select) %>

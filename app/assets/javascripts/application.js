@@ -20,14 +20,13 @@
 //= require twitter/typeahead.min
 //= require commontator/application
 //= require sisyphus.min
-//= require afile.min
 //= require materialize-tags.min
 //= require show_more.min
-//= require turbolinks
 //= require_tree .
+//= require turbolinks
+
 
 $(document).ready(function() {
-    $('select').material_select();
     $('.showmore').showMore({
         speedDown: 300,
         speedUp: 300,
@@ -35,4 +34,7 @@ $(document).ready(function() {
         showText: 'Show more',
         hideText: 'Show less'
     });
+
+    $('.review-form, .new-product').sisyphus();
 });
+

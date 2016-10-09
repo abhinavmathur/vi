@@ -1,6 +1,12 @@
 <p>For help related to this form, see the box below</p>
 <br>
+<% if params[:review_id].present? %>
+    <% review = Review.find(params[:review_id]) %>
+    <%= link_to 'Go back', edit_product_vivieu_path(review) %>
+<% end %>
 <%= form_for Product.new, validate: true do |f| %>
+
+    <%= f.hidden_field :review_id, value: params[:review_id] %>
     <div class="row" id="normal_form">
       <div class="input-field col s12">
         <%= f.select(:category_id, Category.select)%>
