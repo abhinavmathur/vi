@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :product_vivieus, except: [:index, :show], path_names: { edit: 'create-a-vivieu'} do
+    resources :amazon_ads, except: [:index]
     member do
       get '/youtube_videos' => 'product_vivieus#youtube_videos'
       post '/amazon_product' => 'product_vivieus#amazon_product'
@@ -16,7 +17,6 @@ Rails.application.routes.draw do
   devise_for :users, :controllers => { :omniauth_callbacks => 'omniauth_callbacks', registrations: 'registrations' }
 
   resources :reviews, except: :index do
-    resources :amazon_ads, except: [:index, :show]
     member do
       post '/redirect_to_website' => 'reviews#redirect_to_website'
       put '/publish_review' => 'reviews#publish_review'

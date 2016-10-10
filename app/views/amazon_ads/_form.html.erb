@@ -1,28 +1,44 @@
-<%= form_for [@review, @amazon_ad] do |f| %>
-    <div class="row">
-      <div class="input-field col s12">
-        <%= f.text_field :link_id %>
-        <%= f.label :link_id %>
-      </div>
-    </div>
+<div id="amazon-ad-modal" class="modal">
+  <div class="modal-content">
+    <% url = '' %>
+    <% method = '' %>
+    <% if action_name == 'edit' %>
+        <%  url = "/product_vivieus/#{product_vivieu.id}/amazon_ads/#{amazon_ad.id}"%>
+        <% method = :patch %>
+    <% else %>
+        <%  url = "/product_vivieus/#{product_vivieu.id}/amazon_ads"%>
+        <% method = :post %>
+    <% end %>
 
-    <div class="row">
-      <div class="input-field col s12">
-        <%= f.text_field :title %>
-        <%= f.label :title %>
-      </div>
-    </div>
+    <%= form_for [product_vivieu, amazon_ad], url: url, remote: true, method: method do |f| %>
+        <div class="row">
+          <div class="input-field col s12">
+            <%= f.text_field :link_id %>
+            <%= f.label :link_id %>
+          </div>
+        </div>
 
-    <div class="row">
-      <div class="input-field col s12">
-        <%= f.text_field :asins %>
-        <%= f.label :asins %>
-      </div>
-    </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <%= f.text_field :title %>
+            <%= f.label :title %>
+          </div>
+        </div>
 
-    <div class="row">
-      <div class="input-field col s12">
-        <%= f.submit %>
-      </div>
-    </div>
-<% end %>
+        <div class="row">
+          <div class="input-field col s12">
+            <%= f.text_field :asins %>
+            <%= f.label :asins %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-field col s12">
+            <%= f.submit %>
+          </div>
+        </div>
+    <% end %>
+
+  </div>
+</div>
+

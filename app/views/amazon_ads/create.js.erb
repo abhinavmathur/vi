@@ -1,0 +1,5 @@
+$('#amazon-ad-modal').closeModal();
+toastr.success('Your ads have been created', 'Success')
+$('.amazon-ads-action').fadeOut(200, function(){
+    $(this).html('<%= link_to 'Show Ads', product_vivieu_amazon_ad_path(@product_vivieu, @amazon_ad), remote: true %>').fadeIn(200);
+})
