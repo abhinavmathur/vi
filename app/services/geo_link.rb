@@ -1,21 +1,21 @@
 class GeoLink
 
-  STARTING_LINK = 'https://www.amazon'
+  AMAZON_LINK = 'https://www.amazon'
   $country_suffix = {
-      DE: '.de',
-      IT: '.it',
-      BR: '.com.br',
       IN: '.in',
-      GB: '.co.uk',
-      MX: '.com.mx',
-      FR: '.fr',
-      ES: '.es',
       CN: '.cn',
       JP: '.co.jp',
-      AU: '.com.au',
+      FR: '.fr',
+      DE: '.de',
+      IT: '.it',
       NL: '.nl',
+      ES: '.es',
+      UK: '.co.uk',
       CA: '.ca',
-      US: '.com'
+      MX: '.com.mx',
+      US: '.com',
+      AU: '.com.au',
+      BR: '.com.br'
   }
 
   $country_hash = {
@@ -23,7 +23,7 @@ class GeoLink
       IT: '21',
       BR: '20',
       IN: '20',
-      GB: '21',
+      UK: '21',
       MX: '20',
       FR: '21',
       ES: '21',
@@ -40,20 +40,38 @@ class GeoLink
     @country_code = country_code.to_s.upcase
   end
 
-  def simple_link
-    if $country_suffix.key? @country_code.to_sym
-      "#{STARTING_LINK}#{$country_suffix[@country_code.to_sym]}"
+
+  def affiliate_url(review,user)
+    if amazon_url_present?(review)
+      "#{review_url(review)}?tag=#{review.affiliate_tag}-#{suffix_code(user)}"
     else
-      "#{STARTING_LINK}.com"
+      review.affiliate_link
     end
   end
 
-  def review_url(review)
-    "#{simple_link}/dp/#{review.reviewfiable.asin}/"
+  def self.construct_links_for(review)
+    user = User.where(id: review.reviewer_id).first
+    affiliate_countries = user.affiliate_countries.split(',')
+    countries_hash = Hash.new
+    affiliate_countries.each do |country_name|
+      country_code = GeoLink.get_country_code(country_name)
+      countries_hash[country_name] = GeoLink.new(country_code).affiliate_url(review,user)
+    end
+    countries_hash
   end
 
-  def affiliate_url(review)
-    "#{review_url(review)}?tag=#{review.affiliate_tag}-#{suffix_code(review)}"
+  def self.check_errors(review,user)
+    affiliate_countries_size = user.affiliate_countries.split(',').count
+    if affiliate_countries_size < 1
+      return 'No Affiliate Country specified in User Settings'
+    end
+    if review.affiliate_link.present? && review.affiliate_tag.present?
+      return 'Both affiliate link and tag cannot be present'
+    end
+    if review.reviewfiable.asin.present? && review.affiliate_tag == ''
+      return 'No affiliate tag specified'
+    end
+    'No errors'
   end
 
   def self.get_country_name(country_code = 'US')
@@ -67,6 +85,10 @@ class GeoLink
       return 'CN'
     elsif country_name == 'Japan'
       return 'JP'
+    elsif country_name == 'Australia'
+      return 'AU'
+    elsif country_name == 'Germany'
+      return 'DE'
     else
       ISO3166::Country.find_country_by_name(country_name).gec || 'US'
     end
@@ -76,9 +98,26 @@ class GeoLink
     ISO3166::Country.find_country_by_name(country_name).gec || 'US'
   end
 
+  def amazon_url_present?(review)
+    review.reviewfiable.asin.present?
+  end
+
   private
-  def suffix_code(review)
-    user_affiliate_countries = User.find_by(id: review.reviewer_id).affiliate_countries.to_s.split(',')
+
+  def simple_link
+    if $country_suffix.key? @country_code.to_sym
+      "#{AMAZON_LINK}#{$country_suffix[@country_code.to_sym]}"
+    else
+      "#{AMAZON_LINK}.com"
+    end
+  end
+
+  def review_url(review)
+    "#{simple_link}/dp/#{review.reviewfiable.asin}/"
+  end
+
+  def suffix_code(user)
+    user_affiliate_countries = user.affiliate_countries.to_s.split(',')
     user_affiliate_countries.each do |country|
       user_country_code = GeoLink.get_country_code(country)
       if user_country_code == @country_code
