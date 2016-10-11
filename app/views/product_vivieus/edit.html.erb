@@ -97,15 +97,27 @@
         <% else %>
             <%= link_to 'Show Ad', product_vivieu_amazon_ad_path(@product_vivieu, @product_vivieu.amazon_ad), remote: true %>
             <%= link_to 'Edit Ad', edit_product_vivieu_amazon_ad_path(@product_vivieu, @product_vivieu.amazon_ad), remote: true, data: {disable_with: 'Loading...'} %>
-        <%= link_to 'Delete Ad', product_vivieu_amazon_ad_path(@product_vivieu, @product_vivieu.amazon_ad), remote: true, method: :delete, data: { disable_with: 'Deleting...'} %>
+            <%= link_to 'Delete Ad', product_vivieu_amazon_ad_path(@product_vivieu, @product_vivieu.amazon_ad), remote: true, method: :delete, data: { disable_with: 'Deleting...'} %>
         <% end %>
       </div>
     </div>
 
 
     <div class="row">
-      <div class="col s6">
-        <a href="https://www.amazon.fr/dp/<%= @product_vivieu.reviewfiable.asin %>" class="embedly-card"></a>
+      <div class="col s12">
+        <% user = User.find(@product_vivieu.reviewer_id) %>
+        <% if GeoLink.check_errors(@product_vivieu, user ) == 'None' %>
+            <% links = GeoLink.construct_links_for(@product_vivieu) %>
+            <% links.each do |key, value| %>
+                <div class="global-link-card" data-country="<%= key %>" style="border: 1px solid red;">
+                  <a href="<%= value %>" data-card-controls="0" class="embedly-card"></a>
+                </div>
+            <% end %>
+        <% else %>
+            <p>
+              <%= GeoLink.check_errors(@product_vivieu, user ) %>
+            </p>
+        <% end %>
       </div>
     </div>
   </div>
