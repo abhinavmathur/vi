@@ -7,6 +7,8 @@ Rails.application.routes.draw do
       post '/add_product' => 'product_vivieus#add_product'
       patch '/publish' => 'product_vivieus#publish'
       patch '/unpublish' => 'product_vivieus#unpublish'
+      patch '/add_target_country' => 'product_vivieus#add_target_country'
+      patch '/affiliate_category' => 'product_vivieus#affiliate_category'
     end
     collection do
       get '/autocomplete' => 'product_vivieus#autocomplete'

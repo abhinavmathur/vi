@@ -7,6 +7,8 @@
 
     </div>
 
+
+
     <%= form_for @product_vivieu, html: { class: 'review-form'}, url: "/product_vivieus/#{@product_vivieu.id}", remote: true do |f| %>
         <div class="row">
           <div class="col s12 input-field">
@@ -30,37 +32,39 @@
         </div>
 
         <div class="row">
-          <div class="col s12 input-field">
+          <p class="center flow-text">Video for this review</p>
+          <div class="col s5 input-field center">
+            <a class="modal-trigger-youtube waves-effect waves-light btn youtube-button" href="#youtube-videos-modal">Get From Youtube</a>
+          </div>
+          <div class="col s2 input-field center">OR</div>
+          <div class="col s5 input-field">
             <%= f.text_field :youtube_url %>
             <%= f.label :youtube_url, 'YouTube Video ID' %>
           </div>
         </div>
 
         <div class="row">
-          <div class="col s12 input-field">
-            <a class="modal-trigger-youtube waves-effect waves-light btn youtube-button" href="#youtube-videos-modal">Modal</a>
+          <div class="switch">
+            <label>
+              Other Affiliate Program
+              <input type="checkbox" <%= 'checked' if @product_vivieu.affiliate_category? %> id="affiliate_category">
+              <span class="lever"></span>
+              Amazon Affiliate Program
+            </label>
           </div>
         </div>
 
-
-
-        <div class="row">
-          <div class="col s12 input-field">
-            <%= f.text_field :affiliate_link %>
-            <%= f.label :affiliate_link,
-                        'Your affiliate link goes here', placeholder: 'http://',
-                        data: { validation: 'url',
-                                error: 'Must be a valid link',
-                                suggestion: 'Should start with http or https'} %>
+        <div class="affiliate_options">
+          <div class="if-amazon">
+            <%= render partial: 'product_vivieus/partials/if_amazon', locals:{ f: f }%>
           </div>
+          <div class="if-not-amazon">
+            <%= render partial: 'product_vivieus/partials/if_not_amazon', locals:{ f: f}  %>
+          </div>
+
         </div>
 
-        <div class="row">
-          <div class="col s12 input-field">
-            <%= f.text_field :affiliate_tag %>
-            <%= f.label :affiliate_tag %>
-          </div>
-        </div>
+
 
         <div class="row">
           <div class="col s12 input-field">
@@ -105,18 +109,24 @@
 
     <div class="row">
       <div class="col s12">
-        <% user = User.find(@product_vivieu.reviewer_id) %>
-        <% if GeoLink.check_errors(@product_vivieu, user ) == 'None' %>
-            <% links = GeoLink.construct_links_for(@product_vivieu) %>
-            <% links.each do |key, value| %>
-                <div class="global-link-card" data-country="<%= key %>" style="border: 1px solid red;">
-                  <a href="<%= value %>" data-card-controls="0" class="embedly-card"></a>
-                </div>
+        <% if @product_vivieu.reviewfiable.asin.present? %>
+            <p class="flow-text center">Global links</p>
+            <% user = User.find(@product_vivieu.reviewer_id) %>
+            <% if GeoLink.check_errors(@product_vivieu, user ) == 'None' %>
+                <% links = GeoLink.construct_links_for(@product_vivieu) %>
+                <% links.each do |key, value| %>
+                    <p>Country: <%= key %></p>
+                    <div class="<%= key %>-display-card" style="border: 1px solid red;">
+                      <a href="<%= value %>" data-card-controls="0" class="embedly-card"></a>
+                    </div>
+                <% end %>
+            <% else %>
+                <p>
+                  <%= GeoLink.check_errors(@product_vivieu, user ) %>
+                </p>
             <% end %>
         <% else %>
-            <p>
-              <%= GeoLink.check_errors(@product_vivieu, user ) %>
-            </p>
+            <p class="flow-text center">Global Links is not applicable for non-Amazon products</p>
         <% end %>
       </div>
     </div>
@@ -134,17 +144,39 @@
 </div>
 
 <script type="text/javascript" charset="utf-8">
+  <% if @product_vivieu.affiliate_category %>
+  $('.if-not-amazon').hide()
+  <% else %>
+  $('.if-amazon').hide();
+  <% end %>
 
-  $('#hello').on('click', function()
+  $('#affiliate_category').on('click', function()
   {
-    if($('#hello').prop('checked')) {
-      alert('checked');
+    var checkbox = document.getElementById('affiliate_category');
+    if(checkbox.checked)
+    {
+      toastr.success('Your preference has been updated to Amazon affiliates !', 'Success')
+      $('.if-not-amazon').fadeOut(200, function(){
+        $('.if-amazon').fadeIn(200);
+      })
+      $.ajax({
+        method: 'PATCH',
+        url: 'http://localhost:3000/product_vivieus/<%= @product_vivieu.id %>/affiliate_category',
+        data: { affiliate: 'Amazon'}
+      })
     }
     else
     {
-      alert('unchecked');
+      toastr.success('Your preference has been updated', 'Success')
+      $('.if-amazon').fadeOut(200, function(){
+        $('.if-not-amazon').fadeIn(200);
+      })
+      $.ajax({
+        method: 'PATCH',
+        url: 'http://localhost:3000/product_vivieus/<%= @product_vivieu.id %>/affiliate_category',
+        data: { affiliate: 'Other'}
+      })
     }
-
   });
 
   $(".youtube-button").on('click', function(){
@@ -299,19 +331,6 @@
     $('#amazon-modal').closeModal();
   }
 
-  function save_form()
-  {
-    var valuesToSubmit = $('.review-form').serialize();
-    $.ajax({
-      method: 'put',
-      url: 'http://localhost:3000/product_vivieus/<%= @product_vivieu.id %>/autosave_form',
-      data: valuesToSubmit,
-      success: function(){
-        toastr.success('Review saved', 'Success !')
-      }
-    })
-  }
-
   function publish_review_form() {
     var valuesToSubmit = $('.review-form').serialize();
     $.ajax({
@@ -324,7 +343,7 @@
       success: function(){
         toastr.success('Your review is now live !', 'Success')
         $('.publish-buttons').fadeOut(200, function () {
-          $(this).html('<%= link_to 'Unpublish Review', unpublish_product_vivieu_path(@product_vivieu), method: :post %>').fadeIn(200)
+          $(this).html('<%= link_to 'Unpublish Review', unpublish_product_vivieu_path(@product_vivieu), method: :post, class: 'waves btn red white-text' %>').fadeIn(200)
         })
       },
       error: function(jqXHR, textStatus, errorThrown){
@@ -346,10 +365,32 @@
       timeout: 10000
     })
   }
+</script>
+<script type="text/javascript" charset="utf-8">
+  var citynames = new Bloodhound({
+    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    prefetch: {
+      /*Todo change to vivieu in production*/
+      url: 'http://localhost:3000/assets/affiliate_countries.json',
+      filter: function(list) {
+        return $.map(list, function(cityname) {
+          return { name: cityname };
+        });
+      }
+    }
+  });
 
+  citynames.initialize();
 
-
-
-
+  $('#review_target_countries').materialtags({
+    freeInput: false,
+    typeaheadjs: {
+      name: 'affiliate_countries',
+      displayKey: 'name',
+      valueKey: 'name',
+      source: citynames.ttAdapter()
+    }
+  });
 
 </script>

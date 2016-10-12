@@ -1,6 +1,7 @@
 class ProductVivieusController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_product_vivieu, only: [:edit, :update, :destroy, :amazon_product, :add_product, :publish, :unpublish]
+  before_action :set_product_vivieu, only: [:edit, :update, :destroy, :amazon_product, :add_product,
+                                            :publish, :unpublish, :add_target_country, :affiliate_category]
 
   def new
     render layout: false
@@ -126,6 +127,31 @@ class ProductVivieusController < ApplicationController
     redirect_to edit_product_vivieu_path(@product_vivieu)
   end
 
+  def add_target_country
+    target_country_array = ['']
+    unless @product_vivieu.target_countries.nil?
+      target_country_array = @product_vivieu.target_countries.split(',')
+    end
+    target_country = params[:target_country]
+    target_country_array.push(target_country).uniq
+    if @product_vivieu.update(target_countries: target_country_array.join(','))
+      code = GeoLink.get_country_code(target_country)
+      geolink = GeoLink.new(code).amazon_search_link(@product_vivieu, current_user)
+      render json: geolink  , status: :ok
+    end
+  end
+
+  def affiliate_category
+    affiliate = params[:affiliate]
+    if affiliate == 'Amazon'
+      @product_vivieu.update(affiliate_category: true)
+      render json: nil, status: :ok
+    else
+      @product_vivieu.update(affiliate_category: false)
+      render json: nil, status: :ok
+    end
+  end
+
 
 
   private
@@ -134,7 +160,7 @@ class ProductVivieusController < ApplicationController
   end
 
   def edit_review_params
-    params.require(:review).permit(:title, :description, :tags, :youtube_url, :affiliate_tag, :affiliate_link, :product_id)
+    params.require(:review).permit(:title, :description, :tags, :youtube_url, :affiliate_tag, :affiliate_link, :product_id, :target_countries)
   end
 
   def set_product_vivieu

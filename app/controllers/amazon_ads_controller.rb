@@ -57,7 +57,6 @@ class AmazonAdsController < ApplicationController
 
   def destroy
     @amazon_ad.destroy
-
   end
 
   private

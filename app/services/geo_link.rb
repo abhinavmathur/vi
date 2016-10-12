@@ -40,9 +40,9 @@ class GeoLink
     @country_code = country_code.to_s.upcase
   end
 
-  def amazon_search_link(review)
+  def amazon_search_link(review,user)
     product_title = review.reviewfiable.title.split(' ').join('+')
-    "#{simple_link}/s?field-keywords=#{product_title}"
+    "#{simple_link}/s/?tag=#{review.affiliate_tag}-#{suffix_code(user)}&field-keywords=#{product_title}"
   end
 
   def affiliate_url(review,user)
@@ -53,8 +53,26 @@ class GeoLink
     end
   end
 
+  def self.construct_product_link(review)
+    target_countries_array = ['']
+    unless review.target_countries.nil?
+      target_countries_array = review.target_countries.split(',')
+    end
+    user = User.where(id: review.reviewer_id).first
+    affiliate_countries = user.affiliate_countries.split(',')
+    affiliate_countries.each do |country_name|
+      country_code = GeoLink.get_country_code(country_name)
+      if target_countries_array.include?(country_name)
+        return  GeoLink.new(country_code).amazon_search_link(review,user)
+      else
+        return  GeoLink.new(country_code).affiliate_url(review,user)
+      end
+    end
+
+  end
+
   def self.construct_links_for(review)
-    target_countries_array = [""]
+    target_countries_array = ['']
     unless review.target_countries.nil?
       target_countries_array = review.target_countries.split(',')
     end
@@ -66,7 +84,7 @@ class GeoLink
       unless target_countries_array.include?(country_name)
         countries_hash[country_name] = GeoLink.new(country_code).affiliate_url(review,user)
       else
-        countries_hash[country_name] = GeoLink.new(country_code).amazon_search_link(review)
+        countries_hash[country_name] = GeoLink.new(country_code).amazon_search_link(review,user)
       end
     end
     countries_hash
@@ -118,7 +136,7 @@ class GeoLink
 
   private
 
-    def simple_link
+  def simple_link
     if $country_suffix.key? @country_code.to_sym
       "#{AMAZON_LINK}#{$country_suffix[@country_code.to_sym]}"
     else
