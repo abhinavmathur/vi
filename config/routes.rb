@@ -1,11 +1,14 @@
 Rails.application.routes.draw do
   resources :product_vivieus, except: [:index, :show], path_names: { edit: 'create-a-vivieu'} do
+    resources :amazon_ads, except: [:index]
     member do
       get '/youtube_videos' => 'product_vivieus#youtube_videos'
       post '/amazon_product' => 'product_vivieus#amazon_product'
       post '/add_product' => 'product_vivieus#add_product'
       patch '/publish' => 'product_vivieus#publish'
       patch '/unpublish' => 'product_vivieus#unpublish'
+      patch '/add_target_country' => 'product_vivieus#add_target_country'
+      patch '/affiliate_category' => 'product_vivieus#affiliate_category'
     end
     collection do
       get '/autocomplete' => 'product_vivieus#autocomplete'
@@ -16,7 +19,6 @@ Rails.application.routes.draw do
   devise_for :users, :controllers => { :omniauth_callbacks => 'omniauth_callbacks', registrations: 'registrations' }
 
   resources :reviews, except: :index do
-    resources :amazon_ads, except: [:index, :show]
     member do
       post '/redirect_to_website' => 'reviews#redirect_to_website'
       put '/publish_review' => 'reviews#publish_review'

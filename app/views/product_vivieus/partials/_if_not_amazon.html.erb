@@ -1,0 +1,10 @@
+<div class="row">
+  <div class="col s12 input-field">
+    <%= f.text_field :affiliate_link %>
+    <%= f.label :affiliate_link,
+                'Your affiliate link goes here', placeholder: 'http://',
+                data: { validation: 'url',
+                        error: 'Must be a valid link',
+                        suggestion: 'Should start with http or https'} %>
+  </div>
+</div>

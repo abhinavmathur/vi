@@ -13,4 +13,6 @@
 
 class AmazonAd < ActiveRecord::Base
   belongs_to :review
+
+  validates :asins, presence: true
 end

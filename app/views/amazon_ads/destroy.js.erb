@@ -1,0 +1,3 @@
+$('.amazon-ads-action').fadeOut(200, function(){
+  $(this).html('<%= link_to 'Create an Ad', new_product_vivieu_amazon_ad_path(@product_vivieu), remote: true, data: { disable_with: 'Loading'} %>').fadeIn(200);
+})

@@ -1,0 +1,12 @@
+<div id="amazon-ad-show-modal" class="modal">
+  <div class="modal-content">
+    <div class="row">
+      <% asin_array = asins.split(',') %>
+      <% asin_array.each do |asin| %>
+          <div class="col m3">
+            <a href="https://www.amazon.com/dp/<%= asin %>" class="embedly-card"></a>
+          </div>
+      <% end %>
+    </div>
+  </div>
+</div>

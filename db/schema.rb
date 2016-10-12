@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160929093840) do
+ActiveRecord::Schema.define(version: 20161012013755) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -182,15 +182,16 @@ ActiveRecord::Schema.define(version: 20160929093840) do
     t.string   "affiliate_link"
     t.integer  "reviewfiable_id"
     t.string   "reviewfiable_type"
-    t.boolean  "publish"
+    t.boolean  "publish",            default: false
     t.string   "slug"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
     t.integer  "reviewer_id"
     t.integer  "reviewgroup_id"
     t.integer  "visit_id"
     t.string   "target_countries"
     t.string   "seo_description"
+    t.boolean  "affiliate_category", default: false
   end
 
   add_index "reviews", ["reviewer_id"], name: "index_reviews_on_reviewer_id", using: :btree
