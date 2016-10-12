@@ -38,6 +38,7 @@ class ProductVivieusController < ApplicationController
           redirect_to edit_product_vivieu_path(@product_vivieu) and return
         }
         format.json {
+          flash[:success] = 'Form saved !'
           render json: nil, status: :ok
         }
       else

@@ -112,12 +112,13 @@
         <% if @product_vivieu.reviewfiable.asin.present? %>
             <p class="flow-text center">Global links</p>
             <% user = User.find(@product_vivieu.reviewer_id) %>
+            <% main_image = @product_vivieu.reviewfiable.product_images.split(',').first %>
             <% if GeoLink.check_errors(@product_vivieu, user ) == 'None' %>
                 <% links = GeoLink.construct_links_for(@product_vivieu) %>
                 <% links.each do |key, value| %>
                     <p>Country: <%= key %></p>
                     <div class="<%= key %>-display-card" style="border: 1px solid red;">
-                      <a href="<%= value %>" data-card-controls="0" class="embedly-card"></a>
+                      <a href="<%= value %>" data-card-controls="0" data-card-image="<%= main_image %>" class="embedly-card"></a>
                     </div>
                 <% end %>
             <% else %>
@@ -156,6 +157,7 @@
     if(checkbox.checked)
     {
       toastr.success('Your preference has been updated to Amazon affiliates !', 'Success')
+      save_review_form();
       $('.if-not-amazon').fadeOut(200, function(){
         $('.if-amazon').fadeIn(200);
       })
@@ -168,6 +170,7 @@
     else
     {
       toastr.success('Your preference has been updated', 'Success')
+      Turbolinks.visit(location.toString());
       $('.if-amazon').fadeOut(200, function(){
         $('.if-not-amazon').fadeIn(200);
       })
@@ -365,6 +368,27 @@
       timeout: 10000
     })
   }
+
+    function save_review_form()
+    {
+      var valuestosubmit = $('.review-form').serialize() + '&submit_method=ajax';
+      $.ajax({
+        method: 'PATCH',
+        url: 'http://localhost:3000/product_vivieus/<%= @product_vivieu.id %>',
+        data: valuestosubmit,
+        dataType: 'json',
+        error: function(jqXHR, textStatus, errorThrown){
+          if(textStatus==="timeout") {
+            toastr.error('Could not save the form. Please check your internet connection', 'Error')
+          }
+          else{
+            toastr.error('Your form was not saved', 'Error')
+          }
+        },
+        timeout: 10000
+      })
+    }
+
 </script>
 <script type="text/javascript" charset="utf-8">
   var citynames = new Bloodhound({

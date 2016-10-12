@@ -1,5 +1,7 @@
 $('#amazon-ad-modal').closeModal();
 toastr.success('Your ads have been created', 'Success')
 $('.amazon-ads-action').fadeOut(200, function(){
-    $(this).html('<%= link_to 'Show Ads', product_vivieu_amazon_ad_path(@product_vivieu, @amazon_ad), remote: true %>').fadeIn(200);
-})
+    $(this).html('<%= link_to 'Show Ads', product_vivieu_amazon_ad_path(@product_vivieu, @amazon_ad), remote: true %>' +
+  '<%= link_to 'Edit Ad', edit_product_vivieu_amazon_ad_path(@product_vivieu, @product_vivieu.amazon_ad), remote: true, data: {disable_with: 'Loading...'} %>' +
+  '<%= link_to 'Delete Ad', product_vivieu_amazon_ad_path(@product_vivieu, @product_vivieu.amazon_ad), remote: true, method: :delete, data: { disable_with: 'Deleting...'} %>').fadeIn(200);
+});
