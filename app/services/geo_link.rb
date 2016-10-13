@@ -93,7 +93,10 @@ class GeoLink
 
 
   def self.check_errors(review,user)
-    affiliate_countries_size = user.affiliate_countries.split(',').count
+    affiliate_countries_size = 0
+    unless user.affiliate_countries.nil?
+      affiliate_countries_size = user.affiliate_countries.split(',').count
+    end
     if affiliate_countries_size < 1
       return 'No Affiliate Country specified in User Settings'
     end

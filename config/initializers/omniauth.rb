@@ -1,1 +1,2 @@
-OmniAuth.config.full_host = Rails.env.production? ? 'https://vivieu.com' : 'http://localhost:3000'
+#todo change to vivieu.com in production
+OmniAuth.config.full_host = Rails.env.production? ? 'http://localhost:3000' : 'http://localhost:3000'

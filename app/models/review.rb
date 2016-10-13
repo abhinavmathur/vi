@@ -25,7 +25,7 @@ class Review < ActiveRecord::Base
   extend FriendlyId
   friendly_id :title, use: [:slugged, :finders]
   belongs_to :reviewfiable, polymorphic: true
-  acts_as_commontable
+  belongs_to :reviewgroup
   visitable
 
   has_many :clicks
@@ -45,7 +45,6 @@ class Review < ActiveRecord::Base
         tags: tags,
     }
   end
-  
 
   def should_generate_new_friendly_id?
     title_changed?

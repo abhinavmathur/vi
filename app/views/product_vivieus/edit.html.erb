@@ -109,7 +109,7 @@
 
     <div class="row">
       <div class="col s12">
-        <% if @product_vivieu.reviewfiable.asin.present? %>
+        <% if @product_vivieu.reviewfiable.present? && @product_vivieu.reviewfiable.asin.present? %>
             <p class="flow-text center">Global links</p>
             <% user = User.find(@product_vivieu.reviewer_id) %>
             <% main_image = @product_vivieu.reviewfiable.product_images.split(',').first %>

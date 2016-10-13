@@ -15,7 +15,7 @@ class ReviewPolicy < ApplicationPolicy
   end
 
   def show?
-    record.publish? || user.try(:admin) || record.author == user || user.try(:manager)
+    record.publish? || user.try(:admin) || record.reviewer_id == user.id || user.try(:manager)
   end
 
   def destroy?
