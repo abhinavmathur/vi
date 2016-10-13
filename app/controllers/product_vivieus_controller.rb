@@ -138,7 +138,7 @@ class ProductVivieusController < ApplicationController
     if @product_vivieu.update(target_countries: target_country_array.join(','))
       code = GeoLink.get_country_code(target_country)
       geolink = GeoLink.new(code).amazon_search_link(@product_vivieu, current_user)
-      render json: geolink  , status: :ok
+      render json: geolink, status: :ok
     end
   end
 

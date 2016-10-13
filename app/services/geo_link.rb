@@ -10,7 +10,7 @@ class GeoLink
       IT: '.it',
       NL: '.nl',
       ES: '.es',
-      UK: '.co.uk',
+      GB: '.co.uk',
       CA: '.ca',
       MX: '.com.mx',
       US: '.com',
@@ -23,7 +23,7 @@ class GeoLink
       IT: '21',
       BR: '20',
       IN: '20',
-      UK: '21',
+      GB: '21',
       MX: '20',
       FR: '21',
       ES: '21',
@@ -110,23 +110,32 @@ class GeoLink
   end
 
   def self.get_country_name(country_code = 'US')
-    ISO3166::Country[country_code].name || nil
+    begin
+      ISO3166::Country[country_code].name || nil
+    rescue
+      'Not found'
+    end
   end
 
   def self.get_country_code(country_name = 'United States')
-    if country_name == 'Spain'
-      return 'ES'
-    elsif country_name == 'China'
-      return 'CN'
-    elsif country_name == 'Japan'
-      return 'JP'
-    elsif country_name == 'Australia'
-      return 'AU'
-    elsif country_name == 'Germany'
-      return 'DE'
-    else
-      ISO3166::Country.find_country_by_name(country_name).gec || 'US'
+    begin
+      if country_name == 'Spain'
+        return 'ES'
+      elsif country_name == 'China'
+        return 'CN'
+      elsif country_name == 'Japan'
+        return 'JP'
+      elsif country_name == 'Australia'
+        return 'AU'
+      elsif country_name == 'Germany'
+        return 'DE'
+      else
+        ISO3166::Country.find_country_by_name(country_name).gec || 'US'
+      end
+    rescue
+      'ERROR'
     end
+
   end
 
   def self.get_country_code_raw(country_name = 'United States')
@@ -136,8 +145,6 @@ class GeoLink
   def amazon_url_present?(review)
     review.reviewfiable.asin.present?
   end
-
-  private
 
   def simple_link
     if $country_suffix.key? @country_code.to_sym
@@ -150,6 +157,8 @@ class GeoLink
   def review_url(review)
     "#{simple_link}/dp/#{review.reviewfiable.asin}/"
   end
+
+  private
 
   def suffix_code(user)
     user_affiliate_countries = user.affiliate_countries.to_s.split(',')

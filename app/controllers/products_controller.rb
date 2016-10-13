@@ -21,7 +21,12 @@ class ProductsController < ApplicationController
     if @product.save
       Review.find_by(id: review_id).update(reviewfiable: @product)
       flash[:notice] = 'Product was created successfully'
-      redirect_to product_path(@product)
+      if params[:product][:review_id].present?
+        redirect_to product_path(@product, review_id: params[:product][:review_id])
+      else
+        redirect_to product_path(@product)
+      end
+
     else
       flash[:error] = @product.errors.full_messages.to_sentence
       render :new
@@ -65,7 +70,7 @@ class ProductsController < ApplicationController
         redirect_to product_path(@product)
       end
     else
-      flash[:error] = 'Something went wrong. Please check the form'
+      flash[:error] = @product.errors.full_messages.to_sentence
       render :edit
     end
   end
