@@ -6,9 +6,6 @@
       <ul class="hide-on-med-and-down buttons">
         <li class="left"><a href="/" class="brand-logo left hide-on-med-and-down">Vivieu</a></li>
 
-
-
-
         <% if user_signed_in? %>
         <ul id="dropdown1" class="dropdown-content">
           <li><%= link_to 'Dashboard', user_path(current_user) %></li>
@@ -20,40 +17,45 @@
 
         <li class="right bold-text">
           <a href="#" class="dropdown-button" data-activates="dropdown1">
-            <%= current_user.username %><i class="large material-icons right">perm_identity</i><i class="material-icons right">arrow_drop_down</i>
+            <%= image_tag current_user.avatar, class: 'circle nav-avatar responsive-img left' %><%= current_user.username %><i class="material-icons right">arrow_drop_down</i>
           </a>
         </li>
 
         <% else %>
-        <a class="btn red modal-trigger" href="#modal1">Log In</a>
+         <li class="right"><a class="btn red modal-trigger" href="#modal1">Log In</a></li>
         <% end %>
-        
-        <li class="right"><form class="nav-search-bar">
-          <div class="input-field">
-            <input id="search" type="search" placeholder="search for a review" required>
-            <label for="search"><i class="material-icons">search</i></label>
-            <i class="material-icons">close</i>
-          </div>
-        </form></li>
+
+
+        <li class="right"><a  href="#search"><i class="material-icons">search</i>
+        </a></li>
+
+        <div id="search">
+          <span class="close">x</span>
+          <form role="search" id="searchform" action "/search" method="get">
+            <input value="" name="q" type="search" placeholder="type to search"/>
+          </form>
+        </div>
+
       </ul>
+
+
 
 
       <ul class="side-nav" id="mobile-demo">
         <% if user_signed_in? %>
-        <li id="logo"><%= link_to 'Viveau', root_path %></li>
+
+        <div class="mobile-profile orange darken-1">
+          <li class="mobile-heading">Hello</li>
+          <li><%= image_tag current_user.avatar, class: "circle nav-avatar" %></li>
+          <%= current_user.username %>
+
+        </div>
         <li>
+
           <div class="divider">
           </div>
         </li>
-        <li>
-          <form class="mobile-search" method="get" action="/search">
-            <div class="input-field">
-              <input  id="search" type="search" placeholder=" search" required>
-              <label for="search"><i class="black-text material-icons right">search</i></label>
-              <i class="material-icons">close</i>
-            </div>
-          </form>
-        </li>
+
         <li><%= link_to 'Dashboard' %></li>
         <li><%= link_to 'Profile' %></li>
         <li class="divider"></li>
@@ -68,13 +70,15 @@
 </div>
 
 <!-- modal content  -->
-<div id="modal1" class="purple darken-4 white-text center modal">
-  <div class="modal-content">
+<div id="modal1" class="purple darken-4 center modal">
+  <div class="purple darken-4 modal-content white-text">
     <h4>Log In</h4>
+  </div>
+  <div class="white modal-content">
     <p>Sign in with the one and only Google.</p>
     <p>Fast and Secure!</p>
     <%= link_to 'Google', user_google_oauth2_omniauth_authorize_path,
-    class: "modal-action modal-close btn purple-text white" %>
-
+    class: "modal-action modal-close btn purple darken-4" %>
+  </div>
   </div>
 </div>

@@ -26,7 +26,7 @@
           <% end %>
         </div>
           <div class="card-action">
-            <%= link_to 'Add a review', new_review_path %>
+            <%= link_to 'Add a review', new_review_path( product_id: @product.id ) %>
             <%= link_to 'Wrong product', new_product_path %>
           </div>
 
