@@ -10,7 +10,7 @@ class ProductPolicy < ApplicationPolicy
   end
 
   def update?
-    record.user_id == user.id || user.try(:admin) || user.try(:manager)
+    user.try(:reviewer) || user.try(:admin) || user.try(:manager)
   end
 
   def destroy?

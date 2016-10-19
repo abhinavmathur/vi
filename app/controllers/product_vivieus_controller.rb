@@ -4,10 +4,12 @@ class ProductVivieusController < ApplicationController
                                             :publish, :unpublish, :add_target_country, :affiliate_category]
 
   def new
+    authorize Review.new, :create?
     render layout: false
   end
 
   def create
+    authorize @product_vivieu, :create?
     @product_vivieu = Review.create(create_review_params)
     @product_vivieu.reviewer_id = current_user.id
     if @product_vivieu.save
@@ -27,10 +29,12 @@ class ProductVivieusController < ApplicationController
   end
 
   def edit
+    authorize @product_vivieu, :update?
 
   end
 
   def update
+    authorize @product_vivieu, :update?
     respond_to do |format|
       if @product_vivieu.update(edit_review_params)
         format.html {
@@ -55,6 +59,7 @@ class ProductVivieusController < ApplicationController
   end
 
   def destroy
+    authorize @product_vivieu, :destroy?
     @product_vivieu.destroy
     flash[:notice] = 'The review was deleted'
     redirect_to root_path
@@ -96,8 +101,11 @@ class ProductVivieusController < ApplicationController
     asin = params[:product][:asin]
     result, obj = Product.from_amazon(asin)
     if result == 'duplicate' or result == 'notice'
-      @product_vivieu.update(reviewfiable: obj)
-      @product = obj
+      if @product_vivieu.update(reviewfiable: obj)
+        @product = obj
+      else
+        render json: obj.errors, status: :unprocessable_entity
+      end
     else
       render json: obj, status: :unprocessable_entity
     end
@@ -152,8 +160,6 @@ class ProductVivieusController < ApplicationController
       render json: nil, status: :ok
     end
   end
-
-
 
   private
   def create_review_params

@@ -38,8 +38,8 @@ class Product < ActiveRecord::Base
 
   has_many :reviews, as: :reviewfiable
 
-  validates :title, :description, :company, :tags, presence: true
-  validates :title, :description, uniqueness: true
+  validates :title, presence: true
+  validates :title, uniqueness: true
 
 
   def slug_candidates

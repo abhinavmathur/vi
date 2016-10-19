@@ -512,3 +512,19 @@ function back_to_previous_card() {
       }
     })
   }
+
+
+      if review_id.present?
+        Review.find_by(id: review_id).update(reviewfiable: @product)
+        flash[:notice] = 'Product was updated successfully'
+        redirect_to product_path(@product, review_id: review_id) and return
+      else
+        flash[:error] = @product.errors.full_messages.to_s
+        redirect_to edit_product_path(@product, review_id: review_id) and return
+      end
+      flash[:notice] = 'Product was updated successfully'
+      redirect_to product_path(@product) and return
+    else
+      flash[:error] = @product.errors.full_messages.to_sentence
+      redirect_to edit_product_path(@product, review_id: review_id) and return
+    end

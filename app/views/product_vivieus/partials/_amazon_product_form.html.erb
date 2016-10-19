@@ -26,8 +26,8 @@
         success: function(data){
           close_amazon_modal();
           var product_array = [];
-          product_array.push('<div class="card-panel teal"><span>')
-          product_array.push('<h2 class="center">'+ data.title +'</h2>')
+          product_array.push('<div class="card-panel"><span>')
+          product_array.push('<h2 class="flow-text center">'+ data.title +'</h2>')
           product_array.push('<img class="responsive-img" src="'+ data.main_image +'">');
           product_array.push('<a class="waves-effect waves-light red btn" onclick="show_product_form()">Wrong Product ?</a>')
           product_array.push('</span></div>');

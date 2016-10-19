@@ -66,8 +66,4 @@ class User < ActiveRecord::Base
       user.save!
     end
   end
-
-  def self.country_name(country_code)
-    ISO3166::Country[country_code].name || nil
-  end
 end

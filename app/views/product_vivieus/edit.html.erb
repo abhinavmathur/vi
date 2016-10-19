@@ -1,7 +1,7 @@
 <div class="row">
   <!--Review form-->
   <div class="col s12 m8 l8">
-    <h2>Review details</h2>
+    <h2 class="flow-text center">Product Review</h2>
 
     <div id="review-error-messages">
 
@@ -61,14 +61,13 @@
           <div class="if-not-amazon">
             <%= render partial: 'product_vivieus/partials/if_not_amazon', locals:{ f: f}  %>
           </div>
-
         </div>
 
 
 
         <div class="row">
           <div class="col s12 input-field">
-            <%= f.submit 'Save' %>
+            <%= f.submit 'Save as Draft' %>
           </div>
         </div>
     <% end %>
@@ -122,7 +121,7 @@
                     </div>
                 <% end %>
             <% else %>
-                <p>
+                <p class="center">
                   <%= GeoLink.check_errors(@product_vivieu, user ) %>
                 </p>
             <% end %>
@@ -170,7 +169,6 @@
     else
     {
       toastr.success('Your preference has been updated', 'Success')
-      Turbolinks.visit(location.toString());
       $('.if-amazon').fadeOut(200, function(){
         $('.if-not-amazon').fadeIn(200);
       })
@@ -299,8 +297,8 @@
       data: { product_id: product_id },
       success: function(data){
         var product_array = [];
-        product_array.push('<div class="card-panel teal"><span>')
-        product_array.push('<h2 class="center">'+ data.title +'</h2>')
+        product_array.push('<div class="card-panel"><span>')
+        product_array.push('<h2 class="center flow-text">'+ data.title +'</h2>')
         var first_image = data.product_images.split(',')[0];
         product_array.push('<img class="responsive-img" src="'+ first_image +'">');
         product_array.push('<a class="waves-effect waves-light red btn" onclick="show_product_form()">Wrong Product ?</a>')
@@ -310,8 +308,8 @@
           $(this).html(card).fadeIn();
         })
       },
-      error: function(data){
-        console.log(data)
+      error: function(jqXHR, textStatus, errorThrown){
+        toastr.error(jqXHR.responseText)
       }
     })
   }
@@ -382,7 +380,7 @@
             toastr.error('Could not save the form. Please check your internet connection', 'Error')
           }
           else{
-            toastr.error('Your form was not saved', 'Error')
+            toastr.error(jqXHR.responseText, 'Error')
           }
         },
         timeout: 10000

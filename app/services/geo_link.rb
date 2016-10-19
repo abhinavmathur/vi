@@ -97,6 +97,9 @@ class GeoLink
     unless user.affiliate_countries.nil?
       affiliate_countries_size = user.affiliate_countries.split(',').count
     end
+    if review.affiliate_link.present? && review.affiliate_tag.present? && review.reviewfiable.asin.present?
+      return 'You are trying to use an Amazon product with a non amazon link. Please leave the affiliate link blank.'
+    end
     if affiliate_countries_size < 1
       return 'No Affiliate Country specified in User Settings'
     end
@@ -105,6 +108,9 @@ class GeoLink
     end
     if review.reviewfiable.asin.present? && review.affiliate_tag == ''
       return 'No affiliate tag specified'
+    end
+    if review.affiliate_link.present?
+      return 'Global link only works when using Amazon affiliate program'
     end
     'None'
   end
