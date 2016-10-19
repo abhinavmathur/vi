@@ -182,7 +182,7 @@ ActiveRecord::Schema.define(version: 20161012013755) do
     t.string   "affiliate_link"
     t.integer  "reviewfiable_id"
     t.string   "reviewfiable_type"
-    t.boolean  "publish",            default: false
+    t.boolean  "publish"
     t.string   "slug"
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false

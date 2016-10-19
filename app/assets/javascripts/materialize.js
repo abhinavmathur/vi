@@ -24,7 +24,6 @@ $(document).on('turbolinks:load', function(){
     top: 200,
     offset: 60,
     bottom: 500
-
   });
   $('.tooltipped').tooltip({
 
@@ -38,4 +37,9 @@ $(document).on('turbolinks:load', function(){
     ending_top: '10%'
 
   });
+  $('.scrollspy').scrollSpy({}
+  );
+  $('.contents-wrapper').pushpin({
+    offset: 90
+    });
 });
