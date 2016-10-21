@@ -1,21 +1,21 @@
-<div id="review-title-modal" class="modal">
+<div id="review-title-modal" class="modal blue darken-3">
+
   <div class="modal-content">
-    <h4>Give us a title for your review</h4>
+    <h5 class="white-text">Give us a title for your review</h5>
     <div class="new-vivieu-form-errors">
     </div>
     <%= form_for Review.new, url: product_vivieus_path, method: :post, remote: true do |f| %>
-        <div class="row">
-          <div class="col s12 input-field">
-            <%= f.text_field :title %>
-            <%= f.label :title %>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col s12 input-field">
-            <%= f.submit 'Next ->' %>
-          </div>
-        </div>
-    <% end %>
+    <div class="input-field">
+      <%= f.text_field :title %>
+      <%= f.label :title %>
+    </div>
+    <div class="modal-footer blue darken-3">
+      <div class="input-field">
+        <%= f.submit 'Next', class: 'btn red' %>
+      </div>
+    </div>
   </div>
+
+
+  <% end %>
 </div>

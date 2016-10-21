@@ -7,13 +7,10 @@ body {
 
 .main-nav {
   font-family: 'Baloo thambi';
-
-
-  padding: 0 40px;
+  padding: 0 0 0 40px;
   & .brand-logo {
     font-family: 'Baloo Thambi';
     font-size: 300% !important;
-
   }
 }
 /* footer */
@@ -40,11 +37,27 @@ body {
     font-size: 150%;
   }
 }
-.search-bar {
+.search-widget {
+    width: 80% !important;
+    margin: 0 auto;
+  .search-bar {
 
-  width: 300px;
-  color: white;
+    width: 50% !important;
+    background: white !important;
+    padding: 0 10px !important;
+    color: black !important;
+    margin-bottom: 0;
+
+  }
+  .btn {
+    height: 46px;
+    position: relative;
+    left: -20px;
+  }
+
 }
+
+
 /* sub nav bar */
 .sub-nav-bar {
 
@@ -75,12 +88,7 @@ body {
   height: 400px;
 }
 
-.nav-search-bar {
 
-  font-style:  italic;
-  padding: 0 20px;
-
-}
 .mobile-search input {
   margin: 0;
 }
@@ -151,10 +159,7 @@ body {
 #down-arrow {
   font-size: 60% !important;
 }
-.feed-card .col {
-  padding: 0;
 
-}
 .caption{
   font-family: 'Baloo thambi';
 }
@@ -215,4 +220,22 @@ body {
   border: 5px dashed grey;
   border-radius: 5px;
   padding: 120px 30px;
+}
+.play-btn {
+  position: relative;
+  bottom: 50%;
+}
+.search-nav {
+
+  width: 240px;
+
+}
+#search-nav {
+  position: relative;
+  height: 45px;
+
+  top: 10px;
+}
+#review-title-modal {
+  font-family: 'Baloo thambi';
 }

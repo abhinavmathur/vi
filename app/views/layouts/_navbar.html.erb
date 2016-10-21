@@ -1,71 +1,61 @@
-<div class="navbar-fixed">
-  <nav>
-    <div class="nav-wrapper main-nav blue darken-4">
-      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+<nav >
+  <div class="main-nav nav-wrapper blue darken-4">
+    <a href="/" class="brand-logo">Viveau</a>
 
-      <ul class="hide-on-med-and-down buttons">
-        <li class="left"><a href="/" class="brand-logo left hide-on-med-and-down">Vivieu</a></li>
+    <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 
 
 
-        <% if user_signed_in? %>
-        <ul id="dropdown1" class="dropdown-content">
-          <li><%= link_to 'Dashboard', user_path(current_user) %></li>
-          <li>  <a class="modal-trigger waves-effect waves-light" href="#review-title-modal">Create a Review</a></li>
-          <li><%= link_to 'Settings', edit_user_registration_path %></li>
-          <li class="divider"></li>
-          <li><%= link_to 'Log out', destroy_user_session_path, method: :delete %></li>
-        </ul>
 
+    <ul class="right hide-on-med-and-down">
+      <% if user_signed_in? %>
 
-        <li class="right bold-text">
-          <a href="#" class="dropdown-button" data-activates="dropdown1">
-            <%= current_user.username %><i class="large material-icons right">perm_identity</i><i class="material-icons right">arrow_drop_down</i>
-          </a>
-        </li>
-
-        <% else %>
-        <a class="btn red modal-trigger right" href="#login-modal">Log In</a>
-        <% end %>
-        
-        <li class="right"><form class="nav-search-bar">
-          <div class="input-field">
-            <input id="search" type="search" placeholder="search for a review" required>
+      <li>
+        <form>
+          <div class="input-field search-field ">
+            <input id="search-nav" type="search" placeholder="search for a review" class="blue black-text" required>
             <label for="search"><i class="material-icons">search</i></label>
             <i class="material-icons">close</i>
           </div>
-        </form></li>
-      </ul>
+        </form>
+      </li>
 
-
-      <ul class="side-nav" id="mobile-demo">
-        <% if user_signed_in? %>
-        <li id="logo"><%= link_to 'Vivieu', root_path %></li>
-        <li>
-          <div class="divider">
-          </div>
-        </li>
-        <li>
-          <form class="mobile-search" method="get" action="/search">
-            <div class="input-field">
-              <input  id="search" type="search" placeholder=" search" required>
-              <label for="search"><i class="black-text material-icons right">search</i></label>
-              <i class="material-icons">close</i>
-            </div>
-          </form>
-        </li>
-        <li><%= link_to 'Dashboard' %></li>
-        <li><%= link_to 'Profile' %></li>
+      <!-- dropdown menu  -->
+      <ul id="dropdown1" class="dropdown-content">
+        <li><%= link_to 'Dashboard', user_path(current_user) %></li>
+        <li><%= link_to 'Create a review', '#review-title-modal', class: "modal-trigger" %></li>
+        <li><%= link_to 'Settings', edit_user_registration_path %></li>
         <li class="divider"></li>
-        <li><%= link_to 'Log out', destroy_user_session_path, method: :delete%></li>
-
-        <% else %>
-        <li><%= link_to 'Log in', new_user_session_path %></li>
-        <% end %>
+        <li><%= link_to 'Log out', destroy_user_session_path, method: :delete %></li>
       </ul>
-    </div>
-  </nav>
-</div>
+
+      <!-- dropdown-trigger -->
+      <li>
+        <a href="#" class="dropdown-button" data-activates="dropdown1">
+          <i class="large material-icons left">perm_identity</i><i class="material-icons left">arrow_drop_down</i>
+        </a>
+      </li>
+
+      <% else %>
+      <li><%= link_to 'Log In', "#login-modal", class: "btn blue modal-trigger"%></li>
+      <% end %>
+    </ul>
+    <ul class="side-nav" id="mobile-demo">
+      <% if user_signed_in? %>
+      <li><%= link_to 'Dashboard', user_path(current_user) %></li>
+      <li><%= link_to 'Create a review', '#', class: "modal-trigger" %></li>
+      <li><%= link_to 'Settings', edit_user_registration_path %></li>
+      <li class="divider"></li>
+      <li><%= link_to 'Log out', destroy_user_session_path, method: :delete %></li>
+     <% else %>
+     <li><%= link_to 'Log In', "#login-modal", class: "btn blue modal-trigger"%></li>
+     <% end %>
+   </ul>
+
+
+  </div>
+</nav>
+
 
 <!-- modal content  -->
 <div id="login-modal" class="purple darken-4 white-text center modal">
@@ -75,6 +65,5 @@
     <p>Fast and Secure!</p>
     <%= link_to 'Google', user_google_oauth2_omniauth_authorize_path,
     class: "modal-action modal-close btn purple-text white" %>
-
   </div>
 </div>
