@@ -16,5 +16,4 @@ class ProductPolicy < ApplicationPolicy
   def destroy?
     user.try(:admin)
   end
-
 end
