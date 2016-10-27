@@ -78,6 +78,10 @@ test:
 #   production:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
+staging:
+  <<: *default
+  database: vi_staging
+
 production:
   <<: *default
   database: vi_production
