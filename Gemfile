@@ -92,11 +92,13 @@ gem 'jquery-slick-rails'
 gem 'country_select'
 gem 'twitter-typeahead-rails', :git => 'https://github.com/yourabi/twitter-typeahead-rails.git'
 gem 'countries', :require => 'countries/global'
-gem 'mina', require: false
+gem 'mina', '~> 0.3.8', require: false
 gem 'encryptor'
-gem 'mina-multistage', require: false
+gem 'mina-multistage', '~> 1.0', '>= 1.0.2', require: false
 gem 'highline',  require: false
-gem 'mina-puma', require: false
+gem 'mina-puma', :require => false
 gem 'mina-scp',  require: false
+gem 'mina-sidekiq', '~> 0.4.1', require: false
+
 
 

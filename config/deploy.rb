@@ -1,48 +1,65 @@
 require 'mina/multistage'
+require 'mina_sidekiq/tasks'
 require 'mina/bundler'
 require 'mina/rails'
 require 'mina/git'
 require 'mina/rbenv'
+require 'mina/puma'
 require 'mina/scp'
-require 'highline/import'
 
 
-set :forward_agent, true
-set :shared_dirs, fetch(:shared_dirs, []).push('tmp/pids', 'tmp/sockets')
-set :shared_files, fetch(:shared_files, []).push('config/database.yml', 'config/secrets.yml', 'config/application.yml', 'log', 'tmp')
 
-set :app_path, lambda { "#{fetch(:deploy_to)}/#{fetch(:current_path)}" }
+###
+### SERVER
+################################################################################
 
-# Path of shared directory – where all files shared between deployments are
-set :app_shared_path, lambda { "#{fetch(:deploy_to)}/#{fetch(:shared_path)}" }
 
+set :app_root,              '/home/raaaaj5000/RubymineProjects/vi'   # Local path to application
+set :template_path,         "#{app_root}/config/deploy/templates" # Local path to deploy templates
+set :shared_paths,          ['config/database.yml',               # Database config
+                             'config/application.yml',            # Figaro variables
+                             'config/secrets.yml',                # Rails secrets
+                             'public/uploads',                    # Image uploads
+                             'log',                               # Log files
+                             'tmp'
+]
+
+require_relative 'deploy/setup'
+require_relative 'deploy/nodejs'
+require_relative 'deploy/rbenv'
+require_relative 'deploy/puma'
+require_relative 'deploy/nginx'
+require_relative 'deploy/secrets'
+require_relative 'deploy/sidekiq'
+
+### Load rbenv into the session
 task :environment do
   invoke :'rbenv:load'
 end
 
+###
+### MINA DEPLOY
+################################################################################
 
-task setup: :environment do
-  command %[mkdir -p "#{fetch(:app_shared_path)}/tmp/sockets"]
-  command %[chmod g+rx,u+rwx "#{fetch(:app_shared_path)}/tmp/sockets"]
-  command %[mkdir -p "#{fetch(:app_shared_path)}/tmp/pids"]
-  command %[chmod g+rx,u+rwx "#{fetch(:app_shared_path)}/tmp/pids"]
-  command %[mkdir -p "#{fetch(:app_shared_path)}/tmp/log"]
-  command %[chmod g+rx,u+rwx "#{fetch(:app_shared_path)}/tmp/log"]
-end
-
-desc 'Deploys the current version to the server.'
+desc "Deploys the current version to the server."
 task deploy: :environment do
-  invoke :'git:clone'
-  invoke :'deploy:link_shared_paths'
-  invoke :'bundle:install'
-  invoke :'rails:db_migrate'
-  invoke :'rails:assets_precompile'
-  invoke :'deploy:cleanup'
-  invoke :'secrets:upload'
+  to :before_hook do
+    # Put things to run locally before ssh
+  end
 
-  to :launch do
-    invoke :'puma:restart'
-    invoke :'sidekiq:start'
+  deploy do
+    invoke :'sidekiq:quiet'
+    invoke :'git:clone'
+    invoke :'deploy:link_shared_paths'
+    invoke :'bundle:install'
+    invoke :'secrets:upload'
+    invoke :'rails:db_migrate'
+    invoke :'rails:assets_precompile'
+    invoke :'deploy:cleanup'
+
+    to :launch do
+      invoke :'puma:restart'
+      invoke :'sidekiq:start'
+    end
   end
 end
-
