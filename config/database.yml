@@ -78,8 +78,12 @@ test:
 #   production:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
+staging:
+  <<: *default
+  database: vi_staging
+
 production:
   <<: *default
   database: vi_production
   username: raaaaj5000
-  password: 0522Lucknow
+  password: ENV["database_password"]

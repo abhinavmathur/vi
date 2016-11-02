@@ -530,7 +530,11 @@ GEM
       rubyzip (~> 1.0)
       websocket (~> 1.0)
     sexp_processor (4.7.0)
+<<<<<<< HEAD
+    sidekiq (4.2.3)
+=======
     sidekiq (4.2.4)
+>>>>>>> deploy
       concurrent-ruby (~> 1.0)
       connection_pool (~> 2.2, >= 2.2.0)
       rack-protection (>= 1.5.0)

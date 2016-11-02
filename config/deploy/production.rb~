@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+set :domain, ''
+set :deploy_to, ''
+set :repository, ''
+set :branch, ''
+set :user, ''
+=======
 set :domain, 'www.vivieu.com'
 set :deploy_to, '/var/www/vivieu.com'
 set :repository, 'https://www.github.com/abhinavmathur/vi.git'
@@ -7,3 +14,4 @@ set :app_name, 'vi'
 set :environment_name, 'production'
 set :pg_database, 'vi_production'
 set :pg_host, 'vivieu.com'
+>>>>>>> deploy

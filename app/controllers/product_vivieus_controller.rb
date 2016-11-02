@@ -77,7 +77,7 @@ class ProductVivieusController < ApplicationController
 
   def autocomplete
     @products = Product.search(params[:query], {
-        fields: ["title"],
+        fields: ['title'],
         limit: 15,
         misspellings: {below: 5}
     })

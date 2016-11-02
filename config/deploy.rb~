@@ -1,4 +1,19 @@
 require 'mina/multistage'
+<<<<<<< HEAD
+require 'mina/bundler'
+require 'mina/rails'
+require 'mina/git'
+
+
+
+task setup: :environment do
+
+end
+
+desc 'Deploys the current version to the server.'
+task deploy: :environment do
+
+=======
 require 'mina_sidekiq/tasks'
 require 'mina/bundler'
 require 'mina/rails'
@@ -21,7 +36,8 @@ set :shared_paths,          ['config/database.yml',               # Database con
                              'config/secrets.yml',                # Rails secrets
                              'public/uploads',                    # Image uploads
                              'log',                               # Log files
-                             'tmp']
+                             'tmp'
+]
 
 require_relative 'deploy/setup'
 require_relative 'deploy/nodejs'
@@ -61,4 +77,5 @@ task deploy: :environment do
       invoke :'sidekiq:start'
     end
   end
+>>>>>>> deploy
 end
