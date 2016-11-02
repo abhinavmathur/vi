@@ -6,3 +6,5 @@ set :user, 'raj'
 set :forward_agent, true
 set :app_name, 'vi'
 set :environment_name, 'staging'
+set :pg_database, 'vi_staging'
+set :pg_host, 'staging.vivieu.com'

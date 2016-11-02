@@ -5,4 +5,5 @@ set :branch, 'master'
 set :user, 'raj'
 set :app_name, 'vi'
 set :environment_name, 'production'
-
+set :pg_database, 'vi_production'
+set :pg_host, 'vivieu.com'

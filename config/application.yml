@@ -18,7 +18,7 @@ production:
  GOOGLE_API_KEY: AIzaSyCMdsY3lGx8E4Hm48R_1ALG0AVMgftlaMk
  ACCESS_KEY_ID: AKIAISLSJ37X47W7QD5A
  SECRET_ACCESS_KEY: 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
- database_password: 0522Lucknow
+ database_password: 0522LucknowIndia
  rake_secret: f639786907201015252f972918423e8730e2bac3d9befc08fbe0e79b433e606df02e5b0b34b706cd9485a13756f1ea8aeb69b1cb29631bed47ec218d12acffa5
  heed_user_key: b8207c28fb4c439cad73b2cf7a772241
 
@@ -30,6 +30,6 @@ staging:
  GOOGLE_API_KEY: AIzaSyCMdsY3lGx8E4Hm48R_1ALG0AVMgftlaMk
  ACCESS_KEY_ID: AKIAISLSJ37X47W7QD5A
  SECRET_ACCESS_KEY: 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
- database_password: 0522Lucknow
+ database_password: 0522LucknowIndia
  rake_secret: f639786907201015252f972918423e8730e2bac3d9befc08fbe0e79b433e606df02e5b0b34b706cd9485a13756f1ea8aeb69b1cb29631bed47ec218d12acffa5
  heed_user_key: b8207c28fb4c439cad73b2cf7a772241
