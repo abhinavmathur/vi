@@ -173,7 +173,7 @@
     <orderEntry type="library" scope="PROVIDED" name="bcrypt (v3.1.11, rbenv: 2.3.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="better_errors (v2.1.1, rbenv: 2.3.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="binding_of_caller (v0.7.2, rbenv: 2.3.1) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="brakeman (v3.4.0, rbenv: 2.3.1) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="brakeman (v3.4.1, rbenv: 2.3.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="browser (v2.3.0, rbenv: 2.3.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="builder (v3.2.2, rbenv: 2.3.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="bullet (v5.4.2, rbenv: 2.3.1) [gem]" level="application" />
@@ -242,11 +242,7 @@
     <orderEntry type="library" scope="PROVIDED" name="fog-terremark (v0.1.0, rbenv: 2.3.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="fog-vmfusion (v0.1.0, rbenv: 2.3.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="fog-voxel (v0.1.0, rbenv: 2.3.1) [gem]" level="application" />
-<<<<<<< HEAD
-    <orderEntry type="library" scope="PROVIDED" name="fog-vsphere (v1.4.0, rbenv: 2.3.1) [gem]" level="application" />
-=======
     <orderEntry type="library" scope="PROVIDED" name="fog-vsphere (v1.5.0, rbenv: 2.3.1) [gem]" level="application" />
->>>>>>> deploy
     <orderEntry type="library" scope="PROVIDED" name="fog-xenserver (v0.2.3, rbenv: 2.3.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="fog-xml (v0.1.2, rbenv: 2.3.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="formatador (v0.2.5, rbenv: 2.3.1) [gem]" level="application" />
@@ -255,11 +251,7 @@
     <orderEntry type="library" scope="PROVIDED" name="globalid (v0.3.7, rbenv: 2.3.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="gmaps4rails (v2.1.2, rbenv: 2.3.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="gravatarify (v3.0.0, rbenv: 2.3.1) [gem]" level="application" />
-<<<<<<< HEAD
-    <orderEntry type="library" scope="PROVIDED" name="groupdate (v3.1.0, rbenv: 2.3.1) [gem]" level="application" />
-=======
     <orderEntry type="library" scope="PROVIDED" name="groupdate (v3.1.1, rbenv: 2.3.1) [gem]" level="application" />
->>>>>>> deploy
     <orderEntry type="library" scope="PROVIDED" name="hashie (v3.4.6, rbenv: 2.3.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="highline (v1.7.8, rbenv: 2.3.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="hooks (v0.4.1, rbenv: 2.3.1) [gem]" level="application" />
@@ -284,18 +276,11 @@
     <orderEntry type="library" scope="PROVIDED" name="mime-types (v3.1, rbenv: 2.3.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="mime-types-data (v3.2016.0521, rbenv: 2.3.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="mimemagic (v0.3.2, rbenv: 2.3.1) [gem]" level="application" />
-<<<<<<< HEAD
-    <orderEntry type="library" scope="PROVIDED" name="mina (v1.0.2, rbenv: 2.3.1) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="mina-multistage (v1.0.3, rbenv: 2.3.1) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="mina-puma (v0.3.1, rbenv: 2.3.1) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="mina-scp (v0.1.2, rbenv: 2.3.1) [gem]" level="application" />
-=======
     <orderEntry type="library" scope="PROVIDED" name="mina (v0.3.8, rbenv: 2.3.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="mina-multistage (v1.0.2, rbenv: 2.3.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="mina-puma (v0.3.2, rbenv: 2.3.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="mina-scp (v0.1.2, rbenv: 2.3.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="mina-sidekiq (v0.4.1, rbenv: 2.3.1) [gem]" level="application" />
->>>>>>> deploy
     <orderEntry type="library" scope="PROVIDED" name="mini_portile2 (v2.1.0, rbenv: 2.3.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="minitest (v5.9.1, rbenv: 2.3.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="multi_json (v1.12.1, rbenv: 2.3.1) [gem]" level="application" />
@@ -353,11 +338,7 @@
     <orderEntry type="library" scope="PROVIDED" name="select2-rails (v4.0.3, rbenv: 2.3.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="selenium-webdriver (v3.0.0, rbenv: 2.3.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="sexp_processor (v4.7.0, rbenv: 2.3.1) [gem]" level="application" />
-<<<<<<< HEAD
-    <orderEntry type="library" scope="PROVIDED" name="sidekiq (v4.2.3, rbenv: 2.3.1) [gem]" level="application" />
-=======
     <orderEntry type="library" scope="PROVIDED" name="sidekiq (v4.2.4, rbenv: 2.3.1) [gem]" level="application" />
->>>>>>> deploy
     <orderEntry type="library" scope="PROVIDED" name="sidekiq-middleware (v0.3.0, rbenv: 2.3.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="simple_form (v3.3.1, rbenv: 2.3.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="simple_form-materialize (v0.0.1@6d2afd, rbenv: 2.3.1) [gem]" level="application" />
@@ -390,11 +371,7 @@
     <orderEntry type="library" scope="PROVIDED" name="websocket (v1.2.3, rbenv: 2.3.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="xml-simple (v1.1.5, rbenv: 2.3.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="xpath (v2.0.0, rbenv: 2.3.1) [gem]" level="application" />
-<<<<<<< HEAD
-    <orderEntry type="library" scope="PROVIDED" name="yt (v0.28.0, rbenv: 2.3.1) [gem]" level="application" />
-=======
     <orderEntry type="library" scope="PROVIDED" name="yt (v0.28.1, rbenv: 2.3.1) [gem]" level="application" />
->>>>>>> deploy
   </component>
   <component name="RModuleSettingsStorage">
     <LOAD_PATH number="0" />
