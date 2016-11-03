@@ -7,7 +7,7 @@ preload_app!
 daemonize
 
 rackup      DefaultRackup
-environment "#{environment_name}"
+environment "#{environment_name}" || 'staging'
 
 bind "unix:<%= "#{deploy_to}/#{shared_path}" %>/tmp/sockets/puma.sock"
 pidfile "<%= "#{deploy_to}/#{shared_path}" %>/tmp/pids/puma.pid"
