@@ -15,7 +15,7 @@ require 'mina/scp'
 
 
 set :app_root,              '/home/raaaaj5000/RubymineProjects/vi'   # Local path to application
-set :template_path,         "#{app_root}/config/deploy/templates" # Local path to deploy templates
+#set :template_path,         "#{app_root}/config/deploy/templates" # Local path to deploy templates
 set :shared_paths,          ['config/database.yml',               # Database config
                              'config/application.yml',            # Figaro variables
                              'config/secrets.yml',                # Rails secrets
@@ -26,7 +26,6 @@ set :shared_paths,          ['config/database.yml',               # Database con
 require_relative 'deploy/setup'
 require_relative 'deploy/nodejs'
 require_relative 'deploy/rbenv'
-require_relative 'deploy/puma'
 require_relative 'deploy/nginx'
 require_relative 'deploy/secrets'
 require_relative 'deploy/sidekiq'
