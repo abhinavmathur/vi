@@ -3,7 +3,7 @@ deploy_production = '/var/www/vivieu.com'
 
 workers  1
 
-threads 0, 16
+threads 1, 16
 
 rackup      DefaultRackup
 environment ENV['RACK_ENV'] || 'production'
