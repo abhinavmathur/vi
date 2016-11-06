@@ -1,4 +1,4 @@
-server 'server', roles: [:web, :app, :db], primary: true
+server '138.197.140.132', roles: [:web, :app, :db], primary: true
 
 set :repo_url,        'git@github.com:abhinavmathur/vi.git'
 set :application,     'vi'
@@ -9,10 +9,10 @@ set :puma_workers,    1
 # Don't change these unless you know what you're doing
 set :pty,             true
 set :use_sudo,        false
-set :stage,           "#{stage}"
+set(:stage)  {"#{deploy_stage}"}
 set :deploy_via,      :remote_cache
-set :deploy_to,       "#{deploy_location}"
-set :puma_bind,       "unix://#{shared_path}/tmp/sockets/#{puma_process_name}-puma.sock"
+set(:deploy_to) {"#{deploy_location}"}
+set(:puma_bind) {"unix://#{shared_path}/tmp/sockets/#{puma_process_name}-puma.sock"}
 set :puma_state,      "#{shared_path}/tmp/pids/puma.state"
 set :puma_pid,        "#{shared_path}/tmp/pids/puma.pid"
 set :puma_access_log, "#{release_path}/log/puma.error.log"
