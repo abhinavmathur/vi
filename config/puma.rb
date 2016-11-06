@@ -5,7 +5,6 @@ workers  1
 
 threads 0, 16
 
-preload_app!
 rackup      DefaultRackup
 environment ENV['RACK_ENV'] || 'production'
 daemonize   true
