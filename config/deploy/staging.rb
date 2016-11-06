@@ -1,11 +1,3 @@
-set :domain, 'staging.vivieu.com'
-set :deploy_to, '/var/www/staging.vivieu.com'
-set :repository, 'git@github.com:abhinavmathur/vi.git'
-set :branch, 'master'
-set :user, 'raj'
-set :forward_agent, true
-set :app_name, 'vi'
-set :environment_name, 'staging'
-set :pg_database, 'vi_staging'
-set :pg_host, 'staging.vivieu.com'
-
+set :stage, 'staging'
+set :deploy_location, '/var/www/staging.vivieu.com'
+set :puma_process_name, 'staging'

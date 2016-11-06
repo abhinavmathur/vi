@@ -44,6 +44,12 @@ group :development do
   #gem 'rack-mini-profiler'
   gem 'bullet'
   gem 'spring'
+  gem 'capistrano',         require: false
+  gem 'capistrano-rbenv', '~> 2.0',     require: false
+  gem 'capistrano-rails',   require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano3-puma',   require: false
+  gem 'capistrano-sidekiq', github: 'seuros/capistrano-sidekiq', require: false
 end
 
 
@@ -94,9 +100,4 @@ gem 'twitter-typeahead-rails', :git => 'https://github.com/yourabi/twitter-typea
 gem 'countries', :require => 'countries/global'
 gem 'mina', '~> 0.3.8', require: false
 gem 'encryptor'
-gem 'mina-multistage', '~> 1.0', '>= 1.0.2', require: false
-gem 'highline',  require: false
-gem 'mina-puma', :require => false
-gem 'mina-scp',  require: false
-gem 'mina-sidekiq', '~> 0.4.1', require: false
 
