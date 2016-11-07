@@ -86,4 +86,4 @@ production:
   <<: *default
   database: vi_production
   username: raaaaj5000
-  password: ENV["database_password"]
+  password: 0522LucknowIndia

@@ -1,3 +1,5 @@
+set :domain_name, 'vivieu.com'
 set :deploy_stage, 'production'
 set :deploy_location, '/var/www/vivieu.com'
 set :puma_process_name, 'production'
+set :shared_path_app, '/var/www/vivieu.com/shared'
