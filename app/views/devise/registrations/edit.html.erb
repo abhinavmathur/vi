@@ -67,6 +67,7 @@
       </div>
     </div>
 
+
     <div class="col s12 m4">
       <div class="tabs-wrapper">
         <div class="blue darken-2 card">
@@ -135,8 +136,7 @@ var citynames = new Bloodhound({
   datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
   queryTokenizer: Bloodhound.tokenizers.whitespace,
   prefetch: {
-    /*Todo change to vivieu in production*/
-    url: 'http://localhost:3000/assets/affiliate_countries.json',
+    url: '<%= request.domain %>/assets/affiliate_countries.json',
     filter: function(list) {
       return $.map(list, function(cityname) {
         return { name: cityname };

@@ -6,10 +6,10 @@ workers  1
 threads 1, 16
 
 rackup      DefaultRackup
-environment ENV['RACK_ENV']
+environment ENV['RAILS_ENV']
 daemonize   true
 
-if ENV['RACK_ENV'] == 'staging'
+if ENV['RAILS_ENV'] == 'staging'
   bind "unix:#{deploy_staging}/shared/tmp/sockets/staging-puma.sock"
   pidfile "#{deploy_staging}/shared/tmp/pids/puma.pid"
   state_path "#{deploy_staging}/shared/tmp/sockets/puma.state"

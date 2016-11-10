@@ -1,5 +1,3 @@
-server '138.197.140.132', user: 'raj', roles: [:web, :app, :db], primary: true
-
 set :repo_url,        'git@github.com:abhinavmathur/vi.git'
 set :application,     'vi'
 set :user,            'abhinavmathur'
@@ -7,27 +5,11 @@ set :puma_threads,    [4, 16]
 set :puma_workers,    1
 
 # Don't change these unless you know what you're doing
-set :shared_path, -> do
-  {
-      production: '/var/www/vivieu.com/shared',
-      staging: '/var/www/staging.vivieu.com/shared'
-  }
-end
-set :pty,             true
+set :shared_path, "#{fetch :shared_path_app}"
+set :pty,             false
 set :use_sudo,        true
 set :stage, -> { fetch(:deploy_stage)}
 set :deploy_via,      :remote_cache
-set :deploy_to, -> { fetch(:deploy_location) }
-set :puma_bind, -> do
-  {
-      production: "unix://#{shared_path}/tmp/sockets/production-puma.sock",
-      staging: "unix://#{shared_path}/tmp/sockets/staging-puma.sock"
-  }
-end
-set :puma_state,      "#{fetch :shared_path}/tmp/pids/puma.state"
-set :puma_pid,        "#{fetch :shared_path}/tmp/pids/puma.pid"
-set :puma_access_log, "#{fetch :shared_path}/log/puma.error.log"
-set :puma_error_log,  "#{fetch :shared_path}/log/puma.access.log"
 set :ssh_options,     { forward_agent: true, user: fetch(:user), keys: %w(~/.ssh/id_rsa.pub) }
 set :puma_preload_app, true
 set :puma_worker_timeout, nil
@@ -52,7 +34,7 @@ set :keep_releases, 5
 set :linked_files, %w{config/database.yml config/secrets.yml config/application.yml}
 set :linked_dirs,  %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/uploads}
 
-before 'deploy:migrate', 'secrets:upload_to_staging'
+before 'deploy:check:make_linked_dirs', 'secrets:upload_to_staging'
 
 namespace :secrets do
   desc 'upload secrets'
